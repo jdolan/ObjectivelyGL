@@ -94,6 +94,19 @@ START_TEST(initWithData) {
 
 } END_TEST
 
+START_TEST(initWithDescriptor) {
+
+	ShaderDescriptor resource = MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl");
+
+	Shader *shader = $(alloc(Shader), initWithDescriptor, &resource);
+	ck_assert(shader);
+	ck_assert_int_ne(0, shader->name);
+	ck_assert_int_eq(GL_VERTEX_SHADER, shader->type);
+	ck_assert_str_ne("", shader->source);
+	release(shader);
+
+} END_TEST
+
 START_TEST(initWithResource) {
 
 	Resource *resource = $(alloc(Resource), initWithBytes, (const uint8_t *) SOURCE, strlen(SOURCE), __FILE__);
@@ -113,19 +126,6 @@ START_TEST(initWithResource) {
 START_TEST(initWithResourceName) {
 
 	Shader *shader = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
-	ck_assert(shader);
-	ck_assert_int_ne(0, shader->name);
-	ck_assert_int_eq(GL_VERTEX_SHADER, shader->type);
-	ck_assert_str_ne("", shader->source);
-	release(shader);
-
-} END_TEST
-
-START_TEST(initWithDescriptor) {
-
-	ShaderDescriptor resource = MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl");
-
-	Shader *shader = $(alloc(Shader), initWithDescriptor, &resource);
 	ck_assert(shader);
 	ck_assert_int_ne(0, shader->name);
 	ck_assert_int_eq(GL_VERTEX_SHADER, shader->type);
@@ -166,9 +166,9 @@ int main(int argc, char **argv) {
 	
 	tcase_add_test(tcase, initWithBytes);
 	tcase_add_test(tcase, initWithData);
+	tcase_add_test(tcase, initWithDescriptor);
 	tcase_add_test(tcase, initWithResource);
 	tcase_add_test(tcase, initWithResourceName);
-	tcase_add_test(tcase, initWithDescriptor);
 	tcase_add_test(tcase, initWithSource);
 	tcase_add_test(tcase, compile);
 

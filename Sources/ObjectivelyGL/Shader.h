@@ -202,14 +202,14 @@ struct ShaderInterface {
 	 * @brief Initializes this Shader with the Data containing Shader source.
 	 * @param self The Shader.
 	 * @param type The Shader type.
-	 * @param bytes The Data containing Shader source.
+	 * @param data The Data containing Shader source.
 	 * @return The initialized Shader, or `NULL` on error.
 	 * @memberof Shader
 	 */
 	Shader *(*initWithData)(Shader *self, GLenum type, const Data *data);
 
 	/**
-	 * @fn Shader *Shader::initWithDescriptor(Shader *self, ShaderDescriptor *resource)
+	 * @fn Shader *Shader::initWithDescriptor(Shader *self, ShaderDescriptor *descriptor)
 	 * @brief Initializes this Shader with the given ShaderDescriptor containing Shader source.
 	 * @param self The Shader.
 	 * @param descriptor The ShaderDescriptor.
@@ -234,6 +234,7 @@ struct ShaderInterface {
 	 * @fn Shader *Shader::initWithResourceName(Shader *self, GLenum type, const char *name)
 	 * @brief Initializes this Shader with the named Resource containing Shader source.
 	 * @param self The Shader.
+	 * @param type The Shader type.
 	 * @param name The name of the Resource containing Shader source.
 	 * @return The initialized Shader, or `NULL` on error.
 	 * @memberof Shader
