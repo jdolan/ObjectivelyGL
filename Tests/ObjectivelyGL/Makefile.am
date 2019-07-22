@@ -11,12 +11,13 @@ TESTS = \
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \
+	-DRESOURCES=\"$(top_srcdir)/Resources\" \
 	@HOST_CFLAGS@ \
 	@CHECK_CFLAGS@ \
 	@SDL2_CFLAGS@
 
 LDADD = \
-	$(top_srcdir)/Sources/Objectively/libObjectivelyGL.la \
+	$(top_srcdir)/Sources/ObjectivelyGL/libObjectivelyGL.la \
 	@HOST_LIBS@ \
 	@CHECK_LIBS@ \
 	@SDL2_LIBS@
