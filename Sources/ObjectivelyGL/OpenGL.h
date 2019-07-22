@@ -45,6 +45,9 @@
 extern "C" {
 #endif
 
+#include <stddef.h>
+#include <stdint.h>
+
 struct gladGLversionStruct {
     int major;
     int minor;

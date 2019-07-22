@@ -1,4 +1,3 @@
-
 AM_TESTS_ENVIRONMENT = \
 	AM_TESTS=1; export AM_TESTS;
 
