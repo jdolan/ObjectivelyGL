@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+includedir=@includedir@
+libdir=@libdir@
+
+Name: ObjectivelyGL
+Description: Object oriented OpenGL framework for GNU C.
+URL: https://github.com/jdolan/ObjectivelyGL
+Version: @PACKAGE_VERSION@
+Cflags: -I${includedir}
+Libs: -L${libdir} -lObjectivelyGL -lObjectively
+Libs.private:
