@@ -21,48 +21,14 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include <check.h>
-
-#include <SDL.h>
-
-#include <ObjectivelyGL.h>
-
-#ifndef RESOURCES
-# define RESOURCES "."
-#endif
-
-static SDL_Window *window;
-static SDL_GLContext *context;
+#include "Test.h"
 
 static void setup(void) {
-
-	$$(Resource, addResourcePath, RESOURCES);
-
-	SDL_Init(SDL_INIT_VIDEO);
-
-	window = SDL_CreateWindow(__FILE__,
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		1024,
-		768,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
-	);
-
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-
-	context = SDL_GL_CreateContext(window);
-	gladLoadGLLoader(SDL_GL_GetProcAddress);
+	createContext(3, 3);
 }
 
 static void teardown(void) {
-
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(window);
-
-	SDL_Quit();
+	destroyContext();
 }
 
 START_TEST(initWithShaders) {

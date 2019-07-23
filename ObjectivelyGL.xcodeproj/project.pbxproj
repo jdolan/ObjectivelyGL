@@ -140,6 +140,7 @@
 		CE7DEE0822E5046800ED22EA /* simple.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.fs.glsl; sourceTree = "<group>"; };
 		CE7DEE0E22E5176F00ED22EA /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE7DEE0F22E5185900ED22EA /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		CEBB82AC22E68EE100997E82 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
 		CEE761B622E2003A007CB42B /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		CEE761B722E2003A007CB42B /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -252,8 +253,9 @@
 		CE0CE9B322E1EA9A00963219 /* ObjectivelyGL */ = {
 			isa = PBXGroup;
 			children = (
-				CE2A594222E25F7D0043FCD2 /* Shader.c */,
 				CE2A596422E444640043FCD2 /* Program.c */,
+				CE2A594222E25F7D0043FCD2 /* Shader.c */,
+				CEBB82AC22E68EE100997E82 /* Test.h */,
 				CE0CE9B422E1EA9A00963219 /* Makefile.am */,
 			);
 			path = ObjectivelyGL;
