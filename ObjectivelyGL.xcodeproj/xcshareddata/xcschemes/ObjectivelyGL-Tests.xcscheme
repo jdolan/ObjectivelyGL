@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE0CE99622E1E90900963219"
-               BuildableName = "libObjectivelyGL.dylib"
-               BlueprintName = "ObjectivelyGL"
+               BlueprintIdentifier = "CE03F13E22E65FC200147FB9"
+               BuildableName = "ObjectivelyGL-Tests"
+               BlueprintName = "ObjectivelyGL-Tests"
                ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE0CE99622E1E90900963219"
-            BuildableName = "libObjectivelyGL.dylib"
-            BlueprintName = "ObjectivelyGL"
+            BlueprintIdentifier = "CE03F13E22E65FC200147FB9"
+            BuildableName = "ObjectivelyGL-Tests"
+            BlueprintName = "ObjectivelyGL-Tests"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE0CE99622E1E90900963219"
-            BuildableName = "libObjectivelyGL.dylib"
-            BlueprintName = "ObjectivelyGL"
+            BlueprintIdentifier = "CE03F13E22E65FC200147FB9"
+            BuildableName = "ObjectivelyGL-Tests"
+            BlueprintName = "ObjectivelyGL-Tests"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
