@@ -31,13 +31,46 @@ static void teardown(void) {
 	destroyContext();
 }
 
+START_TEST(infoLog) {
+
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl")
+	);
+
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	ck_assert_ptr_ne(NULL, program);
+
+	FreeShaderDescriptors(descriptors);
+
+	GLchar *info = $(program, infoLog);
+	ck_assert_str_eq("", info);
+	free(info);
+
+	release(program);
+} END_TEST
+
+START_TEST(init) {
+
+	Program *program = $(alloc(Program), init);
+	ck_assert_ptr_ne(NULL, program);
+
+	ck_assert_int_ne(0, program->name);
+	ck_assert_ptr_ne(NULL, program->shaders);
+
+	release(program);
+
+} END_TEST
+
 START_TEST(initWithShaders) {
 
-	Shader *vertex = $(alloc(Shader), initWithDescriptor, &MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"));
-	ck_assert_ptr_ne(NULL, vertex);
+	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
+	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "simple.fs.glsl");
 
-	Shader *fragment = $(alloc(Shader), initWithDescriptor, &MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl"));
+	ck_assert_ptr_ne(NULL, vertex);
 	ck_assert_ptr_ne(NULL, fragment);
+
+	ck_assert_int_eq(GL_TRUE, $(vertex, compile));
+	ck_assert_int_eq(GL_TRUE, $(fragment, compile));
 
 	Program *program = $(alloc(Program), initWithShaders, vertex, fragment, NULL);
 	ck_assert_ptr_ne(NULL, program);
@@ -54,12 +87,12 @@ START_TEST(initWithShaders) {
 
 START_TEST(initWithDescriptors) {
 
-	ShaderDescriptor shaders[] = MakeShaderDescriptors(
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
 		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
 		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
-	Program *program = $(alloc(Program), initWithDescriptors, shaders);
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
 	ck_assert_ptr_ne(NULL, program);
 
 	ck_assert_int_eq(2, program->shaders->array.count);
@@ -68,15 +101,57 @@ START_TEST(initWithDescriptors) {
 
 } END_TEST
 
+START_TEST(initWithDescriptors_missing) {
+
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "missing.fs.glsl")
+	);
+
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	ck_assert_ptr_eq(NULL, program);
+
+	ck_assert_ptr_ne(NULL, descriptors[0].shader);
+	ck_assert_int_eq(GL_TRUE, descriptors[0].status);
+
+	ck_assert_ptr_eq(NULL, descriptors[1].shader);
+	ck_assert_int_eq(GL_FALSE, descriptors[1].status);
+
+	FreeShaderDescriptors(descriptors);
+
+} END_TEST
+
+START_TEST(initWithDescriptors_syntaxError) {
+
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "syntax-error.glsl")
+	);
+
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	ck_assert_ptr_eq(NULL, program);
+
+	ck_assert_ptr_ne(NULL, descriptors[0].shader);
+	ck_assert_int_eq(GL_TRUE, descriptors[0].status);
+
+	ck_assert_ptr_ne(NULL, descriptors[1].shader);
+	ck_assert_int_eq(GL_FALSE, descriptors[1].status);
+
+	FreeShaderDescriptors(descriptors);
+
+} END_TEST
+
 START_TEST(link) {
 
-	ShaderDescriptor shaders[] = MakeShaderDescriptors(
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
 		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
 		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
-	Program *program = $(alloc(Program), initWithDescriptors, shaders);
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
 	ck_assert_ptr_ne(NULL, program);
+
+	FreeShaderDescriptors(descriptors);
 
 	const GLint status = $(program, link);
 	ck_assert_int_eq(GL_TRUE, status);
@@ -89,9 +164,13 @@ int main(int argc, char **argv) {
 
 	TCase *tcase = tcase_create("Program");
 	tcase_add_checked_fixture(tcase, setup, teardown);
-	
+
+	tcase_add_test(tcase, infoLog);
+	tcase_add_test(tcase, init);
 	tcase_add_test(tcase, initWithShaders);
 	tcase_add_test(tcase, initWithDescriptors);
+	tcase_add_test(tcase, initWithDescriptors_missing);
+	tcase_add_test(tcase, initWithDescriptors_syntaxError);
 	tcase_add_test(tcase, link);
 
 	Suite *suite = suite_create("Program");

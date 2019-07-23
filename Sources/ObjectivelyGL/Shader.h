@@ -66,7 +66,7 @@ typedef struct {
  * @brief Creates a ShaderDescriptor with the specified type and Resource names.
  */
 #define MakeShaderDescriptor(type, ...) \
-	(ShaderDescriptor) { type, { __VA_ARGS__, NULL }, NULL, GL_FALSE  }
+	(ShaderDescriptor) { type, { __VA_ARGS__, NULL }, NULL, GL_FALSE }
 
 /**
  * @brief Creates a `NULL`-terminated array of ShaderDescriptors.
@@ -74,7 +74,7 @@ typedef struct {
 #define MakeShaderDescriptors(...) \
 	{ \
 		__VA_ARGS__, \
-		MakeShaderDescriptor(GL_INVALID_ENUM, NULL, NULL, GL_FALSE) \
+		MakeShaderDescriptor(GL_NONE, NULL, NULL, GL_FALSE) \
 	}
 
 /**
@@ -108,11 +108,6 @@ struct Shader {
 	 * @brief The Shader source.
 	 */
 	GLchar *source;
-
-	/**
-	 * @brief The info log, available after compilation.
-	 */
-	GLchar *info;
 };
 
 /**
@@ -183,7 +178,15 @@ struct ShaderInterface {
 	 * @return `GL_TRUE` on success, `GL_FALSE` on error.
 	 * @memberof Shader
 	 */
-	GLint (*compile)(Shader *self);
+	GLint (*compile)(const Shader *self);
+
+	/**
+	 * @fn GLchar *Shader::infoLog(const Shader *self)
+	 * @param self The Shader.
+	 * @return The information log for the Shader.
+	 * @memberof Shader
+	 */
+	GLchar *(*infoLog)(const Shader *self);
 
 	/**
 	 * @fn Shader *Shader::initWithBytes(Shader *self, GLenum type, const uint8_t *bytes, size_t length)
@@ -270,4 +273,11 @@ struct ShaderInterface {
  * @return The Shader Class.
  * @memberof Shader
  */
-OBJECTIVELY_EXPORT Class *_Shader(void);
+OBJECTIVELYGL_EXPORT Class *_Shader(void);
+
+/**
+ * @brief Frees ShaderDescriptors when they are no longer needed.
+ * @param descriptors The ShaderDescriptors.
+ * @relates ShaderDescriptor
+ */
+OBJECTIVELYGL_EXPORT void FreeShaderDescriptors(ShaderDescriptor *descriptors);

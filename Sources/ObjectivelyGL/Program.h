@@ -61,11 +61,6 @@ struct Program {
 	 * @brief The Shaders attached to this Program.
 	 */
 	MutableArray *shaders;
-
-	/**
-	 * @brief The info log, available after linking.
-	 */
-	GLchar *info;
 };
 
 /**
@@ -79,6 +74,14 @@ struct ProgramInterface {
 	ObjectInterface objectInterface;
 
 	/**
+	 * @fn GLchar *Program::infoLog(const Program *self)
+	 * @param self The Program.
+	 * @return The information log for the Program.
+	 * @memberof Program
+	 */
+	GLchar *(*infoLog)(const Program *self);
+
+	/**
 	 * @fn Program *Program::initWithShaders(Program *self, ...)
 	 * @brief Initializes this Program.
 	 * @param self The Program.
@@ -90,9 +93,9 @@ struct ProgramInterface {
 
 	/**
 	 * @fn Program *Program::initWithShaders(Program *self, ...)
-	 * @brief Initializes this Program with the specified Shaders.
+	 * @brief Initializes this Program with the specified compiled Shaders.
 	 * @param self The Program.
-	 * @param ... A `NULL`-terminated list of one or more Shaders.
+	 * @param ... A `NULL`-terminated list of one or more compiled Shaders.
 	 * @return The initialized Program, or `NULL` on error.
 	 * @memberof Program
 	 */
@@ -115,7 +118,7 @@ struct ProgramInterface {
 	 * @return `GL_TRUE` on success, `GL_FALSE` on error.
 	 * @memberof Program
 	 */
-	GLint (*link)(Program *self);
+	GLint (*link)(const Program *self);
 };
 
 /**

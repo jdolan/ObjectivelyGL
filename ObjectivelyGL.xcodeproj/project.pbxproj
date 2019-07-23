@@ -43,6 +43,7 @@
 		CE2A597422E4448F0043FCD2 /* Program.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A596422E444640043FCD2 /* Program.c */; };
 		CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0722E5035100ED22EA /* simple.vs.glsl */; };
 		CE7DEE0D22E514DC00ED22EA /* simple.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* simple.fs.glsl */; };
+		CEBB82B122E749CB00997E82 /* syntax-error.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBB82B022E749A700997E82 /* syntax-error.glsl */; };
 		CEE761B822E2003A007CB42B /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE761B622E2003A007CB42B /* Shader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CEE761B922E2003A007CB42B /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CEE761B722E2003A007CB42B /* Shader.c */; };
 /* End PBXBuildFile section */
@@ -105,6 +106,7 @@
 			files = (
 				CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */,
 				CE7DEE0D22E514DC00ED22EA /* simple.fs.glsl in CopyFiles */,
+				CEBB82B122E749CB00997E82 /* syntax-error.glsl in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +143,7 @@
 		CE7DEE0E22E5176F00ED22EA /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE7DEE0F22E5185900ED22EA /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		CEBB82AC22E68EE100997E82 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		CEBB82B022E749A700997E82 /* syntax-error.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = "syntax-error.glsl"; sourceTree = "<group>"; };
 		CEE761B622E2003A007CB42B /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		CEE761B722E2003A007CB42B /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -277,6 +280,7 @@
 			children = (
 				CE7DEE0722E5035100ED22EA /* simple.vs.glsl */,
 				CE7DEE0822E5046800ED22EA /* simple.fs.glsl */,
+				CEBB82B022E749A700997E82 /* syntax-error.glsl */,
 				CE7DEE0E22E5176F00ED22EA /* Makefile.am */,
 			);
 			path = Resources;

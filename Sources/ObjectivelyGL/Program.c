@@ -44,12 +44,26 @@ static void dealloc(Object *self) {
 
 	release(this->shaders);
 
-	free(this->info);
-
 	super(Object, self, dealloc);
 }
 
 #pragma mark - Program
+
+/**
+ * @fn GLchar *Program::infoLog(const Program *self)
+ * @memberof Program
+ */
+static GLchar *infoLog(const Program *self) {
+
+	GLint length;
+	glGetProgramiv(self->name, GL_INFO_LOG_LENGTH, &length);
+
+	GLchar *info = calloc(length, 1);
+	assert(info);
+
+	glGetProgramInfoLog(self->name, length, NULL, info);
+	return info;
+}
 
 /**
  * @fn Program *Program::init(Program *self)
@@ -103,14 +117,24 @@ static Program *initWithDescriptors(Program *self, ShaderDescriptor *descriptors
 	self = $(self, init);
 	if (self) {
 
-		for (ShaderDescriptor *descriptor = descriptors; descriptor->type != GL_INVALID_ENUM; descriptor++) {
-			Shader *shader = $(alloc(Shader), initWithDescriptor, descriptor);
-			if (shader) {
-				$(self->shaders, addObject, shader);
-			} else {
+		for (ShaderDescriptor *descriptor = descriptors;
+			 descriptor->type != GL_NONE;
+			 descriptor++) {
+
+			$(alloc(Shader), initWithDescriptor, descriptor);
+		}
+
+		for (ShaderDescriptor *descriptor = descriptors;
+			 descriptor->type != GL_NONE;
+			 descriptor++) {
+
+			if (descriptor->shader == NULL) {
+				return release(self);
+			} else if (descriptor->status == GL_FALSE) {
 				return release(self);
 			}
-			release(shader);
+
+			$(self->shaders, addObject, descriptor->shader);
 		}
 	}
 
@@ -132,27 +156,20 @@ static void detach(const Array *array, ident obj, ident data) {
 }
 
 /**
- * @fn GLint Program::link(Program *self)
+ * @fn GLint Program::link(const Program *self)
  * @memberof Program
  */
-static GLint link(Program *self) {
+static GLint link(const Program *self) {
 
-	$((Array *) self->shaders, enumerateObjects, attach, self);
+	$((Array *) self->shaders, enumerateObjects, attach, (ident) self);
 
 	glLinkProgram(self->name);
 
-	$((Array *) self->shaders, enumerateObjects, detach, self);
+	$((Array *) self->shaders, enumerateObjects, detach, (ident) self);
 
 	GLint status;
 	glGetProgramiv(self->name, GL_LINK_STATUS, &status);
 
-	GLint length;
-	glGetProgramiv(self->name, GL_INFO_LOG_LENGTH, &length);
-
-	self->info = malloc(length);
-	assert(self->info);
-
-	glGetProgramInfoLog(self->name, length, NULL, self->info);
 	return status;
 }
 
@@ -165,6 +182,7 @@ static void initialize(Class *clazz) {
 
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
+	((ProgramInterface *) clazz->interface)->infoLog = infoLog;
 	((ProgramInterface *) clazz->interface)->init = init;
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;
 	((ProgramInterface *) clazz->interface)->initWithDescriptors = initWithDescriptors;

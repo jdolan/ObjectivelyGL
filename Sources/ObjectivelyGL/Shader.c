@@ -42,7 +42,6 @@ static void dealloc(Object *self) {
 	glDeleteShader(this->name);
 
 	free(this->source);
-	free(this->info);
 
 	super(Object, self, dealloc);
 }
@@ -56,7 +55,7 @@ static void dealloc(Object *self) {
 static ssize_t appendBytes(Shader *self, const uint8_t *bytes, size_t length) {
 
 	if (length) {
-		
+
 		GLchar *source = realloc(self->source, strlen(self->source) + length + 1);
 		if (source) {
 			self->source = source;
@@ -114,10 +113,10 @@ static ssize_t appendSource(Shader *self, const GLchar *source) {
 }
 
 /**
- * @fn GLint Shader::compile(Shader *self, GLChar **out)
+ * @fn GLint Shader::compile(const Shader *self)
  * @memberof Shader
  */
-static GLint compile(Shader *self) {
+static GLint compile(const Shader *self) {
 
 	glShaderSource(self->name, 1, (const GLchar **) &self->source, NULL);
 
@@ -126,15 +125,23 @@ static GLint compile(Shader *self) {
 	GLint status;
 	glGetShaderiv(self->name, GL_COMPILE_STATUS, &status);
 
+	return status;
+}
+
+/**
+ * @fn GLchar *Shader::infoLog(const Shader *self)
+ * @memberof Shader
+ */
+static GLchar *infoLog(const Shader *self) {
+
 	GLint length;
 	glGetShaderiv(self->name, GL_INFO_LOG_LENGTH, &length);
 
-	self->info = malloc(length);
-	assert(self->info);
+	GLchar *info = calloc(length, 1);
+	assert(info);
 
-	glGetShaderInfoLog(self->name, length, NULL, self->info);
-
-	return status;
+	glGetShaderInfoLog(self->name, length, NULL, info);
+	return info;
 }
 
 /**
@@ -264,6 +271,7 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
 	((ShaderInterface *) clazz->interface)->compile = compile;
+	((ShaderInterface *) clazz->interface)->infoLog = infoLog;
 	((ShaderInterface *) clazz->interface)->appendBytes = appendBytes;
 	((ShaderInterface *) clazz->interface)->appendData = appendData;
 	((ShaderInterface *) clazz->interface)->appendResource = appendResource;
@@ -301,3 +309,13 @@ Class *_Shader(void) {
 }
 
 #undef _Class
+
+void FreeShaderDescriptors(ShaderDescriptor *descriptors) {
+
+	for (ShaderDescriptor *descriptor = descriptors;
+		 descriptor->type != GL_NONE;
+		 descriptor++) {
+
+		release(descriptor->shader);
+	}
+}
