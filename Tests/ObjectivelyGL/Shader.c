@@ -96,13 +96,15 @@ START_TEST(initWithData) {
 
 START_TEST(initWithDescriptor) {
 
-	ShaderDescriptor resource = MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl");
+	ShaderDescriptor descriptor = MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl");
 
-	Shader *shader = $(alloc(Shader), initWithDescriptor, &resource);
+	Shader *shader = $(alloc(Shader), initWithDescriptor, &descriptor);
 	ck_assert(shader);
 	ck_assert_int_ne(0, shader->name);
 	ck_assert_int_eq(GL_VERTEX_SHADER, shader->type);
 	ck_assert_str_ne("", shader->source);
+	ck_assert_ptr_eq(shader, descriptor.shader);
+	ck_assert_int_eq(GL_TRUE, descriptor.status);
 	release(shader);
 
 } END_TEST
@@ -147,13 +149,24 @@ START_TEST(initWithSource) {
 
 START_TEST(compile) {
 
-	ShaderDescriptor resource = MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl");
-
-	Shader *shader = $(alloc(Shader), initWithDescriptor, &resource);
+	Shader *shader = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
 	ck_assert(shader);
 
-	const GLint res = $(shader, compile);
-	ck_assert_int_eq(res, GL_TRUE);
+	const GLint status = $(shader, compile);
+	ck_assert_int_eq(GL_TRUE, status);
+
+	release(shader);
+
+} END_TEST
+
+START_TEST(compileError) {
+
+	Shader *shader = $(alloc(Shader), initWithSource, GL_VERTEX_SHADER, "syntax error");
+	ck_assert(shader);
+
+	const GLint status = $(shader, compile);
+	ck_assert_int_eq(GL_FALSE, status);
+	ck_assert_ptr_ne(NULL, shader->info);
 
 	release(shader);
 
@@ -171,6 +184,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, initWithResourceName);
 	tcase_add_test(tcase, initWithSource);
 	tcase_add_test(tcase, compile);
+	tcase_add_test(tcase, compileError);
 
 	Suite *suite = suite_create("Shader");
 	suite_add_tcase(suite, tcase);

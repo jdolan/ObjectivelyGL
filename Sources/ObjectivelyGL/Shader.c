@@ -26,8 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Objectively/MutableString.h>
-
 #include "Shader.h"
 
 #define _Class _Shader
@@ -57,13 +55,17 @@ static void dealloc(Object *self) {
  */
 static ssize_t appendBytes(Shader *self, const uint8_t *bytes, size_t length) {
 
-	const size_t size = strlen(self->source) + length + 1;
+	if (length) {
+		
+		GLchar *source = realloc(self->source, strlen(self->source) + length + 1);
+		if (source) {
+			self->source = source;
+		} else {
+			return -1;
+		}
 
-	self->source = realloc(self->source, size);
-
-	strncat(self->source, (char *) bytes, length);
-
-	glShaderSource(self->name, 1, (const GLchar **) &self->source, NULL);
+		strncat(self->source, (char *) bytes, length);
+	}
 
 	return length;
 }
@@ -90,12 +92,17 @@ static ssize_t appendResource(Shader *self, const Resource *resource) {
  */
 static ssize_t appendResourceName(Shader *self, const char *name) {
 
+	ssize_t length;
+
 	Resource *resource = $$(Resource, resourceWithName, name);
 	if (resource) {
-		return $(self, appendResource, resource);
+		length = $(self, appendResource, resource);
 	} else {
-		return -1;
+		length = -1;
 	}
+	release(resource);
+
+	return length;
 }
 
 /**
@@ -111,6 +118,8 @@ static ssize_t appendSource(Shader *self, const GLchar *source) {
  * @memberof Shader
  */
 static GLint compile(Shader *self) {
+
+	glShaderSource(self->name, 1, (const GLchar **) &self->source, NULL);
 
 	glCompileShader(self->name);
 
@@ -136,7 +145,9 @@ static Shader *initWithBytes(Shader *self, GLenum type, const uint8_t *bytes, si
 
 	self = $(self, initWithType, type);
 	if (self) {
-		$(self, appendBytes, bytes, length);
+		if ($(self, appendBytes, bytes, length) == -1) {
+			self = release(self);
+		}
 	}
 	return self;
 }
@@ -149,8 +160,8 @@ static Shader *initWithData(Shader *self, GLenum type, const Data *data) {
 
 	self = $(self, initWithType, type);
 	if (self) {
-		if (data) {
-			$(self, appendData, data);
+		if ($(self, appendData, data) == -1) {
+			self = release(self);
 		}
 	}
 	return self;
@@ -186,8 +197,8 @@ static Shader *initWithResource(Shader *self, GLenum type, const Resource *resou
 
 	self = $(self, initWithType, type);
 	if (self) {
-		if (resource) {
-			$(self, appendResource, resource);
+		if ($(self, appendResource, resource) == -1) {
+			self = release(self);
 		}
 	}
 	return self;
