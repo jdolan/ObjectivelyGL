@@ -24,9 +24,7 @@
 #pragma once
 
 #include <check.h>
-
 #include <SDL.h>
-
 #include <ObjectivelyGL.h>
 
 #ifndef RESOURCES
@@ -57,9 +55,13 @@ void createContext(int major, int minor) {
 
 	context = SDL_GL_CreateContext(window);
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
+
+	ck_assert_int_eq(GL_NO_ERROR, glGetError());
 }
 
 void destroyContext(void) {
+
+	ck_assert_int_eq(GL_NO_ERROR, glGetError());
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
