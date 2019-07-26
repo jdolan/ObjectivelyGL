@@ -41,6 +41,8 @@
 		CE2A596D22E4447B0043FCD2 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE2A596E22E4447B0043FCD2 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE2A597422E4448F0043FCD2 /* Program.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A596422E444640043FCD2 /* Program.c */; };
+		CE2DC4A422E8C65F00908C7E /* Buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2DC4A222E8C65F00908C7E /* Buffer.h */; };
+		CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2DC4A322E8C65F00908C7E /* Buffer.c */; };
 		CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0722E5035100ED22EA /* simple.vs.glsl */; };
 		CE7DEE0D22E514DC00ED22EA /* simple.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* simple.fs.glsl */; };
 		CEBB82B122E749CB00997E82 /* syntax-error.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBB82B022E749A700997E82 /* syntax-error.glsl */; };
@@ -138,6 +140,10 @@
 		CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../opt/local/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		CE2A596422E444640043FCD2 /* Program.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Program.c; sourceTree = "<group>"; };
 		CE2A597322E4447B0043FCD2 /* ObjectivelyGL-Program */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Program"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2DC4A222E8C65F00908C7E /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
+		CE2DC4A322E8C65F00908C7E /* Buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Buffer.c; sourceTree = "<group>"; };
+		CE2DC4A622E8DE3D00908C7E /* Buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Buffer.c; sourceTree = "<group>"; };
+		CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Buffer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7DEE0722E5035100ED22EA /* simple.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.vs.glsl; sourceTree = "<group>"; };
 		CE7DEE0822E5046800ED22EA /* simple.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.fs.glsl; sourceTree = "<group>"; };
 		CE7DEE0E22E5176F00ED22EA /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
@@ -204,6 +210,7 @@
 				CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */,
 				CE2A594722E2609D0043FCD2 /* ObjectivelyGL-Shader */,
 				CE2A597322E4447B0043FCD2 /* ObjectivelyGL-Program */,
+				CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +229,8 @@
 		CE0CE9A722E1EA9A00963219 /* ObjectivelyGL */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DC4A222E8C65F00908C7E /* Buffer.h */,
+				CE2DC4A322E8C65F00908C7E /* Buffer.c */,
 				CE0CE9C322E1F51D00963219 /* Config.h */,
 				CE0CE9A822E1EA9A00963219 /* Config.h.in */,
 				CE2A593E22E253260043FCD2 /* OpenGL.c */,
@@ -256,6 +265,7 @@
 		CE0CE9B322E1EA9A00963219 /* ObjectivelyGL */ = {
 			isa = PBXGroup;
 			children = (
+				CE2DC4A622E8DE3D00908C7E /* Buffer.c */,
 				CE2A596422E444640043FCD2 /* Program.c */,
 				CE2A594222E25F7D0043FCD2 /* Shader.c */,
 				CEBB82AC22E68EE100997E82 /* Test.h */,
@@ -293,6 +303,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2DC4A422E8C65F00908C7E /* Buffer.h in Headers */,
 				CE0CE9C522E1F53F00963219 /* ObjectivelyGL.h in Headers */,
 				CE2A594122E253260043FCD2 /* OpenGL.h in Headers */,
 				CE0CE9BC22E1ECAE00963219 /* Program.h in Headers */,
@@ -358,6 +369,24 @@
 			productReference = CE2A597322E4447B0043FCD2 /* ObjectivelyGL-Program */;
 			productType = "com.apple.product-type.tool";
 		};
+		CE2DC4A722E8DEF200908C7E /* ObjectivelyGL-Buffer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE2DC4B222E8DEF200908C7E /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Buffer" */;
+			buildPhases = (
+				CE2DC4AA22E8DEF200908C7E /* Sources */,
+				CE2DC4AC22E8DEF200908C7E /* Frameworks */,
+				CE2DC4B122E8DEF200908C7E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE2DC4A822E8DEF200908C7E /* PBXTargetDependency */,
+			);
+			name = "ObjectivelyGL-Buffer";
+			productName = "ObjectivelyGL-Shader";
+			productReference = CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -392,6 +421,7 @@
 			projectRoot = "";
 			targets = (
 				CE0CE99622E1E90900963219 /* ObjectivelyGL */,
+				CE2DC4A722E8DEF200908C7E /* ObjectivelyGL-Buffer */,
 				CE2A594622E2609D0043FCD2 /* ObjectivelyGL-Shader */,
 				CE2A596522E4447B0043FCD2 /* ObjectivelyGL-Program */,
 				CE03F13E22E65FC200147FB9 /* ObjectivelyGL-Tests */,
@@ -415,7 +445,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./ObjectivelyGL-Program &&\n./ObjectivelyGL-Shader\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./ObjectivelyGL-Buffer &&\n./ObjectivelyGL-Program &&\n./ObjectivelyGL-Shader\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -424,6 +454,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */,
 				CEE761B922E2003A007CB42B /* Shader.c in Sources */,
 				CE2A594022E253260043FCD2 /* OpenGL.c in Sources */,
 				CE0CE9BD22E1ECAE00963219 /* Program.c in Sources */,
@@ -443,6 +474,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE2A597422E4448F0043FCD2 /* Program.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE2DC4AA22E8DEF200908C7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE2DC4B822E8DF2600908C7E /* Buffer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +698,15 @@
 			buildConfigurations = (
 				CE2A597122E4447B0043FCD2 /* Debug */,
 				CE2A597222E4447B0043FCD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE2DC4B222E8DEF200908C7E /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Buffer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE2DC4B322E8DEF200908C7E /* Debug */,
+				CE2DC4B422E8DEF200908C7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -7,6 +7,7 @@ noinst_HEADERS = \
 pkgincludedir = $(includedir)/$(PACKAGE_NAME)
 
 pkginclude_HEADERS = \
+	Buffer.h \
 	OpenGL.h \
 	Program.h \
 	Shader.h \
@@ -16,6 +17,7 @@ lib_LTLIBRARIES = \
 	libObjectivelyGL.la
 
 libObjectivelyGL_la_SOURCES = \
+	Buffer.c
 	OpenGL.c \
 	Program.c \
 	Shader.c

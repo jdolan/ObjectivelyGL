@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <ObjectivelyGL/Buffer.h>
 #include <ObjectivelyGL/OpenGL.h>
 #include <ObjectivelyGL/Program.h>
 #include <ObjectivelyGL/Shader.h>

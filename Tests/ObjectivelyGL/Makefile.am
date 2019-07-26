@@ -5,6 +5,7 @@ DEFAULT_INCLUDES = \
 	$(top_srcdir)/Sources
 
 TESTS = \
+	Buffer \
 	Program \
 	Shader
 
