@@ -7,7 +7,8 @@ DEFAULT_INCLUDES = \
 TESTS = \
 	Buffer \
 	Program \
-	Shader
+	Shader \
+	VertexArray
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \

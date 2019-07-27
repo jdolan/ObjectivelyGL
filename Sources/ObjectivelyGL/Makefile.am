@@ -11,7 +11,8 @@ pkginclude_HEADERS = \
 	OpenGL.h \
 	Program.h \
 	Shader.h \
-	Types.h
+	Types.h \
+	VertexArray.h
 
 lib_LTLIBRARIES = \
 	libObjectivelyGL.la
@@ -20,7 +21,8 @@ libObjectivelyGL_la_SOURCES = \
 	Buffer.c \
 	OpenGL.c \
 	Program.c \
-	Shader.c
+	Shader.c \
+	VertexArray.c
 
 libObjectivelyGL_la_CFLAGS = \
 	-I$(top_srcdir) \

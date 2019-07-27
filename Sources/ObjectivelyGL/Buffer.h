@@ -54,7 +54,7 @@ typedef struct {
 	/**
 	 * @brief The data.
 	 */
-	const ident data;
+	const GLvoid *data;
 
 	/**
 	 * @brief The usage hint.
@@ -92,7 +92,7 @@ typedef struct {
 	/**
 	 * @brief The data.
 	 */
-	const ident data;
+	const GLvoid *data;
 
 } BufferSubData;
 
