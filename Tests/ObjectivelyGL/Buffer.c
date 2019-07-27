@@ -37,6 +37,11 @@ START_TEST(bind) {
 	ck_assert_ptr_ne(NULL, buffer);
 
 	$(buffer, bind, GL_ARRAY_BUFFER);
+
+	GLint name;
+	glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &name);
+	ck_assert_int_eq(name, buffer->name);
+
 	release(buffer);
 
 } END_TEST
@@ -73,6 +78,22 @@ START_TEST(initWithData) {
 	ck_assert_int_ne(0, buffer->name);
 	ck_assert_int_eq(data.size, buffer->size);
 	ck_assert_int_eq(data.usage, buffer->usage);
+	release(buffer);
+
+} END_TEST
+
+START_TEST(unbind) {
+
+	Buffer *buffer = $(alloc(Buffer), init);
+	ck_assert_ptr_ne(NULL, buffer);
+
+	$(buffer, bind, GL_ARRAY_BUFFER);
+	$(buffer, unbind, GL_ARRAY_BUFFER);
+
+	GLint name;
+	glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &name);
+	ck_assert_int_eq(0, name);
+
 	release(buffer);
 
 } END_TEST
@@ -118,6 +139,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, init);
 	tcase_add_test(tcase, initWithData0);
 	tcase_add_test(tcase, initWithData);
+	tcase_add_test(tcase, unbind);
 	tcase_add_test(tcase, writeData);
 	tcase_add_test(tcase, writeSubData);
 

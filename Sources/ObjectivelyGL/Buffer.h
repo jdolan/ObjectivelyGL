@@ -175,6 +175,15 @@ struct BufferInterface {
 	Buffer *(*initWithData)(Buffer *self, const BufferData *data);
 
 	/**
+	 * @fn void Buffer::unbind(const Buffer *self, GLenum target)
+	 * @brief Unbinds this Buffer from the specified target.
+	 * @param self The Buffer.
+	 * @param target The target, e.g. `GL_ARRAY_BUFFER`, `GL_ELEMENT_ARRAY_BUFFER`, etc.
+	 * @memberof Buffer
+	 */
+	void (*unbind)(const Buffer *self, GLenum target);
+
+	/**
 	 * @fn void Buffer::writeData(const Buffer *self, const BufferData *data)
 	 * @brief Writes data to this this Buffer's data store, (re) allocating storage.
 	 * @details The Buffer is (re)allocated if necessary.

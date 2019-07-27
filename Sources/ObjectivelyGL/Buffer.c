@@ -87,6 +87,14 @@ static Buffer *initWithData(Buffer *self, const BufferData *data) {
 }
 
 /**
+ * @fn void Buffer::unbind(Buffer *self, GLenum target)
+ * @memberof Buffer
+ */
+static void unbind(const Buffer *self, GLenum target) {
+	glBindBuffer(target, 0);
+}
+
+/**
  * @fn void Buffer::writeData(Buffer *self, const BufferData *data)
  * @memberof Buffer
  */
@@ -119,6 +127,7 @@ static void initialize(Class *clazz) {
 	((BufferInterface *) clazz->interface)->bind = bind;
 	((BufferInterface *) clazz->interface)->init = init;
 	((BufferInterface *) clazz->interface)->initWithData = initWithData;
+	((BufferInterface *) clazz->interface)->unbind = unbind;
 	((BufferInterface *) clazz->interface)->writeData = writeData;
 	((BufferInterface *) clazz->interface)->writeSubData = writeSubData;
 }
