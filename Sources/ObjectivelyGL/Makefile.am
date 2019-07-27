@@ -17,7 +17,7 @@ lib_LTLIBRARIES = \
 	libObjectivelyGL.la
 
 libObjectivelyGL_la_SOURCES = \
-	Buffer.c
+	Buffer.c \
 	OpenGL.c \
 	Program.c \
 	Shader.c
