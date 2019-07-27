@@ -8,7 +8,7 @@ CFLAGS += \
 	@SDL2_CFLAGS@
 
 LDADD = \
-	$(top_builddir)/Sources/ObjectivelyGL/libObjectivelyGL.la \
+	$(top_srcdir)/Sources/ObjectivelyGL/libObjectivelyGL.la \
 	@HOST_LIBS@ \
 	@OBJECTIVELY_LIBS@ \
 	@SDL2_LIBS@ \
