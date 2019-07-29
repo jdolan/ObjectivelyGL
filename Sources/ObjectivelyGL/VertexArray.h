@@ -35,23 +35,53 @@
 typedef struct VertexArray VertexArray;
 typedef struct VertexArrayInterface VertexArrayInterface;
 
+/**
+ * @brief Attributes describe the elements of a VertexArray.
+ */
 typedef struct {
+
+	/**
+	 * @brief The index of the Attribute in the Shader inputs.
+	 */
 	GLuint index;
 
+	/**
+	 * @brief The size, in typed primitives, of the Attribute.
+	 */
 	GLint size;
 
+	/**
+	 * @brief The primitive type of the Attribute.
+	 */
 	GLenum type;
 
+	/**
+	 * @brief True if the Attribute is an integer type, and should be normalized to floating point.
+	 */
 	GLboolean normalized;
 
+	/**
+	 * @brief The stride of the Attribute in the VertexArray.
+	 * @details Use `0` for tightly packed arrays, or `sizeof(VertexStruct)` for interleaved ones.
+	 */
 	GLsizei stride;
 
+	/**
+	 * @brief The offset pointer to the Attribute in the Shader inputs.
+	 */
 	const GLvoid *pointer;
+
 } Attribute;
 
+/**
+ * @brief Creates an Attribute with the specified parameters.
+ */
 #define MakeAttribute(index, size, type, normalized, stride, pointer) \
 	(Attribute) { (index), (size), (type), (normalized), (stride), (GLvoid *) (pointer) }
 
+/**
+ * @brief Creates a `NULL`-terminated array of Attributes.
+ */
 #define MakeAttributes(...) \
 	{ \
 		__VA_ARGS__, \
@@ -79,6 +109,11 @@ struct VertexArray {
 	 * @brief The name.
 	 */
 	GLuint name;
+
+	/**
+	 * @brief The Attributes.
+	 */
+	Attribute *attributes;
 };
 
 /**
@@ -91,17 +126,43 @@ struct VertexArrayInterface {
 	 */
 	ObjectInterface objectInterface;
 
-	void (*attributePointers)(VertexArray *self, const Attribute *attrs);
+	/**
+	 * @fn void VertexArray::attributePointers(VertexArray *self, const Attribute *attributes)
+	 * @brief Specifies the generic vertex Attributes for this VertexArray.
+	 * @param self The VertexArray.
+	 * @param attributes The `NULL`-terminated array of Attributes.
+	 * @memberof VertexArray
+	 */
+	void (*attributePointers)(VertexArray *self, const Attribute *attributes);
 
+	/**
+	 * @fn void VertexArray::bind(const VertexArray *self)
+	 * @brief Binds this VertexArray to the current OpenGL context.
+	 * @param self The VertexArray.
+	 * @memberof VertexArray
+	 */
 	void (*bind)(const VertexArray *self);
 
 	/**
-	 *
+	 * @fn void VertexArray::enableAttribute(VertexArray *self, GLuint index)
+	 * @brief Enables the Attribute at the given index.
+	 * @param self The VertexArray.
+	 * @param index The index.
+	 * @memberof VertexArray
 	 */
 	void (*enableAttribute)(VertexArray *self, GLuint index);
 
 	/**
-	 * @fn VertexArray *VertexArray::init(VertexArray *self)
+	 * @fn void VertexArray::disableAttribute(VertexArray *self, GLuint index)
+	 * @brief Disables the Attribute at the given index.
+	 * @param self The VertexArray.
+	 * @param index The index.
+	 * @memberof VertexArray
+	 */
+	void (*disableAttribute)(VertexArray *self, GLuint index);
+
+	/**
+	 * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self)
 	 * @brief Initializes this VertexArray.
 	 * @param self The VertexArray.
 	 * @return The initialized VertexArray, or `NULL` on error.
@@ -109,7 +170,23 @@ struct VertexArrayInterface {
 	 */
 	VertexArray *(*init)(VertexArray *self);
 
-	// ..
+	/**
+	 * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self, const Attribute *attributes)
+	 * @brief Initializes this VertexArray with the specified Attributes.
+	 * @param self The VertexArray.
+	 * @param attributes The Attributes.
+	 * @return The initialized VertexArray, or `NULL` on error.
+	 * @memberof VertexArray
+	 */
+	VertexArray *(*initWithAttributes)(VertexArray *self, const Attribute *attributes);
+
+	/**
+	 * @fn void VertexArray::unbind(const VertexArray *self)
+	 * @brief Unbinds this VertexArray from the current OpenGL context.
+	 * @param self The VertexArray.
+	 * @memberof VertexArray
+	 */
+	void (*unbind)(const VertexArray *self);
 };
 
 /**

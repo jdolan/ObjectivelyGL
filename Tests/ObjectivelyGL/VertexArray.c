@@ -33,7 +33,7 @@ static void teardown(void) {
 
 START_TEST(bind) {
 
-	VertexArray *array = $(alloc(VertexArray), init);
+	VertexArray *array = $(alloc(VertexArray), initWithAttributes, NULL);
 	ck_assert_ptr_ne(NULL, array);
 
 	$(array, bind);
@@ -46,19 +46,12 @@ START_TEST(bind) {
 
 } END_TEST
 
-START_TEST(init) {
+START_TEST(initWithAttributes) {
 
-	VertexArray *array = $(alloc(VertexArray), init);
-	ck_assert_ptr_ne(NULL, array);
-	ck_assert_int_ne(0, array->name);
-	release(array);
+	Buffer *buffer = $(alloc(Buffer), init);
+	ck_assert_ptr_ne(NULL, buffer);
 
-} END_TEST
-
-START_TEST(attribute) {
-
-	VertexArray *array = $(alloc(VertexArray), init);
-	ck_assert_ptr_ne(NULL, array);
+	$(buffer, bind, GL_ARRAY_BUFFER);
 
 	typedef struct {
 		GLfloat position[3];
@@ -76,7 +69,14 @@ START_TEST(attribute) {
 		MakeAttribute(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, bitangent))
 	);
 
-	$(array, attributePointers, attributes);
+	VertexArray *array = $(alloc(VertexArray), initWithAttributes, attributes);
+	ck_assert_ptr_ne(NULL, array);
+	ck_assert_int_ne(0, array->name);
+	ck_assert_ptr_ne(NULL, array->attributes);
+	release(array);
+
+	release(buffer);
+
 } END_TEST
 
 int main(int argc, char **argv) {
@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
 	tcase_add_checked_fixture(tcase, setup, teardown);
 
 	tcase_add_test(tcase, bind);
-	tcase_add_test(tcase, init);
+	tcase_add_test(tcase, initWithAttributes);
 
 	Suite *suite = suite_create("VertexArray");
 	suite_add_tcase(suite, tcase);

@@ -22,6 +22,8 @@
  */
 
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "VertexArray.h"
 
@@ -43,25 +45,50 @@ static void dealloc(Object *self) {
 
 #pragma mark - VertexArray
 
-static void attributePointers(VertexArray *self, const Attribute *attrs) {
+static void attributePointers(VertexArray *self, const Attribute *attributes) {
 
-	while (attrs->type != GL_NONE) {
-		glVertexAttribPointer(attrs->index,
-							  attrs->size,
-							  attrs->type,
-							  attrs->normalized,
-							  attrs->stride,
-							  attrs->pointer);
-		attrs++;
+	const Attribute *attr = attributes;
+	while (attr && attr->type != GL_NONE) {
+		const size_t count = attr - attributes + 1;
+
+		self->attributes = realloc(self->attributes, (count + 1) * sizeof(Attribute));
+		assert(self->attributes);
+
+		self->attributes[count - 1] = *attr;
+		self->attributes[count - 0] = MakeAttribute(0, 0, GL_NONE, GL_FALSE, 0, NULL);
+
+		glVertexAttribPointer(attr->index,
+							  attr->size,
+							  attr->type,
+							  attr->normalized,
+							  attr->stride,
+							  attr->pointer);
+		attr++;
 	}
 }
 
+/**
+ * @fn void VertexArray::bind(const VertexArray *self)
+ * @memberof VertexArray
+ */
 static void bind(const VertexArray *self) {
 	glBindVertexArray(self->name);
 }
 
+/**
+ * @fn void VertexArray::enableAttribute(VertexArray *self, GLuint index)
+ * @memberof VertexArray
+ */
 static void enableAttribute(VertexArray *self, GLuint index) {
 	glEnableVertexAttribArray(index);
+}
+
+/**
+ * @fn void VertexArray::disableAttribute(VertexArray *self, GLuint index)
+ * @memberof VertexArray
+ */
+static void disableAttribute(VertexArray *self, GLuint index) {
+	glDisableVertexAttribArray(index);
 }
 
 /**
@@ -83,6 +110,30 @@ static VertexArray *init(VertexArray *self) {
 	return self;
 }
 
+/**
+ * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self, const Attribute *attributes)
+ * @memberof VertexArray
+ */
+static VertexArray *initWithAttributes(VertexArray *self, const Attribute *attributes) {
+
+	self = $(self, init);
+	if (self) {
+		$(self, bind);
+		$(self, attributePointers, attributes);
+		$(self, unbind);
+	}
+
+	return self;
+}
+
+/**
+ * @fn void VertexArray::unbind(const VertexArray *self)
+ * @memberof VertexArray
+ */
+static void unbind(const VertexArray *self) {
+	glBindVertexArray(0);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -95,7 +146,10 @@ static void initialize(Class *clazz) {
 	((VertexArrayInterface *) clazz->interface)->attributePointers = attributePointers;
 	((VertexArrayInterface *) clazz->interface)->bind = bind;
 	((VertexArrayInterface *) clazz->interface)->enableAttribute = enableAttribute;
+	((VertexArrayInterface *) clazz->interface)->disableAttribute = disableAttribute;
 	((VertexArrayInterface *) clazz->interface)->init = init;
+	((VertexArrayInterface *) clazz->interface)->initWithAttributes = initWithAttributes;
+	((VertexArrayInterface *) clazz->interface)->unbind = unbind;
 }
 
 /**
