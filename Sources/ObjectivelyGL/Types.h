@@ -27,4 +27,6 @@
 
 #include <ObjectivelyGL/OpenGL.h>
 
+#ifndef OBJECTIVELYGL_EXPORT
 #define OBJECTIVELYGL_EXPORT extern
+#endif

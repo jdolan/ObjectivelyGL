@@ -8,6 +8,7 @@ TESTS = \
 	Buffer \
 	Program \
 	Shader \
+	Vector \
 	VertexArray
 
 CFLAGS += \

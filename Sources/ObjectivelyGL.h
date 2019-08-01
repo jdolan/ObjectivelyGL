@@ -28,5 +28,6 @@
 #include <ObjectivelyGL/Program.h>
 #include <ObjectivelyGL/Shader.h>
 #include <ObjectivelyGL/Types.h>
+#include <ObjectivelyGL/Vector.h>
 #include <ObjectivelyGL/VertexArray.h>
 
