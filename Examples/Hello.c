@@ -21,9 +21,14 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+#include <assert.h>
 #include <SDL.h>
 #include <ObjectivelyGL.h>
 
+#include "Teapot.h"
+
+static Program *createProgram(void);
+static VertexArray *createVertexArray(void);
 static void drawScene(SDL_Window *window);
 
 /**
@@ -49,6 +54,15 @@ int main(int argc, char *argv[]) {
 	SDL_GLContext *context = SDL_GL_CreateContext(window);
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
+	Program *program = createProgram();
+
+	$(program, use);
+
+	VertexArray *array = createVertexArray();
+
+	$(array, bind);
+	$(array, enableAttribute, 0);
+
 	while (true) {
 
 		SDL_Event event;
@@ -64,10 +78,15 @@ int main(int argc, char *argv[]) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		drawScene(window);
+		glDrawArrays(GL_TRIANGLES, 0, lengthof(teapot) / 3);
+
+		assert(glGetError() == GL_NO_ERROR);
 
 		SDL_GL_SwapWindow(window);
 	}
+
+	release(array);
+	release(program);
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
@@ -78,9 +97,69 @@ int main(int argc, char *argv[]) {
 }
 
 /**
+ *
+ */
+static Program *createProgram(void) {
+
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+	);
+
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	if (program == NULL) {
+		for (ShaderDescriptor *desc = descriptors; desc->type != GL_NONE; desc++) {
+			if (desc->status != GL_TRUE) {
+				fprintf(stderr, "%s: %s\n", *desc->resources, desc->infoLog);
+			}
+		}
+		exit(1);
+	}
+
+	FreeShaderDescriptors(descriptors);
+
+	if ($(program, link) == GL_FALSE) {
+		fputs($(program, infoLog), stderr);
+		exit(1);
+	}
+
+	return program;
+}
+
+/**
+ *
+ */
+static VertexArray *createVertexArray(void) {
+
+	const BufferData data = MakeBufferData(GL_ARRAY_BUFFER, sizeof(teapot), teapot, GL_STATIC_DRAW);
+
+	Buffer *buffer = $(alloc(Buffer), initWithData, &data);
+	if (buffer == NULL) {
+		fprintf(stderr, "Failed to create buffer\n");
+		exit(1);
+	}
+
+	const Attribute attributes[] = MakeAttributes(
+		MakeAttribute(0, 3, GL_FLOAT, GL_FALSE, 0, NULL)
+	);
+
+	VertexArray *array = $(alloc(VertexArray), initWithAttributes, buffer, attributes);
+	if (array == NULL) {
+		fprintf(stderr, "Failed to create vertex array\n");
+		exit(1);
+	}
+
+	release(buffer);
+	return array;
+}
+
+/**
  * @brief Renders a rotating cube.
  */
 static void drawScene(SDL_Window *window) {
+
+
+
 
 
 }

@@ -250,6 +250,8 @@
 		CE2DC4BA22EBF82200908C7E /* VertexArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VertexArray.c; sourceTree = "<group>"; };
 		CE2DC4BD22EBFFB500908C7E /* VertexArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VertexArray.c; sourceTree = "<group>"; };
 		CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-VertexArray"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2DC4D222EFD09B00908C7E /* Teapot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Teapot.h; sourceTree = "<group>"; };
+		CE2DC4D322F137C300908C7E /* Vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		CE2DC4D422F137C300908C7E /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
 		CE2DC4D722F1BAFD00908C7E /* Vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vector.c; sourceTree = "<group>"; };
 		CE2DC4E622F1BB6600908C7E /* ObjectivelyGL-Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Vector"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				CE61325E22E75B2000673094 /* Hello.c */,
+				CE2DC4D222EFD09B00908C7E /* Teapot.h */,
 				CE0CE9AD22E1EA9A00963219 /* Makefile.am */,
 			);
 			path = Examples;
