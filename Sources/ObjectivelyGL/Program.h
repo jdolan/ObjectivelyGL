@@ -36,6 +36,33 @@ typedef struct Program Program;
 typedef struct ProgramInterface ProgramInterface;
 
 /**
+ * @brief Uniform variables.
+ */
+typedef struct {
+
+	/**
+	 * @brief The index.
+	 */
+	GLuint index;
+
+	/**
+	 * @brief The name.
+	 */
+	GLchar name[64];
+
+	/**
+	 * @brief The size, in units of type.
+	 */
+	GLint size;
+
+	/**
+	 * @brief The type, e.g. `GL_FLOAT_VEC3`.
+	 */
+	GLenum type;
+
+} Variable;
+
+/**
  * @brief The Program type.
  * @extends Object
  */
@@ -72,6 +99,22 @@ struct ProgramInterface {
 	 * @brief The superclass interface.
 	 */
 	ObjectInterface objectInterface;
+
+	/**
+	 * @fn Variable *Program::activeAttributes(const Program *self)
+	 * @param self The Program.
+	 * @return A _none-terminated_ array of this Program's attributes.
+	 * @memberof Program
+	 */
+	Variable *(*activeAttributes)(const Program *self);
+
+	/**
+	 * @fn Variable *Program::activeUniforms(const Program *self)
+	 * @param self The Program.
+	 * @return A _none-terminated_ array of this Program's uniforms.
+	 * @memberof Program
+	 */
+	Variable *(*activeUniforms)(const Program *self);
 
 	/**
 	 * @fn GLchar *Program::infoLog(const Program *self)
@@ -112,13 +155,21 @@ struct ProgramInterface {
 	Program *(*initWithDescriptors)(Program *self, ShaderDescriptor *descriptors);
 
 	/**
-	 * @fn GLint Program::link(Program *self)
+	 * @fn GLint Program::link(const Program *self)
 	 * @brief Links this Program.
 	 * @param self The Program.
 	 * @return `GL_TRUE` on success, `GL_FALSE` on error.
 	 * @memberof Program
 	 */
 	GLint (*link)(const Program *self);
+
+	/**
+	 * @fn void Program::use(const Program *self)
+	 * @brief Installs this Program as part of the current rendering state.
+	 * @param self The Program.
+	 * @memberof Program
+	 */
+	void (*use)(const Program *self);
 };
 
 /**

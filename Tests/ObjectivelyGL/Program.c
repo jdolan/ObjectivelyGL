@@ -31,6 +31,78 @@ static void teardown(void) {
 	destroyContext();
 }
 
+START_TEST(activeAttributes) {
+
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+	);
+
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	ck_assert_ptr_ne(NULL, program);
+
+	FreeShaderDescriptors(descriptors);
+
+	$(program, link);
+	$(program, use);
+
+	Variable *attributes = $(program, activeAttributes);
+	ck_assert_ptr_ne(NULL, attributes);
+
+	const Variable *position = &attributes[0];
+	ck_assert_int_eq(0, position->index);
+	ck_assert_str_eq("position", position->name);
+	ck_assert_int_eq(1, position->size);
+	ck_assert_int_eq(GL_FLOAT_VEC3, position->type);
+
+	free(attributes);
+	
+	release(program);
+
+} END_TEST
+
+START_TEST(activeUniforms) {
+
+	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+	);
+
+	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	ck_assert_ptr_ne(NULL, program);
+
+	FreeShaderDescriptors(descriptors);
+
+	$(program, link);
+	$(program, use);
+
+	Variable *uniforms = $(program, activeUniforms);
+	ck_assert_ptr_ne(NULL, uniforms);
+
+	const Variable *projection = &uniforms[0];
+	ck_assert_int_eq(0, projection->index);
+	ck_assert_str_eq("Matrix.projection", projection->name);
+	ck_assert_int_eq(1, projection->size);
+	ck_assert_int_eq(GL_FLOAT_MAT4, projection->type);
+
+	const Variable *view = &uniforms[1];
+	ck_assert_int_eq(1, view->index);
+	ck_assert_str_eq("Matrix.view", view->name);
+	ck_assert_int_eq(1, view->size);
+	ck_assert_int_eq(GL_FLOAT_MAT4, view->type);
+
+	const Variable *model = &uniforms[2];
+	ck_assert_int_eq(2, model->index);
+	ck_assert_str_eq("Matrix.model", model->name);
+	ck_assert_int_eq(1, model->size);
+	ck_assert_int_eq(GL_FLOAT_MAT4, model->type);
+
+	free(uniforms);
+
+	release(program);
+
+} END_TEST
+
 START_TEST(infoLog) {
 
 	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
@@ -165,6 +237,8 @@ int main(int argc, char **argv) {
 	TCase *tcase = tcase_create("Program");
 	tcase_add_checked_fixture(tcase, setup, teardown);
 
+	tcase_add_test(tcase, activeAttributes);
+	tcase_add_test(tcase, activeUniforms);
 	tcase_add_test(tcase, infoLog);
 	tcase_add_test(tcase, init);
 	tcase_add_test(tcase, initWithShaders);

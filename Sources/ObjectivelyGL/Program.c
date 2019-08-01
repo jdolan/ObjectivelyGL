@@ -50,6 +50,46 @@ static void dealloc(Object *self) {
 #pragma mark - Program
 
 /**
+ * @fn Variable *Program::activeAttributes(const Program *self)
+ * @memberof Program
+ */
+static Variable *activeAttributes(const Program *self) {
+
+	GLuint count;
+	glGetProgramiv(self->name, GL_ACTIVE_ATTRIBUTES, (GLint *) &count);
+
+	Variable *attributes = calloc(count + 1, sizeof(Variable));
+	assert(attributes);
+
+	Variable *a = attributes;
+	for (GLuint i = 0; i < count; a->index = i, i++, a++) {
+		glGetActiveAttrib(self->name, i, sizeof(a->name) - 1, NULL, &a->size, &a->type, a->name);
+	}
+
+	return attributes;
+}
+
+/**
+ * @fn Variable *Program::activeUniforms(const Program *self)
+ * @memberof Program
+ */
+static Variable *activeUniforms(const Program *self) {
+
+	GLuint count;
+	glGetProgramiv(self->name, GL_ACTIVE_UNIFORMS, (GLint *) &count);
+
+	Variable *uniforms = calloc(count + 1, sizeof(Variable));
+	assert(uniforms);
+
+	Variable *u = uniforms;
+	for (GLuint i = 0; i < count; u->index = i, i++, u++) {
+		glGetActiveUniform(self->name, i, sizeof(u->name) - 1, NULL, &u->size, &u->type, u->name);
+	}
+
+	return uniforms;
+}
+
+/**
  * @fn GLchar *Program::infoLog(const Program *self)
  * @memberof Program
  */
@@ -173,6 +213,14 @@ static GLint link(const Program *self) {
 	return status;
 }
 
+/**
+ * @fn void Program::use(const Program *self)
+ * @memberof Program
+ */
+static void use(const Program *self) {
+	glUseProgram(self->name);
+}
+
 #pragma mark - Class lifecycle
 
 /**
@@ -182,11 +230,14 @@ static void initialize(Class *clazz) {
 
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
+	((ProgramInterface *) clazz->interface)->activeAttributes = activeAttributes;
+	((ProgramInterface *) clazz->interface)->activeUniforms = activeUniforms;
 	((ProgramInterface *) clazz->interface)->infoLog = infoLog;
 	((ProgramInterface *) clazz->interface)->init = init;
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;
 	((ProgramInterface *) clazz->interface)->initWithDescriptors = initWithDescriptors;
 	((ProgramInterface *) clazz->interface)->link = link;
+	((ProgramInterface *) clazz->interface)->use = use;
 }
 
 /**
