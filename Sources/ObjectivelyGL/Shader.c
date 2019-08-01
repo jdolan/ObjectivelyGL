@@ -191,6 +191,7 @@ static Shader *initWithDescriptor(Shader *self, ShaderDescriptor *descriptor) {
 
 		descriptor->shader = self;
 		descriptor->status = $(self, compile);
+		descriptor->infoLog = $(self, infoLog);
 	}
 
 	return self;
@@ -317,5 +318,6 @@ void FreeShaderDescriptors(ShaderDescriptor *descriptors) {
 		 descriptor++) {
 
 		release(descriptor->shader);
+		free(descriptor->infoLog);
 	}
 }

@@ -60,6 +60,11 @@ typedef struct {
 	 */
 	GLint status;
 
+	/**
+	 * @brief The information log.
+	 */
+	GLchar *infoLog;
+
 } ShaderDescriptor;
 
 /**
