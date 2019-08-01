@@ -31,45 +31,28 @@ static void teardown(void) {
 	destroyContext();
 }
 
-START_TEST(bind) {
-
-	VertexArray *array = $(alloc(VertexArray), initWithAttributes, NULL);
-	ck_assert_ptr_ne(NULL, array);
-
-	$(array, bind);
-
-	GLint name;
-	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &name);
-	ck_assert_int_eq(name, array->name);
-
-	release(array);
-
-} END_TEST
-
 START_TEST(initWithAttributes) {
 
 	Buffer *buffer = $(alloc(Buffer), init);
 	ck_assert_ptr_ne(NULL, buffer);
 
-	$(buffer, bind, GL_ARRAY_BUFFER);
-
 	typedef struct {
-		GLfloat position[3];
-		GLfloat diffuse[2];
-		GLfloat normal[3];
-		GLfloat tangent[3];
-		GLfloat bitangent[3];
+		vec3f position;
+		vec2f diffuse;
+		vec3f normal;
+		vec3f tangent;
+		vec3f bitangent;
 	} Vertex;
 
 	const Attribute attributes[] = MakeAttributes(
-		MakeAttribute(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, position)),
-		MakeAttribute(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, diffuse)),
-		MakeAttribute(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, normal)),
-		MakeAttribute(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, tangent)),
-		MakeAttribute(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offsetof(Vertex, bitangent))
+		VertexAttributeVec3f(0, Vertex, position),
+		VertexAttributeVec2f(1, Vertex, diffuse),
+		VertexAttributeVec3f(2, Vertex, normal),
+		VertexAttributeVec3f(3, Vertex, tangent),
+		VertexAttributeVec3f(4, Vertex, bitangent)
 	);
 
-	VertexArray *array = $(alloc(VertexArray), initWithAttributes, attributes);
+	VertexArray *array = $(alloc(VertexArray), initWithAttributes, buffer, attributes);
 	ck_assert_ptr_ne(NULL, array);
 	ck_assert_int_ne(0, array->name);
 	ck_assert_ptr_ne(NULL, array->attributes);
@@ -84,7 +67,6 @@ int main(int argc, char **argv) {
 	TCase *tcase = tcase_create("VertexArray");
 	tcase_add_checked_fixture(tcase, setup, teardown);
 
-	tcase_add_test(tcase, bind);
 	tcase_add_test(tcase, initWithAttributes);
 
 	Suite *suite = suite_create("VertexArray");

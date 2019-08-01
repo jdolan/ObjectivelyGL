@@ -40,32 +40,14 @@ static void dealloc(Object *self) {
 
 	glDeleteVertexArrays(1, &this->name);
 
+	free(this->attributes);
+
+	release(this->buffer);
+
 	super(Object, self, dealloc);
 }
 
 #pragma mark - VertexArray
-
-static void attributePointers(VertexArray *self, const Attribute *attributes) {
-
-	const Attribute *attr = attributes;
-	while (attr && attr->type != GL_NONE) {
-		const size_t count = attr - attributes + 1;
-
-		self->attributes = realloc(self->attributes, (count + 1) * sizeof(Attribute));
-		assert(self->attributes);
-
-		self->attributes[count - 1] = *attr;
-		self->attributes[count - 0] = MakeAttribute(0, 0, GL_NONE, GL_FALSE, 0, NULL);
-
-		glVertexAttribPointer(attr->index,
-							  attr->size,
-							  attr->type,
-							  attr->normalized,
-							  attr->stride,
-							  attr->pointer);
-		attr++;
-	}
-}
 
 /**
  * @fn void VertexArray::bind(const VertexArray *self)
@@ -92,35 +74,45 @@ static void disableAttribute(VertexArray *self, GLuint index) {
 }
 
 /**
- * @fn VertexArray *VertexArray::init(VertexArray *self)
+ * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self, Buffer *buffer, const Attribute *attributes)
  * @memberof VertexArray
  */
-static VertexArray *init(VertexArray *self) {
+static VertexArray *initWithAttributes(VertexArray *self, Buffer *buffer, const Attribute *attributes) {
 
 	self = (VertexArray *) super(Object, self, init);
 	if (self) {
+		self->buffer = retain(buffer);
+
 		glGenVertexArrays(1, &self->name);
 		if (self->name) {
+			
+			$(self->buffer, bind, GL_ARRAY_BUFFER);
+			$(self, bind);
 
+			const Attribute *attr = attributes;
+			while (attr->type != GL_NONE) {
+				const size_t count = attr - attributes + 1;
+
+				self->attributes = realloc(self->attributes, (count + 1) * sizeof(Attribute));
+				assert(self->attributes);
+
+				self->attributes[count - 1] = *attr;
+				self->attributes[count - 0] = MakeAttribute(0, 0, GL_NONE, GL_FALSE, 0, NULL);
+
+				glVertexAttribPointer(attr->index,
+									  attr->size,
+									  attr->type,
+									  attr->normalized,
+									  attr->stride,
+									  attr->pointer);
+				attr++;
+			}
+
+			$(self, unbind);
+			$(self->buffer, unbind, GL_ARRAY_BUFFER);
 		} else {
 			self = release(self);
 		}
-	}
-
-	return self;
-}
-
-/**
- * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self, const Attribute *attributes)
- * @memberof VertexArray
- */
-static VertexArray *initWithAttributes(VertexArray *self, const Attribute *attributes) {
-
-	self = $(self, init);
-	if (self) {
-		$(self, bind);
-		$(self, attributePointers, attributes);
-		$(self, unbind);
 	}
 
 	return self;
@@ -143,11 +135,9 @@ static void initialize(Class *clazz) {
 
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((VertexArrayInterface *) clazz->interface)->attributePointers = attributePointers;
 	((VertexArrayInterface *) clazz->interface)->bind = bind;
 	((VertexArrayInterface *) clazz->interface)->enableAttribute = enableAttribute;
 	((VertexArrayInterface *) clazz->interface)->disableAttribute = disableAttribute;
-	((VertexArrayInterface *) clazz->interface)->init = init;
 	((VertexArrayInterface *) clazz->interface)->initWithAttributes = initWithAttributes;
 	((VertexArrayInterface *) clazz->interface)->unbind = unbind;
 }

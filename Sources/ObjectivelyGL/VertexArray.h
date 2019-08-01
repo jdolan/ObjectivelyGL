@@ -29,7 +29,7 @@
 
 /**
  * @file
- * @brief ..
+ * @brief VertexArrays facilitate the binding between generic vertex Attributes and Buffers.
  */
 
 typedef struct VertexArray VertexArray;
@@ -39,7 +39,6 @@ typedef struct VertexArrayInterface VertexArrayInterface;
  * @brief Attributes describe the elements of a VertexArray.
  */
 typedef struct {
-
 	/**
 	 * @brief The index of the Attribute in the Shader inputs.
 	 */
@@ -79,6 +78,18 @@ typedef struct {
 #define MakeAttribute(index, size, type, normalized, stride, pointer) \
 	(Attribute) { (index), (size), (type), (normalized), (stride), (GLvoid *) (pointer) }
 
+#define VertexAttribute(index, size, type, normalized, vertex, member) \
+	MakeAttribute(index, size, type, normalized, sizeof(vertex), offsetof(vertex, member))
+
+#define VertexAttributeVec2f(index, vertex, member) \
+	VertexAttribute(index, 2, GL_FLOAT, GL_FALSE, vertex, member)
+
+#define VertexAttributeVec3f(index, vertex, member) \
+	VertexAttribute(index, 3, GL_FLOAT, GL_FALSE, vertex, member)
+
+#define VertexAttributeVec4f(index, vertex, member) \
+	VertexAttribute(index, 4, GL_FLOAT, GL_FALSE, vertex, member)
+
 /**
  * @brief Creates a `NULL`-terminated array of Attributes.
  */
@@ -114,6 +125,11 @@ struct VertexArray {
 	 * @brief The Attributes.
 	 */
 	Attribute *attributes;
+
+	/**
+	 * @brief The Buffer providing the generic vertex data.
+	 */
+	Buffer *buffer;
 };
 
 /**
@@ -127,17 +143,8 @@ struct VertexArrayInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn void VertexArray::attributePointers(VertexArray *self, const Attribute *attributes)
-	 * @brief Specifies the generic vertex Attributes for this VertexArray.
-	 * @param self The VertexArray.
-	 * @param attributes The `NULL`-terminated array of Attributes.
-	 * @memberof VertexArray
-	 */
-	void (*attributePointers)(VertexArray *self, const Attribute *attributes);
-
-	/**
 	 * @fn void VertexArray::bind(const VertexArray *self)
-	 * @brief Binds this VertexArray to the current OpenGL context.
+	 * @brief Binds this VertexArray to the current context.
 	 * @param self The VertexArray.
 	 * @memberof VertexArray
 	 */
@@ -162,27 +169,19 @@ struct VertexArrayInterface {
 	void (*disableAttribute)(VertexArray *self, GLuint index);
 
 	/**
-	 * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self)
-	 * @brief Initializes this VertexArray.
+	 * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self, Buffer *buffer, const Attribute *attributes)
+	 * @brief Initializes this VertexArray with the backing Buffer and Attributes.
 	 * @param self The VertexArray.
-	 * @return The initialized VertexArray, or `NULL` on error.
-	 * @memberof VertexArray
-	 */
-	VertexArray *(*init)(VertexArray *self);
-
-	/**
-	 * @fn VertexArray *VertexArray::initWithAttributes(VertexArray *self, const Attribute *attributes)
-	 * @brief Initializes this VertexArray with the specified Attributes.
-	 * @param self The VertexArray.
+	 * @param buffer The backing Buffer, which will be bound to `GL_ARRAY_BUFFER`.
 	 * @param attributes The Attributes.
 	 * @return The initialized VertexArray, or `NULL` on error.
 	 * @memberof VertexArray
 	 */
-	VertexArray *(*initWithAttributes)(VertexArray *self, const Attribute *attributes);
+	VertexArray *(*initWithAttributes)(VertexArray *self, Buffer *buffer, const Attribute *attributes);
 
 	/**
 	 * @fn void VertexArray::unbind(const VertexArray *self)
-	 * @brief Unbinds this VertexArray from the current OpenGL context.
+	 * @brief Unbinds this VertexArray from the current context.
 	 * @param self The VertexArray.
 	 * @memberof VertexArray
 	 */
