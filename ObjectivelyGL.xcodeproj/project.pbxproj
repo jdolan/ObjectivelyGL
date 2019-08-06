@@ -17,6 +17,7 @@
 				CE2DC4CF22EFC8D200908C7E /* PBXTargetDependency */,
 				CE03F14522E65FF300147FB9 /* PBXTargetDependency */,
 				CE03F14322E65FF100147FB9 /* PBXTargetDependency */,
+				CE2DC4E922F9D73700908C7E /* PBXTargetDependency */,
 				CE2DC4D122EFC8D500908C7E /* PBXTargetDependency */,
 			);
 			name = "ObjectivelyGL-Tests";
@@ -137,6 +138,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE0CE99622E1E90900963219;
 			remoteInfo = ObjectivelyGL;
+		};
+		CE2DC4E822F9D73700908C7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE2DC4D822F1BB6600908C7E;
+			remoteInfo = "ObjectivelyGL-Vector";
 		};
 		CE61326122E75BA100673094 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -783,6 +791,11 @@
 			isa = PBXTargetDependency;
 			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
 			targetProxy = CE2DC4DA22F1BB6600908C7E /* PBXContainerItemProxy */;
+		};
+		CE2DC4E922F9D73700908C7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE2DC4D822F1BB6600908C7E /* ObjectivelyGL-Vector */;
+			targetProxy = CE2DC4E822F9D73700908C7E /* PBXContainerItemProxy */;
 		};
 		CE61326022E75BA100673094 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
