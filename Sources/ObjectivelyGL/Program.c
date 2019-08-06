@@ -25,8 +25,6 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include <Objectively/MutableArray.h>
-
 #include "Program.h"
 
 #define _Class _Program
@@ -40,9 +38,11 @@ static void dealloc(Object *self) {
 
 	Program *this = (Program *) self;
 
-	glDeleteProgram(this->name);
+	$(this, detachAll);
 
 	release(this->shaders);
+
+	glDeleteProgram(this->name);
 
 	super(Object, self, dealloc);
 }
@@ -87,6 +87,39 @@ static Variable *activeUniforms(const Program *self) {
 	}
 
 	return uniforms;
+}
+
+/**
+ * @fn void Program::attach(Program *self, Shader *shader)
+ * @memberof Program
+ */
+static void attach(Program *self, Shader *shader) {
+
+	glAttachShader(self->name, shader->name);
+
+	$(self->shaders, addObject, shader);
+}
+
+/**
+ * @fn void Program::detach(Program *self, Shader *shader)
+ * @memberof Program
+ */
+static void detach(Program *self, Shader *shader) {
+
+	glDetachShader(self->name, shader->name);
+
+	$(self->shaders, removeObject, shader);
+}
+
+/**
+ * @brief ArrayEnumerator for detachAll.
+ */
+static void detachAll_enumerator(const Array *array, ident obj, ident data) {
+	glDetachShader(((Program *) data)->name, ((Shader *) obj)->name);
+}
+
+static void detachAll(Program *self) {
+	$(self->shaders, removeAllObjectsWithEnumerator, detachAll_enumerator, self);
 }
 
 /**
@@ -139,7 +172,7 @@ static Program *initWithShaders(Program *self, ...) {
 
 		Shader *shader;
 		while ((shader = va_arg(args, Shader *))) {
-			$(self->shaders, addObject, shader);
+			$(self, attach, shader);
 		}
 
 		va_end(args);
@@ -172,7 +205,7 @@ static Program *initWithDescriptor(Program *self, ProgramDescriptor *descriptor)
 				return release(self);
 			}
 
-			$(self->shaders, addObject, shader->shader);
+			$(self, attach, shader->shader);
 		}
 
 		descriptor->status = $(self, link);
@@ -188,32 +221,13 @@ static Program *initWithDescriptor(Program *self, ProgramDescriptor *descriptor)
 	return self;
 }
 
-
-/**
- * @brief ArrayEnumerator for attaching Shaders.
- */
-static void attach(const Array *array, ident obj, ident data) {
-	glAttachShader(((Program *) data)->name, ((Shader *) obj)->name);
-}
-
-/**
- * @brief ArrayEnumerator for detaching Shaders.
- */
-static void detach(const Array *array, ident obj, ident data) {
-	glDetachShader(((Program *) data)->name, ((Shader *) obj)->name);
-}
-
 /**
  * @fn GLint Program::link(const Program *self)
  * @memberof Program
  */
 static GLint link(const Program *self) {
 
-	$((Array *) self->shaders, enumerateObjects, attach, (ident) self);
-
 	glLinkProgram(self->name);
-
-	$((Array *) self->shaders, enumerateObjects, detach, (ident) self);
 
 	GLint status;
 	glGetProgramiv(self->name, GL_LINK_STATUS, &status);
@@ -240,6 +254,9 @@ static void initialize(Class *clazz) {
 
 	((ProgramInterface *) clazz->interface)->activeAttributes = activeAttributes;
 	((ProgramInterface *) clazz->interface)->activeUniforms = activeUniforms;
+	((ProgramInterface *) clazz->interface)->attach = attach;
+	((ProgramInterface *) clazz->interface)->detach = detach;
+	((ProgramInterface *) clazz->interface)->detachAll = detachAll;
 	((ProgramInterface *) clazz->interface)->infoLog = infoLog;
 	((ProgramInterface *) clazz->interface)->init = init;
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;

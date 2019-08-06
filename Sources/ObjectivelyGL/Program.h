@@ -158,6 +158,33 @@ struct ProgramInterface {
 	Variable *(*activeUniforms)(const Program *self);
 
 	/**
+	 * @fn void Program::attach(Program *self, Shader *shader)
+	 * @brief Attaches the specified Shader to this Program.
+	 * @param self The Program.
+	 * @param shader The Shader to attach.
+	 * @memberof Program
+	 */
+	void (*attach)(Program *self, Shader *shader);
+
+	/**
+	 * @fn void Program::detach(Program *self, Shader *shader)
+	 * @brief Detaches the specified Shader from this Program.
+	 * @param self The Program.
+	 * @param shader The Shader to detach.
+	 * @memberof Program
+	 */
+	void (*detach)(Program *self, Shader *shader);
+
+	/**
+	 * @fn void Program::detachAll(Program *self)
+	 * @brief Detaches all Shaders from this Program.
+	 * @param self The Program.
+	 * @param shader The Shader to detach.
+	 * @memberof Program
+	 */
+	void (*detachAll)(Program *self);
+
+	/**
 	 * @fn GLchar *Program::infoLog(const Program *self)
 	 * @param self The Program.
 	 * @return The information log for the Program.
