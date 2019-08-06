@@ -24,6 +24,7 @@
 #include <assert.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "Shader.h"
@@ -185,13 +186,19 @@ static Shader *initWithDescriptor(Shader *self, ShaderDescriptor *descriptor) {
 
 		for (const char **resource = descriptor->resources; *resource; resource++) {
 			if ($(self, appendResourceName, *resource) == -1) {
+				asprintf(&descriptor->infoLog, "Failed to append %s", *resource);
 				return release(self);
 			}
 		}
 
-		descriptor->shader = self;
 		descriptor->status = $(self, compile);
 		descriptor->infoLog = $(self, infoLog);
+
+		if (descriptor->status == GL_TRUE) {
+			descriptor->shader = self;
+		} else {
+			return release(self);
+		}
 	}
 
 	return self;
@@ -311,13 +318,9 @@ Class *_Shader(void) {
 
 #undef _Class
 
-void FreeShaderDescriptors(ShaderDescriptor *descriptors) {
+void FreeShaderDescriptor(ShaderDescriptor *descriptor) {
 
-	for (ShaderDescriptor *descriptor = descriptors;
-		 descriptor->type != GL_NONE;
-		 descriptor++) {
-
-		release(descriptor->shader);
-		free(descriptor->infoLog);
-	}
+	release(descriptor->shader);
+	
+	free(descriptor->infoLog);
 }

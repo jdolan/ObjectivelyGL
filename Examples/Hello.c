@@ -101,28 +101,27 @@ int main(int argc, char *argv[]) {
  */
 static Program *createProgram(void) {
 
-	ShaderDescriptor descriptors[] = MakeShaderDescriptors(
+	ProgramDescriptor descriptor = MakeProgramDescriptor(
 		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
 		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
-	Program *program = $(alloc(Program), initWithDescriptors, descriptors);
+	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
 	if (program == NULL) {
-		for (ShaderDescriptor *desc = descriptors; desc->type != GL_NONE; desc++) {
-			if (desc->status != GL_TRUE) {
-				fprintf(stderr, "%s: %s\n", *desc->resources, desc->infoLog);
+		for (ShaderDescriptor *shader = descriptor.shaders;
+			 shader->type != GL_NONE;
+			 shader++) {
+
+			if (shader->status != GL_TRUE) {
+				fprintf(stderr, "%s\n", shader->infoLog);
 			}
 		}
+		fprintf(stderr, "%s\n", descriptor.infoLog);
+		FreeProgramDescriptor(&descriptor);
 		exit(1);
 	}
 
-	FreeShaderDescriptors(descriptors);
-
-	if ($(program, link) == GL_FALSE) {
-		fputs($(program, infoLog), stderr);
-		exit(1);
-	}
-
+	FreeProgramDescriptor(&descriptor);
 	return program;
 }
 

@@ -37,6 +37,8 @@ typedef struct ShaderInterface ShaderInterface;
 
 /**
  * @brief ShaderDescriptors provide a convenient way to initialize Shaders from Resources.
+ * @details Shaders initialized with descriptors are automatically compiled. Their compilation
+ * status and information log are made available on the descriptor.
  */
 typedef struct {
 
@@ -71,16 +73,7 @@ typedef struct {
  * @brief Creates a ShaderDescriptor with the specified type and Resource names.
  */
 #define MakeShaderDescriptor(type, ...) \
-	(ShaderDescriptor) { type, { __VA_ARGS__, NULL }, NULL, GL_FALSE }
-
-/**
- * @brief Creates a `NULL`-terminated array of ShaderDescriptors.
- */
-#define MakeShaderDescriptors(...) \
-	{ \
-		__VA_ARGS__, \
-		MakeShaderDescriptor(GL_NONE, NULL, NULL, GL_FALSE) \
-	}
+	(ShaderDescriptor) { type, { __VA_ARGS__, NULL }, NULL, GL_FALSE, NULL }
 
 /**
  * @brief The Shader type.
@@ -281,8 +274,8 @@ struct ShaderInterface {
 OBJECTIVELYGL_EXPORT Class *_Shader(void);
 
 /**
- * @brief Frees ShaderDescriptors when they are no longer needed.
- * @param descriptors The ShaderDescriptors.
+ * @brief Frees a ShaderDescriptor when it is no longer needed.
+ * @param descriptor The ShaderDescriptor.
  * @relates ShaderDescriptor
  */
-OBJECTIVELYGL_EXPORT void FreeShaderDescriptors(ShaderDescriptor *descriptors);
+OBJECTIVELYGL_EXPORT void FreeShaderDescriptor(ShaderDescriptor *descriptor);

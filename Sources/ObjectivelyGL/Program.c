@@ -149,37 +149,45 @@ static Program *initWithShaders(Program *self, ...) {
 }
 
 /**
- * @fn Program *Program::initWithDescriptors(Program *self, ShaderDescriptor *descriptors)
+ * @fn Program *Program::initWithDescriptors(Program *self, ProgramDescriptor *descriptor)
  * @memberof Program
  */
-static Program *initWithDescriptors(Program *self, ShaderDescriptor *descriptors) {
+static Program *initWithDescriptor(Program *self, ProgramDescriptor *descriptor) {
 
 	self = $(self, init);
 	if (self) {
 
-		for (ShaderDescriptor *descriptor = descriptors;
-			 descriptor->type != GL_NONE;
-			 descriptor++) {
+		for (ShaderDescriptor *shader = descriptor->shaders;
+			 shader->type != GL_NONE;
+			 shader++) {
 
-			$(alloc(Shader), initWithDescriptor, descriptor);
+			$(alloc(Shader), initWithDescriptor, shader);
 		}
 
-		for (ShaderDescriptor *descriptor = descriptors;
-			 descriptor->type != GL_NONE;
-			 descriptor++) {
+		for (ShaderDescriptor *shader = descriptor->shaders;
+	 		 shader->type != GL_NONE;
+			 shader++) {
 
-			if (descriptor->shader == NULL) {
-				return release(self);
-			} else if (descriptor->status == GL_FALSE) {
+			if (shader->shader == NULL) {
 				return release(self);
 			}
 
-			$(self->shaders, addObject, descriptor->shader);
+			$(self->shaders, addObject, shader->shader);
+		}
+
+		descriptor->status = $(self, link);
+		descriptor->infoLog = $(self, infoLog);
+
+		if (descriptor->status == GL_TRUE) {
+			descriptor->program = self;
+		} else {
+			return release(self);
 		}
 	}
 
 	return self;
 }
+
 
 /**
  * @brief ArrayEnumerator for attaching Shaders.
@@ -235,7 +243,7 @@ static void initialize(Class *clazz) {
 	((ProgramInterface *) clazz->interface)->infoLog = infoLog;
 	((ProgramInterface *) clazz->interface)->init = init;
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;
-	((ProgramInterface *) clazz->interface)->initWithDescriptors = initWithDescriptors;
+	((ProgramInterface *) clazz->interface)->initWithDescriptor = initWithDescriptor;
 	((ProgramInterface *) clazz->interface)->link = link;
 	((ProgramInterface *) clazz->interface)->use = use;
 }
@@ -263,3 +271,16 @@ Class *_Program(void) {
 }
 
 #undef _Class
+
+void FreeProgramDescriptor(ProgramDescriptor *descriptor) {
+
+	for (ShaderDescriptor *shader = descriptor->shaders;
+		 shader->type != GL_NONE;
+		 shader++) {
+
+		FreeShaderDescriptor(shader);
+	}
+
+	free(descriptor->infoLog);
+}
+

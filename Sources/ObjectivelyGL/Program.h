@@ -36,6 +36,47 @@ typedef struct Program Program;
 typedef struct ProgramInterface ProgramInterface;
 
 /**
+ * @brief ProgramDescriptors provide a convenient way to initialize Programs from Resources.
+ * @details Programs initialized with descriptors are automatically compiled and linked. Their
+ * link status and information log, as well as the compilation status and information log of each
+ * Shader, are made available on the descriptor.
+ */
+typedef struct {
+
+	/**
+	 * @brief The ShaderDescriptors to resolve, compile and link to this Program (required).
+	 */
+	ShaderDescriptor shaders[16];
+
+	/**
+	 * @brief The Program, if Shader compilation and linking was successful, or `NULL` on error.
+	 */
+	Program *program;
+
+	/**
+	 * @brief The link status; `GL_TRUE` on success, `GL_FALSE` on error.
+	 */
+	GLint status;
+
+	/**
+	 * @brief The information log.
+	 */
+	GLchar *infoLog;
+
+} ProgramDescriptor;
+
+/**
+ * @brief Creates a ProgramDescriptor with the given ShaderDescriptor arguments.
+ * @see MakeShaderDescriptor
+ */
+#define MakeProgramDescriptor(...) { \
+	.shaders = { \
+		__VA_ARGS__, \
+		MakeShaderDescriptor(GL_NONE, NULL, NULL, GL_FALSE, NULL) \
+	} \
+}
+
+/**
  * @brief Uniform variables.
  */
 typedef struct {
@@ -125,7 +166,7 @@ struct ProgramInterface {
 	GLchar *(*infoLog)(const Program *self);
 
 	/**
-	 * @fn Program *Program::initWithShaders(Program *self, ...)
+	 * @fn Program *Program::init(Program *self)
 	 * @brief Initializes this Program.
 	 * @param self The Program.
 	 * @return The initialized Program, or `NULL` on error.
@@ -145,15 +186,20 @@ struct ProgramInterface {
 	Program *(*initWithShaders)(Program *self, ...);
 
 	/**
-	 * @fn Program *Program::initWithDescriptors(Program *self, ShaderDescriptor *descriptors)
-	 * @brief Initializes this Program with the specified ShaderDescriptors.
+	 * @fn Program *Program::initWithDescriptor(Program *self, ProgramDescriptor *descriptor)
+	 * @brief Initializes this Program with the specified ProgramDescriptor.
+	 * @details All Shaders described by the ProgramDescriptor will be resolved and compiled.
+	 * If all Shaders successfully resovlve and compile, the Program is linked. The link status
+	 * and information log are written to the descriptor. If any Shaders fail to resolve or
+	 * compile, the corresponding ShaderDescriptor will contain error information. The caller
+	 * should call `FreeProgramDescriptor` when the descriptor is no longer needed.
 	 * @param self The Program.
-	 * @param descriptors A `NULL`-terminated array of one or more ShaderDescriptors.
+	 * @param descriptor The ProgramDescriptor.
 	 * @return The initialized Program, or `NULL` on error.
 	 * @memberof Program
 	 */
-	Program *(*initWithDescriptors)(Program *self, ShaderDescriptor *descriptors);
-
+	Program *(*initWithDescriptor)(Program *self, ProgramDescriptor *descriptor);
+	
 	/**
 	 * @fn GLint Program::link(const Program *self)
 	 * @brief Links this Program.
@@ -179,3 +225,10 @@ struct ProgramInterface {
  * @memberof Program
  */
 OBJECTIVELYGL_EXPORT Class *_Program(void);
+
+/**
+ * @brief Frees a ProgramDescriptor when it is no longer needed.
+ * @param descriptor The ProgramDescriptor.
+ * @relates ProgramDescriptor
+ */
+OBJECTIVELYGL_EXPORT void FreeProgramDescriptor(ProgramDescriptor *descriptor);
