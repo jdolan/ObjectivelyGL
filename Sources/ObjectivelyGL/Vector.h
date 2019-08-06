@@ -77,7 +77,12 @@ typedef union {
 	/**
 	 * @brief Swizzle accessor.
 	 */
-	vec2f vec2;
+	vec2f xy;
+
+	/**
+	 * @brief Swizzle accessor.
+	 */
+	vec2f st;
 } vec3f;
 
 /**
@@ -106,12 +111,22 @@ typedef union {
 	/**
 	 * @brief Swizzle accessor.
 	 */
-	vec2f vec2;
+	vec2f xy;
 
 	/**
 	 * @brief Swizzle accessor.
 	 */
-	vec3f vec3;
+	vec2f st;
+
+	/**
+	 * @brief Swizzle accessor.
+	 */
+	vec3f xyz;
+
+	/**
+	 * @brief Swizzle accessor.
+	 */
+	vec3f stu;
 } vec4f;
 
 /**
@@ -140,17 +155,32 @@ typedef union {
 	/**
 	 * @brief Swizzle accessor.
 	 */
-	vec2f vec2;
+	vec2f xy;
 
 	/**
 	 * @brief Swizzle accessor.
 	 */
-	vec3f vec3;
+	vec2f st;
 
 	/**
 	 * @brief Swizzle accessor.
 	 */
-	vec4f vec4;
+	vec3f xyz;
+
+	/**
+	 * @brief Swizzle accessor.
+	 */
+	vec3f stu;
+
+	/**
+	 * @brief Swizzle accessor.
+	 */
+	vec4f xyzw;
+
+	/**
+	 * @brief Swizzle accessor.
+	 */
+	vec4f stuv;
 } vec;
 
 OBJECTIVELYGL_EXPORT vec vec0(void);
