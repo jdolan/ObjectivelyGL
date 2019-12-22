@@ -666,7 +666,7 @@
 		CE0CE98F22E1E90900963219 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "https://github.com/jdolan";
 				TargetAttributes = {
 					CE03F13E22E65FC200147FB9 = {
