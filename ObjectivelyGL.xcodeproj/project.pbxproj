@@ -17,7 +17,6 @@
 				CE2DC4CF22EFC8D200908C7E /* PBXTargetDependency */,
 				CE03F14522E65FF300147FB9 /* PBXTargetDependency */,
 				CE03F14322E65FF100147FB9 /* PBXTargetDependency */,
-				CE2DC4E922F9D73700908C7E /* PBXTargetDependency */,
 				CE2DC4D122EFC8D500908C7E /* PBXTargetDependency */,
 			);
 			name = "ObjectivelyGL-Tests";
@@ -59,12 +58,6 @@
 		CE2DC4C622EBFFD500908C7E /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE2DC4C722EBFFD500908C7E /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE2DC4CD22EBFFE800908C7E /* VertexArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2DC4BD22EBFFB500908C7E /* VertexArray.c */; };
-		CE2DC4DE22F1BB6600908C7E /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
-		CE2DC4DF22F1BB6600908C7E /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
-		CE2DC4E122F1BB6600908C7E /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
-		CE5FC51222FA3C6700556062 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
-		CE5FC51322FA3C6700556062 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
-		CE5FC51422FA3C6700556062 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE61326522E75BA100673094 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
 		CE61326622E75BA100673094 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE61326722E75BA100673094 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
@@ -132,27 +125,6 @@
 			remoteGlobalIDString = CE2DC4BE22EBFFD500908C7E;
 			remoteInfo = "ObjectivelyGL-VertexArray";
 		};
-		CE2DC4DA22F1BB6600908C7E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE0CE99622E1E90900963219;
-			remoteInfo = ObjectivelyGL;
-		};
-		CE2DC4E822F9D73700908C7E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE2DC4D822F1BB6600908C7E;
-			remoteInfo = "ObjectivelyGL-Vector";
-		};
-		CE5FC50E22FA3C6700556062 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE0CE99622E1E90900963219;
-			remoteInfo = ObjectivelyGL;
-		};
 		CE61326122E75BA100673094 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
@@ -191,24 +163,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		CE2DC4C822EBFFD500908C7E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CE2DC4E222F1BB6600908C7E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CE5FC51522FA3C6700556062 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1;
@@ -275,10 +229,8 @@
 		CE2DC4BD22EBFFB500908C7E /* VertexArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VertexArray.c; sourceTree = "<group>"; };
 		CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-VertexArray"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE2DC4D222EFD09B00908C7E /* Teapot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Teapot.h; sourceTree = "<group>"; };
-		CE2DC4E622F1BB6600908C7E /* ObjectivelyGL-Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Vector"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5D758A23228CCB003DC4DE /* libquemath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libquemath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5D758C232290E0003DC4DE /* libquemath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libquemath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE5FC51922FA3C6700556062 /* ObjectivelyGL-Matrix */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Matrix"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE61325E22E75B2000673094 /* Hello.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Hello.c; sourceTree = "<group>"; };
 		CE61326D22E75BA100673094 /* ObjectivelyGL-Hello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Hello"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7DEE0722E5035100ED22EA /* simple.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.vs.glsl; sourceTree = "<group>"; };
@@ -345,26 +297,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CE2DC4DD22F1BB6600908C7E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CE2DC4DE22F1BB6600908C7E /* libObjectivelyGL.dylib in Frameworks */,
-				CE2DC4DF22F1BB6600908C7E /* libObjectively.dylib in Frameworks */,
-				CE2DC4E122F1BB6600908C7E /* libcheck.0.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CE5FC51122FA3C6700556062 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CE5FC51222FA3C6700556062 /* libObjectivelyGL.dylib in Frameworks */,
-				CE5FC51322FA3C6700556062 /* libObjectively.dylib in Frameworks */,
-				CE5FC51422FA3C6700556062 /* libcheck.0.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CE61326422E75BA100673094 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -402,8 +334,6 @@
 				CE61326D22E75BA100673094 /* ObjectivelyGL-Hello */,
 				CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */,
 				CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
-				CE2DC4E622F1BB6600908C7E /* ObjectivelyGL-Vector */,
-				CE5FC51922FA3C6700556062 /* ObjectivelyGL-Matrix */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -606,42 +536,6 @@
 			productReference = CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */;
 			productType = "com.apple.product-type.tool";
 		};
-		CE2DC4D822F1BB6600908C7E /* ObjectivelyGL-Vector */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CE2DC4E322F1BB6600908C7E /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Vector" */;
-			buildPhases = (
-				CE2DC4DB22F1BB6600908C7E /* Sources */,
-				CE2DC4DD22F1BB6600908C7E /* Frameworks */,
-				CE2DC4E222F1BB6600908C7E /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CE2DC4D922F1BB6600908C7E /* PBXTargetDependency */,
-			);
-			name = "ObjectivelyGL-Vector";
-			productName = "ObjectivelyGL-Shader";
-			productReference = CE2DC4E622F1BB6600908C7E /* ObjectivelyGL-Vector */;
-			productType = "com.apple.product-type.tool";
-		};
-		CE5FC50C22FA3C6700556062 /* ObjectivelyGL-Matrix */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CE5FC51622FA3C6700556062 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Matrix" */;
-			buildPhases = (
-				CE5FC50F22FA3C6700556062 /* Sources */,
-				CE5FC51122FA3C6700556062 /* Frameworks */,
-				CE5FC51522FA3C6700556062 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CE5FC50D22FA3C6700556062 /* PBXTargetDependency */,
-			);
-			name = "ObjectivelyGL-Matrix";
-			productName = "ObjectivelyGL-Shader";
-			productReference = CE5FC51922FA3C6700556062 /* ObjectivelyGL-Matrix */;
-			productType = "com.apple.product-type.tool";
-		};
 		CE61325F22E75BA100673094 /* ObjectivelyGL-Hello */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Hello" */;
@@ -695,10 +589,8 @@
 			targets = (
 				CE0CE99622E1E90900963219 /* ObjectivelyGL */,
 				CE2DC4A722E8DEF200908C7E /* ObjectivelyGL-Buffer */,
-				CE5FC50C22FA3C6700556062 /* ObjectivelyGL-Matrix */,
 				CE2A596522E4447B0043FCD2 /* ObjectivelyGL-Program */,
 				CE2A594622E2609D0043FCD2 /* ObjectivelyGL-Shader */,
-				CE2DC4D822F1BB6600908C7E /* ObjectivelyGL-Vector */,
 				CE2DC4BE22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
 				CE03F13E22E65FC200147FB9 /* ObjectivelyGL-Tests */,
 				CE61325F22E75BA100673094 /* ObjectivelyGL-Hello */,
@@ -722,7 +614,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./ObjectivelyGL-Buffer &&\n./ObjectivelyGL-Program &&\n./ObjectivelyGL-Shader &&\n./ObjectivelyGL-Vector &&\n./ObjectivelyGL-VertexArray\n";
+			shellScript = "cd $BUILT_PRODUCTS_DIR &&\n./ObjectivelyGL-Buffer &&\n./ObjectivelyGL-Program &&\n./ObjectivelyGL-Shader &&\n./ObjectivelyGL-VertexArray\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -768,20 +660,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE2DC4CD22EBFFE800908C7E /* VertexArray.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CE2DC4DB22F1BB6600908C7E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CE5FC50F22FA3C6700556062 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,21 +713,6 @@
 			isa = PBXTargetDependency;
 			target = CE2DC4BE22EBFFD500908C7E /* ObjectivelyGL-VertexArray */;
 			targetProxy = CE2DC4D022EFC8D500908C7E /* PBXContainerItemProxy */;
-		};
-		CE2DC4D922F1BB6600908C7E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
-			targetProxy = CE2DC4DA22F1BB6600908C7E /* PBXContainerItemProxy */;
-		};
-		CE2DC4E922F9D73700908C7E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE2DC4D822F1BB6600908C7E /* ObjectivelyGL-Vector */;
-			targetProxy = CE2DC4E822F9D73700908C7E /* PBXContainerItemProxy */;
-		};
-		CE5FC50D22FA3C6700556062 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
-			targetProxy = CE5FC50E22FA3C6700556062 /* PBXContainerItemProxy */;
 		};
 		CE61326022E75BA100673094 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -911,6 +774,7 @@
 					/usr/local/lib,
 					/opt/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -950,6 +814,7 @@
 					/usr/local/lib,
 					/opt/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -1023,34 +888,6 @@
 			name = Debug;
 		};
 		CE2DC4CB22EBFFD500908C7E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		CE2DC4E422F1BB6600908C7E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		CE2DC4E522F1BB6600908C7E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		CE5FC51722FA3C6700556062 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		CE5FC51822FA3C6700556062 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1133,24 +970,6 @@
 			buildConfigurations = (
 				CE2DC4CA22EBFFD500908C7E /* Debug */,
 				CE2DC4CB22EBFFD500908C7E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CE2DC4E322F1BB6600908C7E /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Vector" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CE2DC4E422F1BB6600908C7E /* Debug */,
-				CE2DC4E522F1BB6600908C7E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CE5FC51622FA3C6700556062 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Matrix" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CE5FC51722FA3C6700556062 /* Debug */,
-				CE5FC51822FA3C6700556062 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
