@@ -8,6 +8,7 @@ pkgincludedir = $(includedir)/$(PACKAGE_NAME)
 
 pkginclude_HEADERS = \
 	Buffer.h \
+	CommandQueue.h \
 	OpenGL.h \
 	Program.h \
 	Shader.h \
@@ -20,6 +21,7 @@ lib_LTLIBRARIES = \
 
 libObjectivelyGL_la_SOURCES = \
 	Buffer.c \
+	CommandQueue.c \
 	OpenGL.c \
 	Program.c \
 	Shader.c \

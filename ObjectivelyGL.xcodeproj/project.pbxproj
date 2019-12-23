@@ -33,6 +33,13 @@
 		CE0CE9C522E1F53F00963219 /* ObjectivelyGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE0CE9B822E1EB6300963219 /* ObjectivelyGL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E1323B0310D007D0433 /* UniformBuffer.h */; };
 		CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1423B0310D007D0433 /* UniformBuffer.c */; };
+		CE129E1923B145BA007D0433 /* CommandQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E1723B145BA007D0433 /* CommandQueue.h */; };
+		CE129E1A23B145BA007D0433 /* CommandQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1823B145BA007D0433 /* CommandQueue.c */; };
+		CE129E2623B15E82007D0433 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
+		CE129E2723B15E82007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
+		CE129E2823B15E82007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
+		CE129E2923B15E82007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
+		CE129E2F23B15E99007D0433 /* CommandQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1F23B15E6D007D0433 /* CommandQueue.c */; };
 		CE2A594022E253260043FCD2 /* OpenGL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A593E22E253260043FCD2 /* OpenGL.c */; };
 		CE2A594122E253260043FCD2 /* OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2A593F22E253260043FCD2 /* OpenGL.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2A594E22E260B30043FCD2 /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A594222E25F7D0043FCD2 /* Shader.c */; };
@@ -84,6 +91,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = CE2A596522E4447B0043FCD2;
 			remoteInfo = "ObjectivelyGL-Program";
+		};
+		CE129E2223B15E82007D0433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE0CE99622E1E90900963219;
+			remoteInfo = ObjectivelyGL;
 		};
 		CE2A595322E2618A0043FCD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -137,6 +151,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CE129E2A23B15E82007D0433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		CE2A594522E2609D0043FCD2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,6 +239,10 @@
 		CE0CE9C322E1F51D00963219 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		CE129E1323B0310D007D0433 /* UniformBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniformBuffer.h; sourceTree = "<group>"; };
 		CE129E1423B0310D007D0433 /* UniformBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UniformBuffer.c; sourceTree = "<group>"; };
+		CE129E1723B145BA007D0433 /* CommandQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandQueue.h; sourceTree = "<group>"; };
+		CE129E1823B145BA007D0433 /* CommandQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CommandQueue.c; sourceTree = "<group>"; };
+		CE129E1F23B15E6D007D0433 /* CommandQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CommandQueue.c; sourceTree = "<group>"; };
+		CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-CommandQueue"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE2A593E22E253260043FCD2 /* OpenGL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OpenGL.c; sourceTree = "<group>"; };
 		CE2A593F22E253260043FCD2 /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL.h; sourceTree = "<group>"; };
 		CE2A594222E25F7D0043FCD2 /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
@@ -254,6 +281,17 @@
 			files = (
 				CE0CE9C022E1F4AB00963219 /* libObjectively.dylib in Frameworks */,
 				CE0CE9C222E1F4B300963219 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E2523B15E82007D0433 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E2623B15E82007D0433 /* libObjectivelyGL.dylib in Frameworks */,
+				CE129E2723B15E82007D0433 /* libObjectively.dylib in Frameworks */,
+				CE129E2823B15E82007D0433 /* libSDL2-2.0.0.dylib in Frameworks */,
+				CE129E2923B15E82007D0433 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +376,7 @@
 				CE61326D22E75BA100673094 /* ObjectivelyGL-Hello */,
 				CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */,
 				CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
+				CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -360,6 +399,8 @@
 				CE2DC4A322E8C65F00908C7E /* Buffer.c */,
 				CE0CE9C322E1F51D00963219 /* Config.h */,
 				CE0CE9A822E1EA9A00963219 /* Config.h.in */,
+				CE129E1723B145BA007D0433 /* CommandQueue.h */,
+				CE129E1823B145BA007D0433 /* CommandQueue.c */,
 				CE2A593E22E253260043FCD2 /* OpenGL.c */,
 				CE2A593F22E253260043FCD2 /* OpenGL.h */,
 				CE0CE9BA22E1ECAE00963219 /* Program.h */,
@@ -399,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				CE2DC4A622E8DE3D00908C7E /* Buffer.c */,
+				CE129E1F23B15E6D007D0433 /* CommandQueue.c */,
 				CE2A596422E444640043FCD2 /* Program.c */,
 				CE2A594222E25F7D0043FCD2 /* Shader.c */,
 				CEBB82AC22E68EE100997E82 /* Test.h */,
@@ -446,6 +488,7 @@
 				CEE761B822E2003A007CB42B /* Shader.h in Headers */,
 				CE2DC4BB22EBF82200908C7E /* VertexArray.h in Headers */,
 				CE0CE9C422E1F51D00963219 /* Config.h in Headers */,
+				CE129E1923B145BA007D0433 /* CommandQueue.h in Headers */,
 				CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,6 +513,24 @@
 			productName = ObjectivelyGL;
 			productReference = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
+		};
+		CE129E2023B15E82007D0433 /* ObjectivelyGL-CommandQueue */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE129E2B23B15E82007D0433 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-CommandQueue" */;
+			buildPhases = (
+				CE129E2323B15E82007D0433 /* Sources */,
+				CE129E2523B15E82007D0433 /* Frameworks */,
+				CE129E2A23B15E82007D0433 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE129E2123B15E82007D0433 /* PBXTargetDependency */,
+			);
+			name = "ObjectivelyGL-CommandQueue";
+			productName = "ObjectivelyGL-Shader";
+			productReference = CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */;
+			productType = "com.apple.product-type.tool";
 		};
 		CE2A594622E2609D0043FCD2 /* ObjectivelyGL-Shader */ = {
 			isa = PBXNativeTarget;
@@ -596,6 +657,7 @@
 			targets = (
 				CE0CE99622E1E90900963219 /* ObjectivelyGL */,
 				CE2DC4A722E8DEF200908C7E /* ObjectivelyGL-Buffer */,
+				CE129E2023B15E82007D0433 /* ObjectivelyGL-CommandQueue */,
 				CE2A596522E4447B0043FCD2 /* ObjectivelyGL-Program */,
 				CE2A594622E2609D0043FCD2 /* ObjectivelyGL-Shader */,
 				CE2DC4BE22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
@@ -630,12 +692,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE129E1A23B145BA007D0433 /* CommandQueue.c in Sources */,
 				CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */,
 				CE2A594022E253260043FCD2 /* OpenGL.c in Sources */,
 				CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */,
 				CE0CE9BD22E1ECAE00963219 /* Program.c in Sources */,
 				CEE761B922E2003A007CB42B /* Shader.c in Sources */,
 				CE2DC4BC22EBF82200908C7E /* VertexArray.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E2323B15E82007D0433 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E2F23B15E99007D0433 /* CommandQueue.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +762,11 @@
 			isa = PBXTargetDependency;
 			target = CE2A596522E4447B0043FCD2 /* ObjectivelyGL-Program */;
 			targetProxy = CE03F14422E65FF300147FB9 /* PBXContainerItemProxy */;
+		};
+		CE129E2123B15E82007D0433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
+			targetProxy = CE129E2223B15E82007D0433 /* PBXContainerItemProxy */;
 		};
 		CE2A595422E2618A0043FCD2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -846,6 +922,20 @@
 			};
 			name = Release;
 		};
+		CE129E2C23B15E82007D0433 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE129E2D23B15E82007D0433 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		CE2A594C22E2609E0043FCD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -942,6 +1032,15 @@
 			buildConfigurations = (
 				CE0CE99C22E1E90900963219 /* Debug */,
 				CE0CE99D22E1E90900963219 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE129E2B23B15E82007D0433 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-CommandQueue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE129E2C23B15E82007D0433 /* Debug */,
+				CE129E2D23B15E82007D0433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
