@@ -45,7 +45,7 @@ START_TEST(activeAttributes) {
 
 	$(program, use);
 
-	Variable *attributes = $(program, activeAttributes);
+	Variable *attributes = $(program, attributes);
 	ck_assert_ptr_ne(NULL, attributes);
 
 	const Variable *position = &attributes[0];
@@ -74,7 +74,7 @@ START_TEST(activeUniforms) {
 
 	$(program, use);
 
-	Variable *uniforms = $(program, activeUniforms);
+	Variable *uniforms = $(program, uniforms);
 	ck_assert_ptr_ne(NULL, uniforms);
 
 	const Variable *projection = &uniforms[0];

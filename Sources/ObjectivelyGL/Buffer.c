@@ -44,11 +44,10 @@ static void dealloc(Object *self) {
 #pragma mark - Buffer
 
 /**
- * @fn void Buffer::bind(Buffer *self, GLenum target)
+ * @fn void Buffer::bind(const Buffer *self, GLenum target)
  * @memberof Buffer
  */
-static void bind(Buffer *self, GLenum target) {
-
+static void bind(const Buffer *self, GLenum target) {
 	glBindBuffer(target, self->name);
 }
 
@@ -111,7 +110,6 @@ static void writeData(Buffer *self, const BufferData *data) {
  * @memberof Buffer
  */
 static void writeSubData(Buffer *self, const BufferSubData *data) {
-
 	glBufferSubData(data->target, data->offset, data->size, data->data);
 }
 

@@ -8,6 +8,7 @@ uniform Matrix {
 	mat4 model;
 } matrix;
 
+
 void main() {
 	gl_Position = matrix.projection * matrix.view * matrix.model * vec4(position, 1.0);
 }

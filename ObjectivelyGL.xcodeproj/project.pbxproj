@@ -31,6 +31,8 @@
 		CE0CE9C222E1F4B300963219 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9C122E1F4B300963219 /* OpenGL.framework */; };
 		CE0CE9C422E1F51D00963219 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = CE0CE9C322E1F51D00963219 /* Config.h */; };
 		CE0CE9C522E1F53F00963219 /* ObjectivelyGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE0CE9B822E1EB6300963219 /* ObjectivelyGL.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E1323B0310D007D0433 /* UniformBuffer.h */; };
+		CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1423B0310D007D0433 /* UniformBuffer.c */; };
 		CE2A594022E253260043FCD2 /* OpenGL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A593E22E253260043FCD2 /* OpenGL.c */; };
 		CE2A594122E253260043FCD2 /* OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2A593F22E253260043FCD2 /* OpenGL.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2A594E22E260B30043FCD2 /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A594222E25F7D0043FCD2 /* Shader.c */; };
@@ -212,6 +214,8 @@
 		CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libObjectively.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE0CE9C122E1F4B300963219 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CE0CE9C322E1F51D00963219 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		CE129E1323B0310D007D0433 /* UniformBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniformBuffer.h; sourceTree = "<group>"; };
+		CE129E1423B0310D007D0433 /* UniformBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = UniformBuffer.c; sourceTree = "<group>"; };
 		CE2A593E22E253260043FCD2 /* OpenGL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OpenGL.c; sourceTree = "<group>"; };
 		CE2A593F22E253260043FCD2 /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL.h; sourceTree = "<group>"; };
 		CE2A594222E25F7D0043FCD2 /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
@@ -363,6 +367,8 @@
 				CEE761B622E2003A007CB42B /* Shader.h */,
 				CEE761B722E2003A007CB42B /* Shader.c */,
 				CE0CE9B922E1EC5B00963219 /* Types.h */,
+				CE129E1323B0310D007D0433 /* UniformBuffer.h */,
+				CE129E1423B0310D007D0433 /* UniformBuffer.c */,
 				CE2DC4B922EBF82200908C7E /* VertexArray.h */,
 				CE2DC4BA22EBF82200908C7E /* VertexArray.c */,
 				CE0CE9A922E1EA9A00963219 /* Makefile.am */,
@@ -440,6 +446,7 @@
 				CEE761B822E2003A007CB42B /* Shader.h in Headers */,
 				CE2DC4BB22EBF82200908C7E /* VertexArray.h in Headers */,
 				CE0CE9C422E1F51D00963219 /* Config.h in Headers */,
+				CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +632,7 @@
 			files = (
 				CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */,
 				CE2A594022E253260043FCD2 /* OpenGL.c in Sources */,
+				CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */,
 				CE0CE9BD22E1ECAE00963219 /* Program.c in Sources */,
 				CEE761B922E2003A007CB42B /* Shader.c in Sources */,
 				CE2DC4BC22EBF82200908C7E /* VertexArray.c in Sources */,

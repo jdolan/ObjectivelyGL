@@ -23,9 +23,10 @@
 
 #pragma once
 
+#include <cglm/struct.h>
 #include <check.h>
-#include <SDL.h>
 #include <ObjectivelyGL.h>
+#include <SDL.h>
 
 #ifndef RESOURCES
 # define RESOURCES "."

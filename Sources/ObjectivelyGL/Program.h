@@ -77,7 +77,7 @@ typedef struct {
 }
 
 /**
- * @brief Uniform variables.
+ * @brief Uniform and attribute variables.
  */
 typedef struct {
 
@@ -142,20 +142,39 @@ struct ProgramInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn Variable *Program::activeAttributes(const Program *self)
+	 * @fn Variable Program::attributeForLocation(const Program *self, const GLuint index)
 	 * @param self The Program.
-	 * @return A _none-terminated_ array of this Program's attributes.
+	 * @param index The attribute location.
+	 * @return The attribute Variable for the given location.
 	 * @memberof Program
 	 */
-	Variable *(*activeAttributes)(const Program *self);
+	Variable (*attributeForLocation)(const Program *self, GLuint index);
 
 	/**
-	 * @fn Variable *Program::activeUniforms(const Program *self)
+	 * @fn Variable Program::attributeForName(const Program *self, const GLchar *name)
 	 * @param self The Program.
-	 * @return A _none-terminated_ array of this Program's uniforms.
+	 * @param name The attribute name.
+	 * @return The attribute Variable for the given name.
 	 * @memberof Program
 	 */
-	Variable *(*activeUniforms)(const Program *self);
+	Variable (*attributeForName)(const Program *self, const GLchar *name);
+
+	/**
+	 * @fn GLint Program::attributeLocation(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The attribute name.
+	 * @return The attribute location, or -1 on error.
+	 * @memberof Program
+	 */
+	GLint (*attributeLocation)(const Program *self, const GLchar *name);
+
+	/**
+	 * @fn Variable *Program::attributes(const Program *self)
+	 * @param self The Program.
+	 * @return A _none-terminated_ array of this Program's attribute Variables.
+	 * @memberof Program
+	 */
+	Variable *(*attributes)(const Program *self);
 
 	/**
 	 * @fn void Program::attach(Program *self, Shader *shader)
@@ -179,7 +198,6 @@ struct ProgramInterface {
 	 * @fn void Program::detachAll(Program *self)
 	 * @brief Detaches all Shaders from this Program.
 	 * @param self The Program.
-	 * @param shader The Shader to detach.
 	 * @memberof Program
 	 */
 	void (*detachAll)(Program *self);
@@ -235,6 +253,80 @@ struct ProgramInterface {
 	 * @memberof Program
 	 */
 	GLint (*link)(const Program *self);
+
+	/**
+	 * @fn GLint Program::uniformBlockLocation(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The uniform block name.
+	 * @return The uniform block location, or -1 on error.
+	 * @memberof Program
+	 */
+	GLint (*uniformBlockLocation)(const Program *self, const GLchar *name);
+
+	/**
+	 * @fn void Program::uniformBlockBinding(const Program *self, GLuint block, GLuint index)
+	 * @brief Sets the binding point index for the specified uniform block.
+	 * @param self The Program.
+	 * @param block The uniform block location.
+	 * @param index The binding point index.
+	 * @memberof Program
+	 */
+	void (*uniformBlockBinding)(const Program *self, GLuint block, GLuint index);
+
+	/**
+	 * @fn Variable Program::uniformForLocation(const Program *self, const GLuint index)
+	 * @param self The Program.
+	 * @param index The uniform location.
+	 * @return The uniform Variable for the given location.
+	 * @memberof Program
+	 */
+	Variable (*uniformForLocation)(const Program *self, GLuint index);
+
+	/**
+	 * @fn Variable Program::uniformForName(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The uniform name.
+	 * @return The uniform Variable for the given name.
+	 * @memberof Program
+	 */
+	Variable (*uniformForName)(const Program *self, const GLchar *name);
+
+	/**
+	 * @fn GLint Program::uniformLocation(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The uniform name.
+	 * @return The uniform location, or -1 on error.
+	 * @memberof Program
+	 */
+	GLint (*uniformLocation)(const Program *self, const GLchar *name);
+
+	/**
+	 * @fn Variable *Program::uniforms(const Program *self)
+	 * @param self The Program.
+	 * @return A _none-terminated_ array of this Program's uniform Variables.
+	 * @memberof Program
+	 */
+	Variable *(*uniforms)(const Program *self);
+
+	/**
+	 * @fn void Program::setUniform(const Program *self, const Variable *variable, const GLvoid *value)
+	 * @brief Sets the uniform Variable to the specified value.
+	 * @param self The Program.
+	 * @param variable The uniform Variable.
+	 * @param value The value, which must be a pointer.
+	 * @memberof Program
+	 */
+	void (*setUniform)(const Program *self, const Variable *variable, const GLvoid *value);
+
+	/**
+	 * @fn void Program::setUniformForName(const Program *self, const GLchar *name, const void *value)
+	 * @brief Sets the uniform Variable for the given name to the specified value.
+	 * @param self The Program.
+	 * @param name The uniform Variable name.
+	 * @param value The value, which must be a pointer.
+	 * @memberof Program
+	 */
+	void (*setUniformForName)(const Program *self, const GLchar *name, const void *value);
 
 	/**
 	 * @fn void Program::use(const Program *self)

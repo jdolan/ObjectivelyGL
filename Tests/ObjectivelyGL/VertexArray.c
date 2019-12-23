@@ -37,11 +37,11 @@ START_TEST(initWithAttributes) {
 	ck_assert_ptr_ne(NULL, buffer);
 
 	typedef struct {
-		vec3f position;
-		vec2f diffuse;
-		vec3f normal;
-		vec3f tangent;
-		vec3f bitangent;
+		vec3s position;
+		vec2s diffuse;
+		vec3s normal;
+		vec3s tangent;
+		vec3s bitangent;
 	} Vertex;
 
 	const Attribute attributes[] = MakeAttributes(

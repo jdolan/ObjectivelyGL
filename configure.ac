@@ -56,6 +56,7 @@ AM_CONDITIONAL([LINUX], [test "x$HOST_NAME" = "xLINUX"])
 
 AC_CHECK_HEADERS([GL/gl.h OpenGL/gl.h])
 
+PKG_CHECK_MODULES([CGLM], [cglm >= 0.5.0])
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
 PKG_CHECK_MODULES([OBJECTIVELY], [Objectively >= 1.0.0])
 PKG_CHECK_MODULES([SDL2], [sdl2 >= 2.0.5])

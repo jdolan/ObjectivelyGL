@@ -50,10 +50,46 @@ static void dealloc(Object *self) {
 #pragma mark - Program
 
 /**
- * @fn Variable *Program::activeAttributes(const Program *self)
+ * @fn Variable Program::attributeForLocation(const Program *self, const GLuint index)
  * @memberof Program
  */
-static Variable *activeAttributes(const Program *self) {
+static Variable attributeForLocation(const Program *self, const GLuint index) {
+
+	Variable u = { index };
+	glGetActiveUniform(self->name, index, sizeof(u.name) - 1, NULL, &u.size, &u.type, u.name);
+	return u;
+}
+
+/**
+ * @fn Variable Program::attributeForName(const Program *self, const GLchar *name)
+ * @memberof Program
+ */
+static Variable attributeForName(const Program *self, const GLchar *name) {
+
+	const GLint location = $(self, attributeLocation, name);
+	if (location == -1) {
+		return (Variable) {
+			.index = -1,
+			.type = GL_NONE
+		};
+	}
+
+	return $(self, attributeForLocation, location);
+}
+
+/**
+ * @fn GLint Program::attributeLocation(const Program *self, const GLchar *name)
+ * @memberof Program
+ */
+static GLint attributeLocation(const Program *self, const GLchar *name) {
+	return glGetAttribLocation(self->name, name);
+}
+
+/**
+ * @fn Variable *Program::attributes(const Program *self)
+ * @memberof Program
+ */
+static Variable *attributes(const Program *self) {
 
 	GLuint count;
 	glGetProgramiv(self->name, GL_ACTIVE_ATTRIBUTES, (GLint *) &count);
@@ -67,26 +103,6 @@ static Variable *activeAttributes(const Program *self) {
 	}
 
 	return attributes;
-}
-
-/**
- * @fn Variable *Program::activeUniforms(const Program *self)
- * @memberof Program
- */
-static Variable *activeUniforms(const Program *self) {
-
-	GLuint count;
-	glGetProgramiv(self->name, GL_ACTIVE_UNIFORMS, (GLint *) &count);
-
-	Variable *uniforms = calloc(count + 1, sizeof(Variable));
-	assert(uniforms);
-
-	Variable *u = uniforms;
-	for (GLuint i = 0; i < count; u->index = i, i++, u++) {
-		glGetActiveUniform(self->name, i, sizeof(u->name) - 1, NULL, &u->size, &u->type, u->name);
-	}
-
-	return uniforms;
 }
 
 /**
@@ -118,6 +134,10 @@ static void detachAll_enumerator(const Array *array, ident obj, ident data) {
 	glDetachShader(((Program *) data)->name, ((Shader *) obj)->name);
 }
 
+/**
+ * @fn void Program::detachAll(Program *self)
+ * @memberof Program
+ */
 static void detachAll(Program *self) {
 	$(self->shaders, removeAllObjectsWithEnumerator, detachAll_enumerator, self);
 }
@@ -236,6 +256,160 @@ static GLint link(const Program *self) {
 }
 
 /**
+ * @fn void Program::setUniform(const Program *self, const Variable *variable, const GLvoid *value)
+ * @memberof Program
+ */
+static void setUniform(const Program *self, const Variable *variable, const GLvoid *value) {
+
+	switch (variable->type) {
+		case GL_FLOAT:
+			switch (variable->size) {
+				case 1:
+					glUniform1f(variable->index, *(GLfloat *) value);
+					break;
+				case 2:
+					glUniform2fv(variable->index, 2, (const GLfloat *) value);
+					break;
+				case 3:
+					glUniform3fv(variable->index, 3, (const GLfloat *) value);
+					break;
+				case 4:
+					glUniform4fv(variable->index, 4, (const GLfloat *) value);
+					break;
+			}
+			break;
+
+		case GL_FLOAT_MAT3:
+			glUniformMatrix3fv(variable->index, 1, GL_FALSE, (const GLfloat *) value);
+			break;
+
+		case GL_FLOAT_MAT4:
+			glUniformMatrix4fv(variable->index, 1, GL_FALSE, (const GLfloat *) value);
+			break;
+
+		case GL_INT:
+			switch (variable->size) {
+				case 1:
+					glUniform1i(variable->index, *(GLint *) value);
+					break;
+				case 2:
+					glUniform2iv(variable->index, 2, (const GLint *) value);
+					break;
+				case 3:
+					glUniform3iv(variable->index, 3, (const GLint *) value);
+					break;
+				case 4:
+					glUniform4iv(variable->index, 4, (const GLint *) value);
+					break;
+			}
+			break;
+
+		case GL_UNSIGNED_INT:
+			switch (variable->size) {
+				case 1:
+					glUniform1ui(variable->index, *(const GLint *) value);
+					break;
+				case 2:
+					glUniform2uiv(variable->index, 2, (const GLuint *) value);
+					break;
+				case 3:
+					glUniform3uiv(variable->index, 3, (const GLuint *) value);
+					break;
+				case 4:
+					glUniform4uiv(variable->index, 4, (const GLuint *) value);
+					break;
+			}
+			break;
+
+		default:
+			// TODO: Print something?
+			break;
+	}
+}
+
+/**
+ * @fn void Program::setUniformForName(const Program *self, const GLchar *name, const void *value)
+ * @memberof Program
+*/
+static void setUniformForName(const Program *self, const GLchar *name, const void *value) {
+
+	const Variable variable = $(self, uniformForName, name);
+	$(self, setUniform, &variable, value);
+}
+
+/**
+ * @fn GLint Program::uniformBlockLocation(const Program *self, const GLchar *name)
+ * @memberof Program
+ */
+static GLint uniformBlockLocation(const Program *self, const GLchar *name) {
+	return glGetUniformBlockIndex(self->name, name);
+}
+
+/**
+ * @fn void Program::uniformBlockBinding(const Program *self, GLuint block, GLuint index)
+ * @memberof Program
+ */
+static void uniformBlockBinding(const Program *self, GLuint block, GLuint index) {
+	glUniformBlockBinding(self->name, block, index);
+}
+
+/**
+ * @fn Variable Program::uniformForLocation(const Program *self, const GLuint index)
+ * @memberof Program
+ */
+static Variable uniformForLocation(const Program *self, const GLuint index) {
+
+	Variable u = { index };
+	glGetActiveUniform(self->name, index, sizeof(u.name) - 1, NULL, &u.size, &u.type, u.name);
+	return u;
+}
+
+/**
+ * @fn Variable Program::uniformForName(const Program *self, const GLchar *name)
+ * @memberof Program
+ */
+static Variable uniformForName(const Program *self, const GLchar *name) {
+
+	const GLint index = $(self, uniformLocation, name);
+	if (index == -1) {
+		return (Variable) {
+			.index = -1,
+			.type = GL_NONE
+		};
+	}
+
+	return $(self, uniformForLocation, index);
+}
+
+/**
+ * @fn GLint Program::uniformLocation(const Program *self, const GLchar *name)
+ * @memberof Program
+ */
+static GLint uniformLocation(const Program *self, const GLchar *name) {
+	return glGetUniformLocation(self->name, name);
+}
+
+/**
+ * @fn Variable *Program::uniforms(const Program *self)
+ * @memberof Program
+ */
+static Variable *uniforms(const Program *self) {
+
+	GLuint count;
+	glGetProgramiv(self->name, GL_ACTIVE_UNIFORMS, (GLint *) &count);
+
+	Variable *uniforms = calloc(count + 1, sizeof(Variable));
+	assert(uniforms);
+
+	Variable *u = uniforms;
+	for (GLuint i = 0; i < count; u->index = i, i++, u++) {
+		glGetActiveUniform(self->name, i, sizeof(u->name) - 1, NULL, &u->size, &u->type, u->name);
+	}
+
+	return uniforms;
+}
+
+/**
  * @fn void Program::use(const Program *self)
  * @memberof Program
  */
@@ -252,8 +426,10 @@ static void initialize(Class *clazz) {
 
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
-	((ProgramInterface *) clazz->interface)->activeAttributes = activeAttributes;
-	((ProgramInterface *) clazz->interface)->activeUniforms = activeUniforms;
+	((ProgramInterface *) clazz->interface)->attributeForLocation = attributeForLocation;
+	((ProgramInterface *) clazz->interface)->attributeForName = attributeForName;
+	((ProgramInterface *) clazz->interface)->attributeLocation = attributeLocation;
+	((ProgramInterface *) clazz->interface)->attributes = attributes;
 	((ProgramInterface *) clazz->interface)->attach = attach;
 	((ProgramInterface *) clazz->interface)->detach = detach;
 	((ProgramInterface *) clazz->interface)->detachAll = detachAll;
@@ -262,6 +438,14 @@ static void initialize(Class *clazz) {
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;
 	((ProgramInterface *) clazz->interface)->initWithDescriptor = initWithDescriptor;
 	((ProgramInterface *) clazz->interface)->link = link;
+	((ProgramInterface *) clazz->interface)->uniformBlockLocation = uniformBlockLocation;
+	((ProgramInterface *) clazz->interface)->uniformBlockBinding = uniformBlockBinding;
+	((ProgramInterface *) clazz->interface)->uniformForLocation = uniformForLocation;
+	((ProgramInterface *) clazz->interface)->uniformForName = uniformForName;
+	((ProgramInterface *) clazz->interface)->uniformLocation = uniformLocation;
+	((ProgramInterface *) clazz->interface)->uniforms = uniforms;
+	((ProgramInterface *) clazz->interface)->setUniform = setUniform;
+	((ProgramInterface *) clazz->interface)->setUniformForName = setUniformForName;
 	((ProgramInterface *) clazz->interface)->use = use;
 }
 

@@ -67,7 +67,7 @@ typedef struct {
  * @brief Creates a BufferData with the specified parameters.
  */
 #define MakeBufferData(target, size, data, usage) \
-	(BufferData) { (target), (size), (ident) (data), (usage) }
+	(BufferData) { (target), (size), (const GLvoid *) (data), (usage) }
 
 /**
  * @brief BufferSubData is used to modify the data of a Buffer.
@@ -100,7 +100,7 @@ typedef struct {
  * @brief Creates a BufferSubData with the specified parameters.
  */
 #define MakeBufferSubData(target, offset, size, data) \
-	(BufferSubData) { (target), (offset), (size), (ident) (data) }
+	(BufferSubData) { (target), (offset), (size), (const GLvoid *) (data) }
 
 /**
  * @brief The Buffer type.
@@ -123,7 +123,6 @@ struct Buffer {
 	 * @brief The Buffer name.
 	 */
 	GLuint name;
-
 
 	/**
 	 * @brief The size of the Buffer's data store, in bytes.
@@ -153,7 +152,7 @@ struct BufferInterface {
 	 * @param target The target, e.g. `GL_ARRAY_BUFFER`, `GL_ELEMENT_ARRAY_BUFFER`, etc.
 	 * @memberof Buffer
 	 */
-	void (*bind)(Buffer *self, GLenum target);
+	void (*bind)(const Buffer *self, GLenum target);
 
 	/**
 	 * @fn Buffer *Buffer::init(Buffer *self)

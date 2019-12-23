@@ -25,7 +25,6 @@
 
 #include <Objectively/Types.h>
 #include <ObjectivelyGL/OpenGL.h>
-#include <quemath/quemath.h>
 
 #ifndef OBJECTIVELYGL_EXPORT
 #define OBJECTIVELYGL_EXPORT extern
