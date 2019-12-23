@@ -119,4 +119,4 @@ struct UniformBufferInterface {
  * @return The UniformBuffer Class.
  * @memberof UniformBuffer
  */
-OBJECTIVELY_EXPORT Class *_UniformBuffer(void);
+OBJECTIVELYGL_EXPORT Class *_UniformBuffer(void);

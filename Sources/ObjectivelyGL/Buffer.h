@@ -209,4 +209,4 @@ struct BufferInterface {
  * @return The Buffer Class.
  * @memberof Buffer
  */
-OBJECTIVELY_EXPORT Class *_Buffer(void);
+OBJECTIVELYGL_EXPORT Class *_Buffer(void);

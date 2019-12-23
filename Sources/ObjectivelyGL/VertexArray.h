@@ -194,4 +194,4 @@ struct VertexArrayInterface {
  * @return The VertexArray Class.
  * @memberof VertexArray
  */
-OBJECTIVELY_EXPORT Class *_VertexArray(void);
+OBJECTIVELYGL_EXPORT Class *_VertexArray(void);
