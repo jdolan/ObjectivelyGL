@@ -25,7 +25,7 @@
 
 #include <Objectively/Thread.h>
 
-#define CAPACITY 10000
+#define CAPACITY 1000
 
 static int criticalSection;
 
@@ -94,23 +94,13 @@ START_TEST(flush) {
 	release(q);
 } END_TEST
 
-static ident run(Thread *thread) {
-
-	CommandQueue *q = thread->data;
-	while (!thread->isCancelled) {
-		$(q, flush);
-	}
-
-	return NULL;
-}
-
-START_TEST(threaded) {
+START_TEST(start) {
 
 	CommandQueue *q = $(alloc(CommandQueue), initWithCapacity, CAPACITY);
 	ck_assert_ptr_ne(NULL, q);
 
-	Thread *thread = $(alloc(Thread), initWithFunction, run, q);
-	$(thread, start);
+	Thread *thread = $(q, start);
+	ck_assert_ptr_ne(NULL, thread);
 
 	for (size_t i = 0; i < CAPACITY; i++) {
 		ck_assert_int_eq(true, $(q, enqueue, cmd, (ident) i));
@@ -136,7 +126,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, enqueue);
 	tcase_add_test(tcase, dequeue);
 	tcase_add_test(tcase, flush);
-	tcase_add_test(tcase, threaded);
+	tcase_add_test(tcase, start);
 
 	Suite *suite = suite_create("CommandQueue");
 	suite_add_tcase(suite, tcase);
