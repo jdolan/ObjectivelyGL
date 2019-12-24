@@ -47,7 +47,7 @@ static void dealloc(Object *self) {
 #pragma mark - CommandQueue
 
 /**
- * @fn _Bool CommandQueue::dequeue(void)
+ * @fn _Bool CommandQueue::dequeue(CommandQueue *self)
  * @memberof CommandQueue
  */
 static _Bool dequeue(CommandQueue *self) {
@@ -65,6 +65,8 @@ static _Bool dequeue(CommandQueue *self) {
 			dequeued = true;
 		}
 	});
+
+	assert(glGetError() == GL_NO_ERROR);
 
 	return dequeued;
 }
@@ -144,6 +146,33 @@ static _Bool isEmpty(const CommandQueue *self) {
 }
 
 /**
+ * @brief ThreadFunction for start.
+ */
+static ident _start(Thread *thread) {
+
+	CommandQueue *self = thread->data;
+
+	while (!thread->isCancelled) {
+		$(self, flush);
+	}
+
+	return NULL;
+}
+
+/**
+ * @fn Thread *CommandQueue::start(CommandQueue *self)
+ * @memberof CommandQueue
+ */
+static Thread *start(CommandQueue *self) {
+
+	Thread *thread = $(alloc(Thread), initWithFunction, _start, self);
+
+	$(thread, start);
+
+	return thread;
+}
+
+/**
  * @fn void CommandQueue::waitUntilEmpty(const CommandQueue *self)
  * @memberof CommandQueue
  */
@@ -168,6 +197,7 @@ static void initialize(Class *clazz) {
 	((CommandQueueInterface *) clazz->interface)->flush = flush;
 	((CommandQueueInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
 	((CommandQueueInterface *) clazz->interface)->isEmpty = isEmpty;
+	((CommandQueueInterface *) clazz->interface)->start = start;
 	((CommandQueueInterface *) clazz->interface)->waitUntilEmpty = waitUntilEmpty;
 }
 

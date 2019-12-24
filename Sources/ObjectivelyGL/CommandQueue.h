@@ -24,12 +24,14 @@
 #pragma once
 
 #include <Objectively/Condition.h>
+#include <Objectively/Thread.h>
 
 #include <ObjectivelyGL/Types.h>
 
 /**
  * @file
- * @brief ..
+ * @brief CommandQueues allow asynchronous rendering via a dedicatd thread.
+ * @details
  */
 
 typedef struct CommandQueue CommandQueue;
@@ -89,7 +91,7 @@ struct CommandQueueInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn _Bool CommandQueue::dequeue(void)
+	 * @fn _Bool CommandQueue::dequeue(CommandQueue *self)
 	 * @brief Dequeues and executes the next pending command on the calling thread.
 	 * @param self The CommandQueue.
 	 * @return True if a Command was dequeued, false otherwise.
@@ -134,6 +136,14 @@ struct CommandQueueInterface {
 	 */
 	_Bool (*isEmpty)(const CommandQueue *self);
 
+	/**
+	 * @fn Thread *CommandQueue::start(CommandQueue *self)
+	 * @brief A convenience function for flushing this CommandQueue in a worker thread.
+	 * @param self The CommandQueue.
+	 * @return A started Thread that will flush this CommandQueue until it is cancelled.
+	 * @memberof CommandQueue
+	 */
+	Thread *(*start)(CommandQueue *self);
 
 	/**
 	 * @fn void CommandQueue::waitUntilEmpty(const CommandQueue *self)

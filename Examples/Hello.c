@@ -24,35 +24,25 @@
 #include <assert.h>
 #include <cglm/struct.h>
 #include <SDL.h>
+#include <Objectively/Thread.h>
 #include <ObjectivelyGL.h>
 
 #include "Teapot.h"
 
-static Program *createProgram(void);
-static VertexArray *createVertexArray(void);
-
-static struct {
-	mat4s projection;
-	mat4s view;
-	mat4s model;
-} Matrix;
+typedef struct {
+	SDL_Window *window;
+	SDL_GLContext *context;
+	Program *program;
+	VertexArray *vertexArray;
+	UniformBuffer *uniformBuffer;
+} CommandData;
 
 #define UNIFORM_BUFFER_MATRIX 0
 
 /**
- * @brief Program entry point.
+ * @brief Creates the GL context.
  */
-int main(int argc, char *argv[]) {
-
-	SDL_Init(SDL_INIT_VIDEO);
-
-	SDL_Window *window = SDL_CreateWindow(__FILE__,
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		1024,
-		768,
-		SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
-	);
+static SDL_GLContext *createContext(SDL_Window *window) {
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -60,64 +50,12 @@ int main(int argc, char *argv[]) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
 
 	SDL_GLContext *context = SDL_GL_CreateContext(window);
-	gladLoadGLLoader(SDL_GL_GetProcAddress);
-
-	Program *program = createProgram();
-	$(program, use);
-
-	const GLint block = $(program, uniformBlockLocation, "Matrix");
-	$(program, uniformBlockBinding, block, UNIFORM_BUFFER_MATRIX);
-
-	UniformBuffer *buffer = $(alloc(UniformBuffer), init);
-	$(buffer, bind, UNIFORM_BUFFER_MATRIX);
-
-	VertexArray *array = createVertexArray();
-
-	$(array, bind);
-	$(array, enableAttribute, 0);
-
-	while (true) {
-
-		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				break;
-			}
-		}
-
-		if (event.type == SDL_QUIT) {
-			break;
-		}
-
-		int w, h;
-		SDL_GetWindowSize(window, &w, &h);
-
-		Matrix.projection = glms_perspective(90, (float) w / (float) h, 0, 100);
-		Matrix.view = glms_lookat((vec3s) { 0, 2, -2 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
-		Matrix.model = glms_euler_xyz((vec3s) { 0, SDL_GetTicks() * 0.001, -M_PI });
-
-		$((Buffer *) buffer, writeData, &MakeUniformBufferData(sizeof(Matrix), &Matrix, GL_STREAM_DRAW));
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		glDrawArrays(GL_TRIANGLES, 0, lengthof(teapot) / 3);
-
-		assert(glGetError() == GL_NO_ERROR);
-
-		SDL_GL_SwapWindow(window);
+	if (context == NULL) {
+		fprintf(stderr, "Failed to create GL context\n");
+		exit(1);
 	}
 
-	release(array);
-	release(program);
-
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(window);
-
-	SDL_Quit();
-
-	return 0;
+	return context;
 }
 
 /**
@@ -150,6 +88,20 @@ static Program *createProgram(void) {
 }
 
 /**
+ * @brief Creates the UniformBuffer for the "simple" vertex and fragment shaders.
+ */
+static UniformBuffer *createUniformBuffer(void) {
+
+	UniformBuffer *uniformBuffer = $(alloc(UniformBuffer), init);
+	if (uniformBuffer == NULL) {
+		fprintf(stderr, "Failed to create uniform buffer\n");
+		exit(1);
+	}
+
+	return uniformBuffer;
+}
+
+/**
  * Creates the VertexArray from the Teapot vertext data.
  */
 static VertexArray *createVertexArray(void) {
@@ -175,3 +127,126 @@ static VertexArray *createVertexArray(void) {
 	release(buffer);
 	return array;
 }
+
+/**
+ * @brief Command Consumer to initialize GL resources.
+ */
+static void initialize(ident data) {
+
+	CommandData *in = data;
+
+	in->context = createContext(in->window);
+	gladLoadGLLoader(SDL_GL_GetProcAddress);
+
+	in->program = createProgram();
+	in->uniformBuffer = createUniformBuffer();
+	in->vertexArray = createVertexArray();
+
+	const GLint block = $(in->program, uniformBlockLocation, "Matrix");
+	$(in->program, uniformBlockBinding, block, UNIFORM_BUFFER_MATRIX);
+	$(in->uniformBuffer, bind, UNIFORM_BUFFER_MATRIX);
+}
+
+/**
+ * @brief Command Consumer to render the teapot.
+ */
+static void drawScene(ident data) {
+
+	CommandData *in = data;
+
+	int w, h;
+	SDL_GetWindowSize(in->window, &w, &h);
+
+	struct {
+		mat4s projection;
+		mat4s view;
+		mat4s model;
+	} Matrix;
+
+	Matrix.projection = glms_perspective(90, (float) w / (float) h, 0, 100);
+	Matrix.view = glms_lookat((vec3s) { 0, 2, -2 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
+	Matrix.model = glms_euler_xyz((vec3s) { 0, SDL_GetTicks() * 0.001, -M_PI });
+
+	$((Buffer *) in->uniformBuffer, writeData, &MakeUniformBufferData(sizeof(Matrix), &Matrix, GL_STREAM_DRAW));
+
+	$(in->program, use);
+
+	$(in->vertexArray, bind);
+	$(in->vertexArray, enableAttribute, 0);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glDrawArrays(GL_TRIANGLES, 0, lengthof(teapot) / 3);
+
+	SDL_GL_SwapWindow(in->window);
+}
+
+/**
+ * @brief Command Consumer to destroy all GL resources.
+ */
+static void destroy(ident data) {
+
+	CommandData *in = data;
+
+	release(in->program);
+	release(in->uniformBuffer);
+	release(in->vertexArray);
+
+	SDL_GL_DeleteContext(in->context);
+}
+
+/**
+ * @brief Program entry point.
+ */
+int main(int argc, char *argv[]) {
+
+	SDL_Init(SDL_INIT_VIDEO);
+
+	CommandData in = {
+		.window = SDL_CreateWindow(__FILE__,
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			1024,
+			768,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
+		)
+	};
+
+	CommandQueue *queue = $(alloc(CommandQueue), initWithCapacity, 10);
+
+	$(queue, enqueue, initialize, &in);
+
+	Thread *thread = $(queue, start);
+
+	while (true) {
+
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				break;
+			}
+		}
+
+		if (event.type == SDL_QUIT) {
+			$(queue, enqueue, destroy, &in);
+			break;
+		}
+
+		$(queue, enqueue, drawScene, &in);
+		$(queue, waitUntilEmpty);
+	}
+
+	$(thread, cancel);
+	$(thread, join, NULL);
+
+	release(thread);
+
+	SDL_DestroyWindow(in.window);
+
+	SDL_Quit();
+
+	return 0;
+}
+
