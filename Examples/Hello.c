@@ -24,7 +24,6 @@
 #include <assert.h>
 #include <cglm/struct.h>
 #include <SDL.h>
-#include <Objectively/Thread.h>
 #include <ObjectivelyGL.h>
 
 #include "Teapot.h"
