@@ -23,10 +23,13 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <ObjectivelyGL/CommandQueue.h>
 
 #define _Class _CommandQueue
+
+#define COMMAND_QUEUE_DEFAULT_CAPACITY 64
 
 #pragma mark - Object
 
@@ -40,6 +43,7 @@ static void dealloc(Object *self) {
 	free(this->commands);
 
 	release(this->condition);
+	release(this->thread);
 
 	super(Object, self, dealloc);
 }
@@ -63,6 +67,7 @@ static _Bool dequeue(CommandQueue *self) {
 			cmd->data = NULL;
 
 			self->pending = (self->pending + 1) % self->capacity;
+			self->count--;
 			dequeued = true;
 		}
 	});
@@ -91,6 +96,7 @@ static _Bool enqueue(CommandQueue *self, Consumer consumer, ident data) {
 			cmd->data = data;
 
 			self->free = (self->free + 1) % self->capacity;
+			self->count++;
 			enqueued = true;
 		}
 	});
@@ -110,6 +116,28 @@ static void flush(CommandQueue *self) {
 }
 
 /**
+ * @fn CommandQueue *CommandQueue::init(CommandQueue *self)
+ * @memberof CommandQueue
+ */
+static CommandQueue *init(CommandQueue *self) {
+	return $(self, initWithCapacity, COMMAND_QUEUE_DEFAULT_CAPACITY);
+}
+
+/**
+ * @brief ThreadFunction.
+ */
+static ident _thread(Thread *thread) {
+
+	CommandQueue *self = thread->data;
+
+	while (!thread->isCancelled) {
+		$(self, flush);
+	}
+
+	return NULL;
+}
+
+/**
  * @fn CommandQueue *CommandQueue::init(CommandQueue *self, ident context)
  * @memberof CommandQueue
  */
@@ -125,6 +153,9 @@ static CommandQueue *initWithCapacity(CommandQueue *self, size_t capacity) {
 
 		self->condition = $(alloc(Condition), init);
 		assert(self->condition);
+
+		self->thread = $(alloc(Thread), initWithFunction, _thread, self);
+		assert(self->thread);
 	}
 
 	return self;
@@ -149,30 +180,47 @@ static _Bool isEmpty(const CommandQueue *self) {
 }
 
 /**
- * @brief ThreadFunction for start.
+ * @fn void CommandQueue::resize(CommandQueue *self, size_t capacity)
+ * @memberof CommandQueue
  */
-static ident _start(Thread *thread) {
+static void resize(CommandQueue *self, size_t capacity) {
 
-	CommandQueue *self = thread->data;
+	synchronized(self->condition, {
 
-	while (!thread->isCancelled) {
-		$(self, flush);
-	}
+		Command *commands = calloc(capacity, sizeof(Command));
+		assert(commands);
 
-	return NULL;
+		const Command *in = self->commands + self->pending;
+		for (size_t i = 0; i < self->count; i++) {
+			*(commands + i) = *(in + i % self->capacity);
+		}
+
+		free(self->commands);
+
+		self->commands = commands;
+		self->capacity = capacity;
+		self->pending = 0;
+		self->free = self->count;
+	});
 }
 
 /**
- * @fn Thread *CommandQueue::start(CommandQueue *self)
+ * @fn void CommandQueue::start(CommandQueue *self)
  * @memberof CommandQueue
  */
-static Thread *start(CommandQueue *self) {
+static void start(CommandQueue *self) {
 
-	Thread *thread = $(alloc(Thread), initWithFunction, _start, self);
+	$(self->thread, start);
+}
 
-	$(thread, start);
+/**
+ * @fn void *CommandQueue::start(CommandQueue *self)
+ * @memberof CommandQueue
+ */
+static void stop(CommandQueue *self) {
 
-	return thread;
+	$(self->thread, cancel);
+	$(self->thread, join, NULL);
 }
 
 /**
@@ -198,9 +246,12 @@ static void initialize(Class *clazz) {
 	((CommandQueueInterface *) clazz->interface)->dequeue = dequeue;
 	((CommandQueueInterface *) clazz->interface)->enqueue = enqueue;
 	((CommandQueueInterface *) clazz->interface)->flush = flush;
+	((CommandQueueInterface *) clazz->interface)->init = init;
 	((CommandQueueInterface *) clazz->interface)->initWithCapacity = initWithCapacity;
 	((CommandQueueInterface *) clazz->interface)->isEmpty = isEmpty;
+	((CommandQueueInterface *) clazz->interface)->resize = resize;
 	((CommandQueueInterface *) clazz->interface)->start = start;
+	((CommandQueueInterface *) clazz->interface)->stop = stop;
 	((CommandQueueInterface *) clazz->interface)->waitUntilEmpty = waitUntilEmpty;
 }
 

@@ -31,7 +31,8 @@
 /**
  * @file
  * @brief CommandQueues allow asynchronous rendering via a dedicatd thread.
- * @details
+ * @details To process Commands on a dedicated background thread, use _start_ and _stop_.
+ * To process Commands on the calling thread, use _dequeue_ or _flush_.
  */
 
 typedef struct CommandQueue CommandQueue;
@@ -70,6 +71,11 @@ struct CommandQueue {
 	size_t capacity;
 
 	/**
+	 * @brief The count of pending Commands.
+	 */
+	size_t count;
+
+	/**
 	 * @private
 	 */
 	uintptr_t free, pending;
@@ -78,6 +84,11 @@ struct CommandQueue {
 	 * @private
 	 */
 	Condition *condition;
+
+	/**
+	 * @private
+	 */
+	Thread *thread;
 };
 
 /**
@@ -120,9 +131,18 @@ struct CommandQueueInterface {
 
 	/**
 	 * @fn CommandQueue *CommandQueue::init(CommandQueue *self)
-	 * @brief Initializes this CommandQueue.
+	 * @brief Initializes this CommandQueue with a default capacity.
 	 * @param self The CommandQueue.
-	 * @param context The OpenGL context.
+	 * @return The initialized CommandQueue, or `NULL` on error.
+	 * @memberof CommandQueue
+	 */
+	CommandQueue *(*init)(CommandQueue *self);
+
+	/**
+	 * @fn CommandQueue *CommandQueue::initWithCapacity(CommandQueue *self, size_t capacity)
+	 * @brief Initializes this CommandQueue with the specified capacity.
+	 * @param self The CommandQueue.
+	 * @param capacity The capacity.
 	 * @return The initialized CommandQueue, or `NULL` on error.
 	 * @memberof CommandQueue
 	 */
@@ -137,13 +157,29 @@ struct CommandQueueInterface {
 	_Bool (*isEmpty)(const CommandQueue *self);
 
 	/**
-	 * @fn Thread *CommandQueue::start(CommandQueue *self)
-	 * @brief A convenience function for flushing this CommandQueue in a worker thread.
+	 * @fn void CommandQueue::resize(CommandQueue *self, size_t capacity)
+	 * @brief Resizes this CommandQueue to the specified capacity.
 	 * @param self The CommandQueue.
-	 * @return A started Thread that will flush this CommandQueue until it is cancelled.
+	 * @param capacity The desired capacity.
 	 * @memberof CommandQueue
 	 */
-	Thread *(*start)(CommandQueue *self);
+	void (*resize)(CommandQueue *self, size_t capacity);
+
+	/**
+	 * @fn void CommandQueue::start(CommandQueue *self)
+	 * @brief Starts the worker Thread to flush the queue.
+	 * @param self The CommandQueue.
+	 * @memberof CommandQueue
+	 */
+	void (*start)(CommandQueue *self);
+
+	/**
+	 * @fn void *CommandQueue::start(CommandQueue *self)
+	 * @brief Stops the worker Thread.
+	 * @param self The CommandQueue.
+	 * @memberof CommandQueue
+	 */
+	void (*stop)(CommandQueue *self);
 
 	/**
 	 * @fn void CommandQueue::waitUntilEmpty(const CommandQueue *self)

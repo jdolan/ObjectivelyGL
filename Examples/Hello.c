@@ -216,8 +216,7 @@ int main(int argc, char *argv[]) {
 	CommandQueue *queue = $(alloc(CommandQueue), initWithCapacity, 10);
 
 	$(queue, enqueue, initialize, &in);
-
-	Thread *thread = $(queue, start);
+	$(queue, start);
 
 	while (true) {
 
@@ -237,10 +236,9 @@ int main(int argc, char *argv[]) {
 		$(queue, waitUntilEmpty);
 	}
 
-	$(thread, cancel);
-	$(thread, join, NULL);
+	$(queue, stop);
 
-	release(thread);
+	release(queue);
 
 	SDL_DestroyWindow(in.window);
 

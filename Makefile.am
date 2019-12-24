@@ -8,7 +8,7 @@ SUBDIRS = \
 
 html:
 	doxygen
-	install -m 644 Documentation/*.{gif,jpg} Documentation/html
+#install -m 644 Documentation/*.{gif,jpg} Documentation/html
 
 html-clean:
 	rm -rf Documentation/html

@@ -25,8 +25,6 @@
 
 #include <Objectively/Thread.h>
 
-#define CAPACITY 1000
-
 static int criticalSection;
 
 static void setup(void) {
@@ -38,20 +36,28 @@ static void teardown(void) {
 	destroyContext();
 }
 
-static void cmd(ident data) {
+static void command(ident data) {
 	criticalSection++;
+}
+
+static void printq(const CommandQueue *q) {
+
+	const Command *cmd = q->commands;
+	for (size_t i = 0; i < q->capacity; i++, cmd++) {
+		printf("%d %s\n", (int) cmd->data, i == q->pending ? "P" : i == q->free ? "F" : "");
+	}
 }
 
 START_TEST(enqueue) {
 
-	CommandQueue *q = $(alloc(CommandQueue), initWithCapacity, CAPACITY);
+	CommandQueue *q = $(alloc(CommandQueue), init);
 	ck_assert_ptr_ne(NULL, q);
 
-	for (size_t i = 0; i < CAPACITY; i++) {
-		ck_assert_int_eq(true, $(q, enqueue, cmd, (ident) i));
+	for (size_t i = 0; i < q->capacity; i++) {
+		ck_assert_int_eq(true, $(q, enqueue, command, (ident) i));
 	}
 
-	ck_assert_int_eq(false, $(q, enqueue, cmd, (ident) CAPACITY));
+	ck_assert_int_eq(false, $(q, enqueue, command, NULL));
 	ck_assert_int_eq(false, $(q, isEmpty));
 
 	release(q);
@@ -59,14 +65,14 @@ START_TEST(enqueue) {
 
 START_TEST(dequeue) {
 
-	CommandQueue *q = $(alloc(CommandQueue), initWithCapacity, CAPACITY);
+	CommandQueue *q = $(alloc(CommandQueue), init);
 	ck_assert_ptr_ne(NULL, q);
 
-	for (size_t i = 0; i < CAPACITY; i++) {
-		ck_assert_int_eq(true, $(q, enqueue, cmd, (ident) i));
+	for (size_t i = 0; i < q->capacity; i++) {
+		ck_assert_int_eq(true, $(q, enqueue, command, (ident) i));
 	}
 
-	for (size_t i = 0; i < CAPACITY; i++) {
+	for (size_t i = 0; i < q->capacity; i++) {
 		ck_assert_int_eq(true, $(q, dequeue));
 	}
 
@@ -78,11 +84,11 @@ START_TEST(dequeue) {
 
 START_TEST(flush) {
 
-	CommandQueue *q = $(alloc(CommandQueue), initWithCapacity, CAPACITY);
+	CommandQueue *q = $(alloc(CommandQueue), init);
 	ck_assert_ptr_ne(NULL, q);
 
-	for (size_t i = 0; i < CAPACITY; i++) {
-		ck_assert_int_eq(true, $(q, enqueue, cmd, (ident) i));
+	for (size_t i = 0; i < q->capacity; i++) {
+		ck_assert_int_eq(true, $(q, enqueue, command, (ident) i));
 	}
 
 	ck_assert_int_eq(false, $(q, isEmpty));
@@ -94,27 +100,50 @@ START_TEST(flush) {
 	release(q);
 } END_TEST
 
+START_TEST(resize) {
+
+	CommandQueue *q = $(alloc(CommandQueue), initWithCapacity, 8);
+
+	for (size_t i = 0; i < q->capacity; i++) {
+		$(q, enqueue, command, (ident) i);
+	}
+
+	$(q, resize, 16);
+
+	ck_assert_int_eq(0, q->pending);
+	ck_assert_int_eq(8, q->free);
+	ck_assert_int_eq(8, q->count);
+
+	$(q, dequeue);
+	$(q, dequeue);
+
+	$(q, resize, 8);
+
+	ck_assert_int_eq(0, q->pending);
+	ck_assert_int_eq(6, q->free);
+	ck_assert_int_eq(6, q->count);
+
+	printq(q);
+
+} END_TEST
+
 START_TEST(start) {
 
-	CommandQueue *q = $(alloc(CommandQueue), initWithCapacity, CAPACITY);
+	CommandQueue *q = $(alloc(CommandQueue), init);
 	ck_assert_ptr_ne(NULL, q);
 
-	Thread *thread = $(q, start);
-	ck_assert_ptr_ne(NULL, thread);
+	$(q, start);
 
-	for (size_t i = 0; i < CAPACITY; i++) {
-		ck_assert_int_eq(true, $(q, enqueue, cmd, (ident) i));
+	for (size_t i = 0; i < q->capacity; i++) {
+		ck_assert_int_eq(true, $(q, enqueue, command, NULL));
 	}
 
 	$(q, waitUntilEmpty);
+	$(q, stop);
 
-	$(thread, cancel);
-	$(thread, join, NULL);
-
-	ck_assert_int_eq(CAPACITY, criticalSection);
+	ck_assert_int_eq(q->capacity, criticalSection);
 
 	release(q);
-	release(thread);
 
 } END_TEST
 
@@ -126,6 +155,7 @@ int main(int argc, char **argv) {
 	tcase_add_test(tcase, enqueue);
 	tcase_add_test(tcase, dequeue);
 	tcase_add_test(tcase, flush);
+	tcase_add_test(tcase, resize);
 	tcase_add_test(tcase, start);
 
 	Suite *suite = suite_create("CommandQueue");
