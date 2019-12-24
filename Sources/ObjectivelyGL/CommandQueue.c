@@ -51,13 +51,14 @@ static void dealloc(Object *self) {
  * @memberof CommandQueue
  */
 static _Bool dequeue(CommandQueue *self) {
-
 	_Bool dequeued = false;
+
+	Command copy = { .consumer = NULL, .data = NULL };
 
 	synchronized(self->condition, {
 		Command *cmd = self->commands + self->pending;
 		if (cmd->consumer) {
-			cmd->consumer(cmd->data);
+			copy = *cmd;
 			cmd->consumer = NULL;
 			cmd->data = NULL;
 
@@ -66,7 +67,9 @@ static _Bool dequeue(CommandQueue *self) {
 		}
 	});
 
-	assert(glGetError() == GL_NO_ERROR);
+	if (copy.consumer) {
+		copy.consumer(copy.data);
+	}
 
 	return dequeued;
 }
