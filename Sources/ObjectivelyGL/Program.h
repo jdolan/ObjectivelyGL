@@ -36,6 +36,8 @@
 typedef struct Program Program;
 typedef struct ProgramInterface ProgramInterface;
 
+typedef void (*ProgramUse)(const Program *self);
+
 /**
  * @brief ProgramDescriptors provide a convenient way to initialize Programs from Resources.
  * @details Programs initialized with descriptors are automatically compiled and linked. Their
@@ -140,6 +142,16 @@ struct Program {
 	 * @brief The uniform Variables defined by this Program.
 	 */
 	Vector *uniforms;
+
+	/**
+	 * @brief An optional callback that, if set, is called on `use`.
+	 */
+	ProgramUse use;
+
+	/**
+	 * @brief User data.
+	 */
+	ident data;
 };
 
 /**

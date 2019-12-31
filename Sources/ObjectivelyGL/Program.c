@@ -383,7 +383,12 @@ static const Variable *uniformForName(const Program *self, const GLchar *name) {
  * @memberof Program
  */
 static void use(const Program *self) {
+
 	glUseProgram(self->name);
+
+	if (self->use) {
+		self->use(self);
+	}
 }
 
 #pragma mark - Class lifecycle
