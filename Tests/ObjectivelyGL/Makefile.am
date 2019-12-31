@@ -6,9 +6,11 @@ DEFAULT_INCLUDES = \
 
 TESTS = \
 	Buffer \
+	CommandQueue \
 	Program \
 	Shader \
-	VertexArray
+	VertexArray \
+	WavefrontModel
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \

@@ -25,6 +25,7 @@
 
 #include <Objectively/Object.h>
 
+#include <ObjectivelyGL/Attribute.h>
 #include <ObjectivelyGL/Buffer.h>
 
 /**
@@ -34,70 +35,6 @@
 
 typedef struct VertexArray VertexArray;
 typedef struct VertexArrayInterface VertexArrayInterface;
-
-/**
- * @brief Attributes describe the elements of a VertexArray.
- */
-typedef struct {
-	/**
-	 * @brief The index of the Attribute in the Shader inputs.
-	 */
-	GLuint index;
-
-	/**
-	 * @brief The size, in typed primitives, of the Attribute.
-	 */
-	GLint size;
-
-	/**
-	 * @brief The primitive type of the Attribute.
-	 */
-	GLenum type;
-
-	/**
-	 * @brief True if the Attribute is an integer type, and should be normalized to floating point.
-	 */
-	GLboolean normalized;
-
-	/**
-	 * @brief The stride of the Attribute in the VertexArray.
-	 * @details Use `0` for tightly packed arrays, or `sizeof(VertexStruct)` for interleaved ones.
-	 */
-	GLsizei stride;
-
-	/**
-	 * @brief The offset pointer to the Attribute in the Shader inputs.
-	 */
-	const GLvoid *pointer;
-
-} Attribute;
-
-/**
- * @brief Creates an Attribute with the specified parameters.
- */
-#define MakeAttribute(index, size, type, normalized, stride, pointer) \
-	(Attribute) { (index), (size), (type), (normalized), (stride), (GLvoid *) (pointer) }
-
-#define VertexAttribute(index, size, type, normalized, vertex, member) \
-	MakeAttribute(index, size, type, normalized, sizeof(vertex), offsetof(vertex, member))
-
-#define VertexAttributeVec2f(index, vertex, member) \
-	VertexAttribute(index, 2, GL_FLOAT, GL_FALSE, vertex, member)
-
-#define VertexAttributeVec3f(index, vertex, member) \
-	VertexAttribute(index, 3, GL_FLOAT, GL_FALSE, vertex, member)
-
-#define VertexAttributeVec4f(index, vertex, member) \
-	VertexAttribute(index, 4, GL_FLOAT, GL_FALSE, vertex, member)
-
-/**
- * @brief Creates a `NULL`-terminated array of Attributes.
- */
-#define MakeAttributes(...) \
-	{ \
-		__VA_ARGS__, \
-		MakeAttribute(0, 0, GL_NONE, GL_FALSE, 0, NULL) \
-	}
 
 /**
  * @brief The VertexArray type.

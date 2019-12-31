@@ -24,19 +24,33 @@
 #include <assert.h>
 #include <cglm/struct.h>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <ObjectivelyGL.h>
 
-#include "Teapot.h"
+typedef struct {
+	mat4s projection;
+	mat4s view;
+	mat4s model;
+	vec3s lightPos;
+	vec3s viewPos;
+} Uniforms;
+
+typedef struct {
+	vec3s position;
+	vec3s normal;
+	vec2s diffuse;
+	vec3s tangent;
+	vec3s bitangent;
+} Vertex;
 
 typedef struct {
 	SDL_Window *window;
 	SDL_GLContext *context;
 	Program *program;
+	Uniforms uniforms;
 	VertexArray *vertexArray;
-	UniformBuffer *uniformBuffer;
+	Buffer *elementsBuffer;
 } CommandData;
-
-#define UNIFORM_BUFFER_MATRIX 0
 
 /**
  * @brief Creates the GL context.
@@ -58,13 +72,13 @@ static SDL_GLContext *createContext(SDL_Window *window) {
 }
 
 /**
- * @brief Creates the Program from the "simple" vertex and fragment shaders.
+ * @brief Creates the Program from the parallax vertex and fragment shaders.
  */
 static Program *createProgram(void) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/parallax.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/parallax.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -74,7 +88,7 @@ static Program *createProgram(void) {
 			 shader++) {
 
 			if (shader->status != GL_TRUE) {
-				fprintf(stderr, "%s\n", shader->infoLog);
+				fprintf(stderr, "%s: %s\n", shader->resources[0], shader->infoLog);
 			}
 		}
 		fprintf(stderr, "%s\n", descriptor.infoLog);
@@ -84,47 +98,6 @@ static Program *createProgram(void) {
 
 	FreeProgramDescriptor(&descriptor);
 	return program;
-}
-
-/**
- * @brief Creates the UniformBuffer for the "simple" vertex and fragment shaders.
- */
-static UniformBuffer *createUniformBuffer(void) {
-
-	UniformBuffer *uniformBuffer = $(alloc(UniformBuffer), init);
-	if (uniformBuffer == NULL) {
-		fprintf(stderr, "Failed to create uniform buffer\n");
-		exit(1);
-	}
-
-	return uniformBuffer;
-}
-
-/**
- * Creates the VertexArray from the Teapot vertext data.
- */
-static VertexArray *createVertexArray(void) {
-
-	const BufferData data = MakeBufferData(GL_ARRAY_BUFFER, sizeof(teapot), teapot, GL_STATIC_DRAW);
-
-	Buffer *buffer = $(alloc(Buffer), initWithData, &data);
-	if (buffer == NULL) {
-		fprintf(stderr, "Failed to create buffer\n");
-		exit(1);
-	}
-
-	const Attribute attributes[] = MakeAttributes(
-		MakeAttribute(0, 3, GL_FLOAT, GL_FALSE, 0, NULL)
-	);
-
-	VertexArray *array = $(alloc(VertexArray), initWithAttributes, buffer, attributes);
-	if (array == NULL) {
-		fprintf(stderr, "Failed to create vertex array\n");
-		exit(1);
-	}
-
-	release(buffer);
-	return array;
 }
 
 /**
@@ -138,12 +111,19 @@ static void initialize(ident data) {
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
 	in->program = createProgram();
-	in->uniformBuffer = createUniformBuffer();
-	in->vertexArray = createVertexArray();
 
-	const GLint block = $(in->program, uniformBlockLocation, "Matrix");
-	$(in->program, uniformBlockBinding, block, UNIFORM_BUFFER_MATRIX);
-	$(in->uniformBuffer, bind, UNIFORM_BUFFER_MATRIX);
+	Model *model = $((Model *) alloc(WavefrontModel), initWithResourceName, "Models/teapot.obj");
+
+	const Attribute attributes[] = MakeAttributes(
+		MakeVertexAttributeVec3f(TagPosition, 0, Vertex, position),
+		MakeVertexAttributeVec3f(TagNormal, 1, Vertex, normal),
+		MakeVertexAttributeVec2f(TagDiffuse, 2, Vertex, diffuse),
+		MakeVertexAttributeVec3f(TagTangent, 3, Vertex, tangent),
+		MakeVertexAttributeVec3f(TagBitangent, 4, Vertex, bitangent)
+	);
+
+	in->vertexArray = $(model, vertexArray, attributes);
+	in->elementsBuffer = $(model, elementsBuffer);
 }
 
 /**
@@ -156,17 +136,14 @@ static void drawScene(ident data) {
 	int w, h;
 	SDL_GetWindowSize(in->window, &w, &h);
 
-	struct {
-		mat4s projection;
-		mat4s view;
-		mat4s model;
-	} Matrix;
+	const mat4s projection = glms_perspective(90, (float) w / (float) h, 0, 100);
+	$(in->program, setUniformForName, "projection", &projection);
 
-	Matrix.projection = glms_perspective(90, (float) w / (float) h, 0, 100);
-	Matrix.view = glms_lookat((vec3s) { 0, 2, -2 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
-	Matrix.model = glms_euler_xyz((vec3s) { 0, SDL_GetTicks() * 0.001, -M_PI });
+	const mat4s view = glms_lookat((vec3s) { 0, 2, -2 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
+	$(in->program, setUniformForName, "view", &view);
 
-	$((Buffer *) in->uniformBuffer, writeData, &MakeUniformBufferData(sizeof(Matrix), &Matrix, GL_STREAM_DRAW));
+	const mat4s model = glms_mat4_identity();
+	$(in->program, setUniformForName, "model", &model);
 
 	$(in->program, use);
 
@@ -175,9 +152,7 @@ static void drawScene(ident data) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	glDrawArrays(GL_TRIANGLES, 0, lengthof(teapot) / 3);
+	//glDrawElements(GL_TRIANGLES, lengthof(in->elementsBuffer), GL_UNSIGNED_INT, in->elements);
 
 	SDL_GL_SwapWindow(in->window);
 }
@@ -190,7 +165,6 @@ static void destroy(ident data) {
 	CommandData *in = data;
 
 	release(in->program);
-	release(in->uniformBuffer);
 	release(in->vertexArray);
 
 	SDL_GL_DeleteContext(in->context);
@@ -213,7 +187,7 @@ int main(int argc, char *argv[]) {
 		)
 	};
 
-	CommandQueue *queue = $(alloc(CommandQueue), initWithCapacity, 10);
+	CommandQueue *queue = $(alloc(CommandQueue), init);
 
 	$(queue, enqueue, initialize, &in);
 	$(queue, start);
@@ -246,4 +220,5 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
+
 

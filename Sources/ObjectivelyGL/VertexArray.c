@@ -97,7 +97,7 @@ static VertexArray *initWithAttributes(VertexArray *self, Buffer *buffer, const 
 				assert(self->attributes);
 
 				self->attributes[count - 1] = *attr;
-				self->attributes[count - 0] = MakeAttribute(0, 0, GL_NONE, GL_FALSE, 0, NULL);
+				self->attributes[count - 0] = MakeAttribute(TagNone, 0, 0, GL_NONE, GL_FALSE, 0, NULL);
 
 				glVertexAttribPointer(attr->index,
 									  attr->size,

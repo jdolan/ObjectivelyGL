@@ -1,7 +1,8 @@
+SUBDIRS = \
+	Models \
+	Shaders \
+	Materials
 
 resourcesdir = $(datadir)/$(PACKAGE_NAME)
 
-resources_DATA = \
-	simple.fs.glsl \
-	simple.vs.glsl \
-	syntax-error.glsl
+resources_DATA = 

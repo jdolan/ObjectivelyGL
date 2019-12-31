@@ -45,11 +45,11 @@ START_TEST(initWithAttributes) {
 	} Vertex;
 
 	const Attribute attributes[] = MakeAttributes(
-		VertexAttributeVec3f(0, Vertex, position),
-		VertexAttributeVec2f(1, Vertex, diffuse),
-		VertexAttributeVec3f(2, Vertex, normal),
-		VertexAttributeVec3f(3, Vertex, tangent),
-		VertexAttributeVec3f(4, Vertex, bitangent)
+		MakeVertexAttributeVec3f(TagNone, 0, Vertex, position),
+		MakeVertexAttributeVec2f(TagNone, 1, Vertex, diffuse),
+		MakeVertexAttributeVec3f(TagNone, 2, Vertex, normal),
+		MakeVertexAttributeVec3f(TagNone, 3, Vertex, tangent),
+		MakeVertexAttributeVec3f(TagNone, 4, Vertex, bitangent)
 	);
 
 	VertexArray *array = $(alloc(VertexArray), initWithAttributes, buffer, attributes);

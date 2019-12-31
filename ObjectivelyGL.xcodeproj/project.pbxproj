@@ -40,6 +40,27 @@
 		CE129E2823B15E82007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE129E2923B15E82007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE129E2F23B15E99007D0433 /* CommandQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1F23B15E6D007D0433 /* CommandQueue.c */; };
+		CE129E3223B56883007D0433 /* parallax.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3023B5684A007D0433 /* parallax.vs.glsl */; };
+		CE129E3323B56886007D0433 /* parallax.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3123B56873007D0433 /* parallax.fs.glsl */; };
+		CE129E4023B6720F007D0433 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
+		CE129E4123B6720F007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
+		CE129E4223B6720F007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
+		CE129E4823B6721D007D0433 /* Parallax.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E3923B671E7007D0433 /* Parallax.c */; };
+		CE129E4E23B67360007D0433 /* city2_6.gloss.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */; };
+		CE129E4F23B67360007D0433 /* city2_6.normal.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E4A23B67331007D0433 /* city2_6.normal.png */; };
+		CE129E5023B67360007D0433 /* city2_6.diffuse.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */; };
+		CE129E5723B79C29007D0433 /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E5523B79C29007D0433 /* Model.h */; };
+		CE129E5823B79C29007D0433 /* Model.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E5623B79C29007D0433 /* Model.c */; };
+		CE129E7223B8EB2B007D0433 /* WavefrontModel.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E7023B8EB2B007D0433 /* WavefrontModel.h */; };
+		CE129E7323B8EB2B007D0433 /* WavefrontModel.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E7123B8EB2B007D0433 /* WavefrontModel.c */; };
+		CE129E7D23B90579007D0433 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
+		CE129E7E23B90579007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
+		CE129E7F23B90579007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
+		CE129E8023B90579007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
+		CE129E8623B9058A007D0433 /* WavefrontModel.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E7623B9054B007D0433 /* WavefrontModel.c */; };
+		CE129E8823B9079E007D0433 /* teapot.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E7523B8FECA007D0433 /* teapot.obj */; };
+		CE129E8B23BA3B3C007D0433 /* Attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E8923BA3B3C007D0433 /* Attribute.h */; };
+		CE129E8C23BA3B3C007D0433 /* Attribute.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E8A23BA3B3C007D0433 /* Attribute.c */; };
 		CE2A594022E253260043FCD2 /* OpenGL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A593E22E253260043FCD2 /* OpenGL.c */; };
 		CE2A594122E253260043FCD2 /* OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2A593F22E253260043FCD2 /* OpenGL.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2A594E22E260B30043FCD2 /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A594222E25F7D0043FCD2 /* Shader.c */; };
@@ -58,7 +79,7 @@
 		CE2DC4AE22E8DEF200908C7E /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE2DC4AF22E8DEF200908C7E /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE2DC4B022E8DEF200908C7E /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
-		CE2DC4B622E8DF1A00908C7E /* Hello.c in Sources */ = {isa = PBXBuildFile; fileRef = CE61325E22E75B2000673094 /* Hello.c */; };
+		CE2DC4B622E8DF1A00908C7E /* Teapot.c in Sources */ = {isa = PBXBuildFile; fileRef = CE61325E22E75B2000673094 /* Teapot.c */; };
 		CE2DC4B822E8DF2600908C7E /* Buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2DC4A622E8DE3D00908C7E /* Buffer.c */; };
 		CE2DC4BB22EBF82200908C7E /* VertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2DC4B922EBF82200908C7E /* VertexArray.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2DC4BC22EBF82200908C7E /* VertexArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2DC4BA22EBF82200908C7E /* VertexArray.c */; };
@@ -93,6 +114,20 @@
 			remoteInfo = "ObjectivelyGL-Program";
 		};
 		CE129E2223B15E82007D0433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE0CE99622E1E90900963219;
+			remoteInfo = ObjectivelyGL;
+		};
+		CE129E3C23B6720F007D0433 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE0CE99622E1E90900963219;
+			remoteInfo = ObjectivelyGL;
+		};
+		CE129E7923B90579007D0433 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE0CE98F22E1E90900963219 /* Project object */;
 			proxyType = 1;
@@ -160,6 +195,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		CE129E4323B6720F007D0433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CE129E4D23B6734D007D0433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Materials;
+			dstSubfolderSpec = 7;
+			files = (
+				CE129E4E23B67360007D0433 /* city2_6.gloss.jpg in CopyFiles */,
+				CE129E4F23B67360007D0433 /* city2_6.normal.png in CopyFiles */,
+				CE129E5023B67360007D0433 /* city2_6.diffuse.jpg in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E8123B90579007D0433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CE129E8723B90796007D0433 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Models;
+			dstSubfolderSpec = 7;
+			files = (
+				CE129E8823B9079E007D0433 /* teapot.obj in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE2A594522E2609D0043FCD2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,11 +283,13 @@
 		CE7DEE0922E5133C00ED22EA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
+			dstPath = Shaders;
 			dstSubfolderSpec = 7;
 			files = (
-				CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */,
+				CE129E3323B56886007D0433 /* parallax.fs.glsl in CopyFiles */,
+				CE129E3223B56883007D0433 /* parallax.vs.glsl in CopyFiles */,
 				CE7DEE0D22E514DC00ED22EA /* simple.fs.glsl in CopyFiles */,
+				CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */,
 				CEBB82B122E749CB00997E82 /* syntax-error.glsl in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,6 +320,22 @@
 		CE129E1823B145BA007D0433 /* CommandQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CommandQueue.c; sourceTree = "<group>"; };
 		CE129E1F23B15E6D007D0433 /* CommandQueue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CommandQueue.c; sourceTree = "<group>"; };
 		CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-CommandQueue"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE129E3023B5684A007D0433 /* parallax.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = parallax.vs.glsl; sourceTree = "<group>"; };
+		CE129E3123B56873007D0433 /* parallax.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = parallax.fs.glsl; sourceTree = "<group>"; };
+		CE129E3923B671E7007D0433 /* Parallax.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Parallax.c; sourceTree = "<group>"; };
+		CE129E4723B6720F007D0433 /* ObjectivelyGL-Parallax */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Parallax"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE129E4A23B67331007D0433 /* city2_6.normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city2_6.normal.png; sourceTree = "<group>"; };
+		CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = city2_6.diffuse.jpg; sourceTree = "<group>"; };
+		CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = city2_6.gloss.jpg; sourceTree = "<group>"; };
+		CE129E5523B79C29007D0433 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		CE129E5623B79C29007D0433 /* Model.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Model.c; sourceTree = "<group>"; };
+		CE129E7023B8EB2B007D0433 /* WavefrontModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WavefrontModel.h; sourceTree = "<group>"; };
+		CE129E7123B8EB2B007D0433 /* WavefrontModel.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = WavefrontModel.c; sourceTree = "<group>"; };
+		CE129E7523B8FECA007D0433 /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
+		CE129E7623B9054B007D0433 /* WavefrontModel.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = WavefrontModel.c; sourceTree = "<group>"; };
+		CE129E8523B90579007D0433 /* ObjectivelyGL-WavefrontModel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-WavefrontModel"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE129E8923BA3B3C007D0433 /* Attribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attribute.h; sourceTree = "<group>"; };
+		CE129E8A23BA3B3C007D0433 /* Attribute.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Attribute.c; sourceTree = "<group>"; };
 		CE2A593E22E253260043FCD2 /* OpenGL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OpenGL.c; sourceTree = "<group>"; };
 		CE2A593F22E253260043FCD2 /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL.h; sourceTree = "<group>"; };
 		CE2A594222E25F7D0043FCD2 /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
@@ -259,11 +352,10 @@
 		CE2DC4BA22EBF82200908C7E /* VertexArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VertexArray.c; sourceTree = "<group>"; };
 		CE2DC4BD22EBFFB500908C7E /* VertexArray.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VertexArray.c; sourceTree = "<group>"; };
 		CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-VertexArray"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE2DC4D222EFD09B00908C7E /* Teapot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Teapot.h; sourceTree = "<group>"; };
 		CE5D758A23228CCB003DC4DE /* libquemath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libquemath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5D758C232290E0003DC4DE /* libquemath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libquemath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE61325E22E75B2000673094 /* Hello.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Hello.c; sourceTree = "<group>"; };
-		CE61326D22E75BA100673094 /* ObjectivelyGL-Hello */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Hello"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE61325E22E75B2000673094 /* Teapot.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Teapot.c; sourceTree = "<group>"; };
+		CE61326D22E75BA100673094 /* ObjectivelyGL-Teapot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Teapot"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7DEE0722E5035100ED22EA /* simple.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.vs.glsl; sourceTree = "<group>"; };
 		CE7DEE0822E5046800ED22EA /* simple.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.fs.glsl; sourceTree = "<group>"; };
 		CE7DEE0E22E5176F00ED22EA /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
@@ -292,6 +384,27 @@
 				CE129E2723B15E82007D0433 /* libObjectively.dylib in Frameworks */,
 				CE129E2823B15E82007D0433 /* libSDL2-2.0.0.dylib in Frameworks */,
 				CE129E2923B15E82007D0433 /* libcheck.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E3F23B6720F007D0433 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E4023B6720F007D0433 /* libObjectivelyGL.dylib in Frameworks */,
+				CE129E4123B6720F007D0433 /* libObjectively.dylib in Frameworks */,
+				CE129E4223B6720F007D0433 /* libSDL2-2.0.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E7C23B90579007D0433 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E7D23B90579007D0433 /* libObjectivelyGL.dylib in Frameworks */,
+				CE129E7E23B90579007D0433 /* libObjectively.dylib in Frameworks */,
+				CE129E7F23B90579007D0433 /* libSDL2-2.0.0.dylib in Frameworks */,
+				CE129E8023B90579007D0433 /* libcheck.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,10 +486,12 @@
 				CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */,
 				CE2A594722E2609D0043FCD2 /* ObjectivelyGL-Shader */,
 				CE2A597322E4447B0043FCD2 /* ObjectivelyGL-Program */,
-				CE61326D22E75BA100673094 /* ObjectivelyGL-Hello */,
+				CE61326D22E75BA100673094 /* ObjectivelyGL-Teapot */,
 				CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */,
 				CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
 				CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */,
+				CE129E4723B6720F007D0433 /* ObjectivelyGL-Parallax */,
+				CE129E8523B90579007D0433 /* ObjectivelyGL-WavefrontModel */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -395,14 +510,18 @@
 		CE0CE9A722E1EA9A00963219 /* ObjectivelyGL */ = {
 			isa = PBXGroup;
 			children = (
+				CE129E8923BA3B3C007D0433 /* Attribute.h */,
+				CE129E8A23BA3B3C007D0433 /* Attribute.c */,
 				CE2DC4A222E8C65F00908C7E /* Buffer.h */,
 				CE2DC4A322E8C65F00908C7E /* Buffer.c */,
 				CE0CE9C322E1F51D00963219 /* Config.h */,
 				CE0CE9A822E1EA9A00963219 /* Config.h.in */,
 				CE129E1723B145BA007D0433 /* CommandQueue.h */,
 				CE129E1823B145BA007D0433 /* CommandQueue.c */,
-				CE2A593E22E253260043FCD2 /* OpenGL.c */,
+				CE129E5523B79C29007D0433 /* Model.h */,
+				CE129E5623B79C29007D0433 /* Model.c */,
 				CE2A593F22E253260043FCD2 /* OpenGL.h */,
+				CE2A593E22E253260043FCD2 /* OpenGL.c */,
 				CE0CE9BA22E1ECAE00963219 /* Program.h */,
 				CE0CE9BB22E1ECAE00963219 /* Program.c */,
 				CEE761B622E2003A007CB42B /* Shader.h */,
@@ -412,6 +531,8 @@
 				CE129E1423B0310D007D0433 /* UniformBuffer.c */,
 				CE2DC4B922EBF82200908C7E /* VertexArray.h */,
 				CE2DC4BA22EBF82200908C7E /* VertexArray.c */,
+				CE129E7023B8EB2B007D0433 /* WavefrontModel.h */,
+				CE129E7123B8EB2B007D0433 /* WavefrontModel.c */,
 				CE0CE9A922E1EA9A00963219 /* Makefile.am */,
 			);
 			path = ObjectivelyGL;
@@ -420,8 +541,8 @@
 		CE0CE9AC22E1EA9A00963219 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				CE61325E22E75B2000673094 /* Hello.c */,
-				CE2DC4D222EFD09B00908C7E /* Teapot.h */,
+				CE129E3923B671E7007D0433 /* Parallax.c */,
+				CE61325E22E75B2000673094 /* Teapot.c */,
 				CE0CE9AD22E1EA9A00963219 /* Makefile.am */,
 			);
 			path = Examples;
@@ -445,6 +566,7 @@
 				CE2A594222E25F7D0043FCD2 /* Shader.c */,
 				CEBB82AC22E68EE100997E82 /* Test.h */,
 				CE2DC4BD22EBFFB500908C7E /* VertexArray.c */,
+				CE129E7623B9054B007D0433 /* WavefrontModel.c */,
 				CE0CE9B422E1EA9A00963219 /* Makefile.am */,
 			);
 			path = ObjectivelyGL;
@@ -463,12 +585,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE129E4923B67257007D0433 /* Materials */ = {
+			isa = PBXGroup;
+			children = (
+				CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */,
+				CE129E4A23B67331007D0433 /* city2_6.normal.png */,
+				CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */,
+			);
+			path = Materials;
+			sourceTree = "<group>";
+		};
+		CE129E5223B673C9007D0433 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				CEBB82B022E749A700997E82 /* syntax-error.glsl */,
+				CE129E3023B5684A007D0433 /* parallax.vs.glsl */,
+				CE129E3123B56873007D0433 /* parallax.fs.glsl */,
+				CE7DEE0722E5035100ED22EA /* simple.vs.glsl */,
+				CE7DEE0822E5046800ED22EA /* simple.fs.glsl */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		CE129E7423B8FECA007D0433 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE129E7523B8FECA007D0433 /* teapot.obj */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CE2A595522E262D40043FCD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE7DEE0722E5035100ED22EA /* simple.vs.glsl */,
-				CE7DEE0822E5046800ED22EA /* simple.fs.glsl */,
-				CEBB82B022E749A700997E82 /* syntax-error.glsl */,
+				CE129E4923B67257007D0433 /* Materials */,
+				CE129E7423B8FECA007D0433 /* Models */,
+				CE129E5223B673C9007D0433 /* Shaders */,
 				CE7DEE0E22E5176F00ED22EA /* Makefile.am */,
 			);
 			path = Resources;
@@ -485,8 +637,11 @@
 				CE0CE9C522E1F53F00963219 /* ObjectivelyGL.h in Headers */,
 				CE2A594122E253260043FCD2 /* OpenGL.h in Headers */,
 				CE0CE9BC22E1ECAE00963219 /* Program.h in Headers */,
+				CE129E7223B8EB2B007D0433 /* WavefrontModel.h in Headers */,
+				CE129E8B23BA3B3C007D0433 /* Attribute.h in Headers */,
 				CEE761B822E2003A007CB42B /* Shader.h in Headers */,
 				CE2DC4BB22EBF82200908C7E /* VertexArray.h in Headers */,
+				CE129E5723B79C29007D0433 /* Model.h in Headers */,
 				CE0CE9C422E1F51D00963219 /* Config.h in Headers */,
 				CE129E1923B145BA007D0433 /* CommandQueue.h in Headers */,
 				CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */,
@@ -503,6 +658,8 @@
 				CE0CE99422E1E90900963219 /* Sources */,
 				CE0CE99522E1E90900963219 /* Frameworks */,
 				CE0CE99322E1E90900963219 /* Headers */,
+				CE129E4D23B6734D007D0433 /* CopyFiles */,
+				CE129E8723B90796007D0433 /* CopyFiles */,
 				CE7DEE0922E5133C00ED22EA /* CopyFiles */,
 			);
 			buildRules = (
@@ -530,6 +687,42 @@
 			name = "ObjectivelyGL-CommandQueue";
 			productName = "ObjectivelyGL-Shader";
 			productReference = CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */;
+			productType = "com.apple.product-type.tool";
+		};
+		CE129E3A23B6720F007D0433 /* ObjectivelyGL-Parallax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE129E4423B6720F007D0433 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Parallax" */;
+			buildPhases = (
+				CE129E3D23B6720F007D0433 /* Sources */,
+				CE129E3F23B6720F007D0433 /* Frameworks */,
+				CE129E4323B6720F007D0433 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE129E3B23B6720F007D0433 /* PBXTargetDependency */,
+			);
+			name = "ObjectivelyGL-Parallax";
+			productName = "ObjectivelyGL-Shader";
+			productReference = CE129E4723B6720F007D0433 /* ObjectivelyGL-Parallax */;
+			productType = "com.apple.product-type.tool";
+		};
+		CE129E7723B90579007D0433 /* ObjectivelyGL-WavefrontModel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE129E8223B90579007D0433 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-WavefrontModel" */;
+			buildPhases = (
+				CE129E7A23B90579007D0433 /* Sources */,
+				CE129E7C23B90579007D0433 /* Frameworks */,
+				CE129E8123B90579007D0433 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE129E7823B90579007D0433 /* PBXTargetDependency */,
+			);
+			name = "ObjectivelyGL-WavefrontModel";
+			productName = "ObjectivelyGL-Shader";
+			productReference = CE129E8523B90579007D0433 /* ObjectivelyGL-WavefrontModel */;
 			productType = "com.apple.product-type.tool";
 		};
 		CE2A594622E2609D0043FCD2 /* ObjectivelyGL-Shader */ = {
@@ -604,9 +797,9 @@
 			productReference = CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */;
 			productType = "com.apple.product-type.tool";
 		};
-		CE61325F22E75BA100673094 /* ObjectivelyGL-Hello */ = {
+		CE61325F22E75BA100673094 /* ObjectivelyGL-Teapot */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Hello" */;
+			buildConfigurationList = CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Teapot" */;
 			buildPhases = (
 				CE61326222E75BA100673094 /* Sources */,
 				CE61326422E75BA100673094 /* Frameworks */,
@@ -617,9 +810,9 @@
 			dependencies = (
 				CE61326022E75BA100673094 /* PBXTargetDependency */,
 			);
-			name = "ObjectivelyGL-Hello";
+			name = "ObjectivelyGL-Teapot";
 			productName = "ObjectivelyGL-Shader";
-			productReference = CE61326D22E75BA100673094 /* ObjectivelyGL-Hello */;
+			productReference = CE61326D22E75BA100673094 /* ObjectivelyGL-Teapot */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -661,8 +854,10 @@
 				CE2A596522E4447B0043FCD2 /* ObjectivelyGL-Program */,
 				CE2A594622E2609D0043FCD2 /* ObjectivelyGL-Shader */,
 				CE2DC4BE22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
+				CE129E7723B90579007D0433 /* ObjectivelyGL-WavefrontModel */,
 				CE03F13E22E65FC200147FB9 /* ObjectivelyGL-Tests */,
-				CE61325F22E75BA100673094 /* ObjectivelyGL-Hello */,
+				CE129E3A23B6720F007D0433 /* ObjectivelyGL-Parallax */,
+				CE61325F22E75BA100673094 /* ObjectivelyGL-Teapot */,
 			);
 		};
 /* End PBXProject section */
@@ -692,7 +887,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE129E5823B79C29007D0433 /* Model.c in Sources */,
 				CE129E1A23B145BA007D0433 /* CommandQueue.c in Sources */,
+				CE129E8C23BA3B3C007D0433 /* Attribute.c in Sources */,
+				CE129E7323B8EB2B007D0433 /* WavefrontModel.c in Sources */,
 				CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */,
 				CE2A594022E253260043FCD2 /* OpenGL.c in Sources */,
 				CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */,
@@ -707,6 +905,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE129E2F23B15E99007D0433 /* CommandQueue.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E3D23B6720F007D0433 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E4823B6721D007D0433 /* Parallax.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE129E7A23B90579007D0433 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE129E8623B9058A007D0433 /* WavefrontModel.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,7 +960,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE2DC4B622E8DF1A00908C7E /* Hello.c in Sources */,
+				CE2DC4B622E8DF1A00908C7E /* Teapot.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,6 +981,16 @@
 			isa = PBXTargetDependency;
 			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
 			targetProxy = CE129E2223B15E82007D0433 /* PBXContainerItemProxy */;
+		};
+		CE129E3B23B6720F007D0433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
+			targetProxy = CE129E3C23B6720F007D0433 /* PBXContainerItemProxy */;
+		};
+		CE129E7823B90579007D0433 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE0CE99622E1E90900963219 /* ObjectivelyGL */;
+			targetProxy = CE129E7923B90579007D0433 /* PBXContainerItemProxy */;
 		};
 		CE2A595422E2618A0043FCD2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -858,7 +1082,7 @@
 					/usr/local/lib,
 					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -898,7 +1122,7 @@
 					/usr/local/lib,
 					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -930,6 +1154,34 @@
 			name = Debug;
 		};
 		CE129E2D23B15E82007D0433 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CE129E4523B6720F007D0433 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE129E4623B6720F007D0433 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CE129E8323B90579007D0433 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE129E8423B90579007D0433 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1045,6 +1297,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CE129E4423B6720F007D0433 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Parallax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE129E4523B6720F007D0433 /* Debug */,
+				CE129E4623B6720F007D0433 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE129E8223B90579007D0433 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-WavefrontModel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE129E8323B90579007D0433 /* Debug */,
+				CE129E8423B90579007D0433 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CE2A594B22E2609E0043FCD2 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Shader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1081,7 +1351,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Hello" */ = {
+		CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Teapot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE61326B22E75BA100673094 /* Debug */,

@@ -66,6 +66,9 @@ AC_SUBST(SDL2_DLL_LIBS, $(echo $SDL2_LIBS | sed 's/-lmingw32//; s/-lSDL2main//')
 AC_CONFIG_FILES([
 	Makefile
 	Resources/Makefile
+	Resources/Materials/Makefile
+	Resources/Models/Makefile
+	Resources/Shaders/Makefile
 	Sources/Makefile
 	Sources/ObjectivelyGL.pc
 	Sources/ObjectivelyGL/Makefile

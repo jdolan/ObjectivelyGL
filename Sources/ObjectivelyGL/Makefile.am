@@ -7,26 +7,32 @@ noinst_HEADERS = \
 pkgincludedir = $(includedir)/$(PACKAGE_NAME)
 
 pkginclude_HEADERS = \
+	Attribute.h \
 	Buffer.h \
 	CommandQueue.h \
+	Model.h \
 	OpenGL.h \
 	Program.h \
 	Shader.h \
 	Types.h \
 	UniformBuffer.h \
-	VertexArray.h
+	VertexArray.h \
+	WavefrontModel.h
 
 lib_LTLIBRARIES = \
 	libObjectivelyGL.la
 
 libObjectivelyGL_la_SOURCES = \
+	Attribute.c \
 	Buffer.c \
 	CommandQueue.c \
+	Model.c \
 	OpenGL.c \
 	Program.c \
 	Shader.c \
 	UniformBuffer.c \
-	VertexArray.c
+	VertexArray.c \
+	WavefrontModel.c
 
 libObjectivelyGL_la_CFLAGS = \
 	-I$(top_srcdir) \

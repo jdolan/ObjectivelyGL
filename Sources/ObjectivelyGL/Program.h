@@ -24,6 +24,7 @@
 #pragma once
 
 #include <Objectively/MutableArray.h>
+#include <Objectively/Vector.h>
 
 #include <ObjectivelyGL/Shader.h>
 
@@ -82,9 +83,9 @@ typedef struct {
 typedef struct {
 
 	/**
-	 * @brief The index.
+	 * @brief The location.
 	 */
-	GLuint index;
+	GLuint location;
 
 	/**
 	 * @brief The name.
@@ -129,6 +130,16 @@ struct Program {
 	 * @brief The Shaders attached to this Program.
 	 */
 	MutableArray *shaders;
+
+	/**
+	 * @brief The attribute Variables defined by this Program.
+	 */
+	Vector *attributes;
+
+	/**
+	 * @brief The uniform Variables defined by this Program.
+	 */
+	Vector *uniforms;
 };
 
 /**
@@ -142,41 +153,6 @@ struct ProgramInterface {
 	ObjectInterface objectInterface;
 
 	/**
-	 * @fn Variable Program::attributeForLocation(const Program *self, const GLuint index)
-	 * @param self The Program.
-	 * @param index The attribute location.
-	 * @return The attribute Variable for the given location.
-	 * @memberof Program
-	 */
-	Variable (*attributeForLocation)(const Program *self, GLuint index);
-
-	/**
-	 * @fn Variable Program::attributeForName(const Program *self, const GLchar *name)
-	 * @param self The Program.
-	 * @param name The attribute name.
-	 * @return The attribute Variable for the given name.
-	 * @memberof Program
-	 */
-	Variable (*attributeForName)(const Program *self, const GLchar *name);
-
-	/**
-	 * @fn GLint Program::attributeLocation(const Program *self, const GLchar *name)
-	 * @param self The Program.
-	 * @param name The attribute name.
-	 * @return The attribute location, or -1 on error.
-	 * @memberof Program
-	 */
-	GLint (*attributeLocation)(const Program *self, const GLchar *name);
-
-	/**
-	 * @fn Variable *Program::attributes(const Program *self)
-	 * @param self The Program.
-	 * @return A _none-terminated_ array of this Program's attribute Variables.
-	 * @memberof Program
-	 */
-	Variable *(*attributes)(const Program *self);
-
-	/**
 	 * @fn void Program::attach(Program *self, Shader *shader)
 	 * @brief Attaches the specified Shader to this Program.
 	 * @param self The Program.
@@ -184,6 +160,15 @@ struct ProgramInterface {
 	 * @memberof Program
 	 */
 	void (*attach)(Program *self, Shader *shader);
+
+	/**
+	 * @fn const Variable *Program::attributeForName(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The attribute name.
+	 * @return The attribute Variable for the given name, or `NULL`.
+	 * @memberof Program
+	 */
+	const Variable *(*attributeForName)(const Program *self, const GLchar *name);
 
 	/**
 	 * @fn void Program::detach(Program *self, Shader *shader)
@@ -246,13 +231,13 @@ struct ProgramInterface {
 	Program *(*initWithDescriptor)(Program *self, ProgramDescriptor *descriptor);
 	
 	/**
-	 * @fn GLint Program::link(const Program *self)
+	 * @fn GLint Program::link(Program *self)
 	 * @brief Links this Program.
 	 * @param self The Program.
 	 * @return `GL_TRUE` on success, `GL_FALSE` on error.
 	 * @memberof Program
 	 */
-	GLint (*link)(const Program *self);
+	GLint (*link)(Program *self);
 
 	/**
 	 * @fn GLint Program::uniformBlockLocation(const Program *self, const GLchar *name)
@@ -274,39 +259,13 @@ struct ProgramInterface {
 	void (*uniformBlockBinding)(const Program *self, GLuint block, GLuint index);
 
 	/**
-	 * @fn Variable Program::uniformForLocation(const Program *self, const GLuint index)
-	 * @param self The Program.
-	 * @param index The uniform location.
-	 * @return The uniform Variable for the given location.
-	 * @memberof Program
-	 */
-	Variable (*uniformForLocation)(const Program *self, GLuint index);
-
-	/**
-	 * @fn Variable Program::uniformForName(const Program *self, const GLchar *name)
+	 * @fn const Variable *Program::uniformForName(const Program *self, const GLchar *name)
 	 * @param self The Program.
 	 * @param name The uniform name.
-	 * @return The uniform Variable for the given name.
+	 * @return The uniform Variable for the given name, or `NULL`.
 	 * @memberof Program
 	 */
-	Variable (*uniformForName)(const Program *self, const GLchar *name);
-
-	/**
-	 * @fn GLint Program::uniformLocation(const Program *self, const GLchar *name)
-	 * @param self The Program.
-	 * @param name The uniform name.
-	 * @return The uniform location, or -1 on error.
-	 * @memberof Program
-	 */
-	GLint (*uniformLocation)(const Program *self, const GLchar *name);
-
-	/**
-	 * @fn Variable *Program::uniforms(const Program *self)
-	 * @param self The Program.
-	 * @return A _none-terminated_ array of this Program's uniform Variables.
-	 * @memberof Program
-	 */
-	Variable *(*uniforms)(const Program *self);
+	const Variable *(*uniformForName)(const Program *self, const GLchar *name);
 
 	/**
 	 * @fn void Program::setUniform(const Program *self, const Variable *variable, const GLvoid *value)

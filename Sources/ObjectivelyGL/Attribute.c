@@ -21,17 +21,42 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#pragma once
+#include <assert.h>
 
-#include <ObjectivelyGL/Attribute.h>
-#include <ObjectivelyGL/Buffer.h>
-#include <ObjectivelyGL/CommandQueue.h>
-#include <ObjectivelyGL/Model.h>
-#include <ObjectivelyGL/OpenGL.h>
-#include <ObjectivelyGL/Program.h>
-#include <ObjectivelyGL/Shader.h>
-#include <ObjectivelyGL/Types.h>
-#include <ObjectivelyGL/UniformBuffer.h>
-#include <ObjectivelyGL/VertexArray.h>
-#include <ObjectivelyGL/WavefrontModel.h>
+#include "Attribute.h"
 
+/**
+ * @brief
+ */
+OBJECTIVELYGL_EXPORT size_t SizeOfAttribute(const Attribute *attribute) {
+
+	size_t size = 0;
+	switch (attribute->type) {
+		case GL_FLOAT:
+			size = sizeof(GLfloat);
+			break;
+		case GL_BYTE:
+		case GL_UNSIGNED_BYTE:
+			size = sizeof(GLbyte);
+			break;
+		case GL_INT:
+		case GL_UNSIGNED_INT:
+			size = sizeof(GLint);
+			break;
+		default:
+			break;
+	}
+
+	return size * attribute->size;
+}
+
+OBJECTIVELYGL_EXPORT size_t SizeOfAttributes(const Attribute *attributes) {
+
+	size_t size = 0;
+	while (attributes->type != GL_NONE) {
+		size += SizeOfAttribute(attributes);
+		attributes++;
+	}
+
+	return size;
+}

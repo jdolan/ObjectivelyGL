@@ -1,6 +1,7 @@
 *.log
 *.trs
 Buffer
+CommandQueue
 Program
 Shader
 Vector

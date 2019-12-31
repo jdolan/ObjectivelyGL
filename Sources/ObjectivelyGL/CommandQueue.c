@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <ObjectivelyGL/CommandQueue.h>
+#include "CommandQueue.h"
 
 #define _Class _CommandQueue
 

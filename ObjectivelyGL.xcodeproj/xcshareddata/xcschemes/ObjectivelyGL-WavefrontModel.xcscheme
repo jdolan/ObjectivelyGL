@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE61325F22E75BA100673094"
-               BuildableName = "ObjectivelyGL-Hello"
-               BlueprintName = "ObjectivelyGL-Hello"
+               BlueprintIdentifier = "CE129E7723B90579007D0433"
+               BuildableName = "ObjectivelyGL-WavefrontModel"
+               BlueprintName = "ObjectivelyGL-WavefrontModel"
                ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE61325F22E75BA100673094"
-            BuildableName = "ObjectivelyGL-Hello"
-            BlueprintName = "ObjectivelyGL-Hello"
-            ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -53,12 +44,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE61325F22E75BA100673094"
-            BuildableName = "ObjectivelyGL-Hello"
-            BlueprintName = "ObjectivelyGL-Hello"
+            BlueprintIdentifier = "CE129E7723B90579007D0433"
+            BuildableName = "ObjectivelyGL-WavefrontModel"
+            BlueprintName = "ObjectivelyGL-WavefrontModel"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "CK_FORK"
+            value = "no"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -70,9 +68,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CE61325F22E75BA100673094"
-            BuildableName = "ObjectivelyGL-Hello"
-            BlueprintName = "ObjectivelyGL-Hello"
+            BlueprintIdentifier = "CE129E7723B90579007D0433"
+            BuildableName = "ObjectivelyGL-WavefrontModel"
+            BlueprintName = "ObjectivelyGL-WavefrontModel"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

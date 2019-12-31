@@ -23,7 +23,7 @@
 
 #include <assert.h>
 
-#include <ObjectivelyGL/UniformBuffer.h>
+#include "UniformBuffer.h"
 
 #define _Class _UniformBuffer
 
