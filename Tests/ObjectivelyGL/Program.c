@@ -34,8 +34,8 @@ static void teardown(void) {
 START_TEST(attributes) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -61,8 +61,8 @@ START_TEST(attributes) {
 START_TEST(uniforms) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -123,8 +123,8 @@ START_TEST(init) {
 
 START_TEST(initWithShaders) {
 
-	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "Shaders/simple.vs.glsl");
-	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "Shaders/simple.fs.glsl");
+	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
+	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "simple.fs.glsl");
 
 	ck_assert_ptr_ne(NULL, vertex);
 	ck_assert_ptr_ne(NULL, fragment);
@@ -148,26 +148,26 @@ START_TEST(initWithShaders) {
 START_TEST(initWithDescriptor) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
 	ck_assert_ptr_ne(NULL, program);
 
-	FreeProgramDescriptor(&descriptor);
-
 	ck_assert_int_eq(2, program->shaders->array.count);
 
 	release(program);
+
+	FreeProgramDescriptor(&descriptor);
 
 } END_TEST
 
 START_TEST(initWithDescriptor_missing) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/missing.gs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "missing.gs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -178,6 +178,8 @@ START_TEST(initWithDescriptor_missing) {
 
 	ck_assert_ptr_eq(NULL, descriptor.shaders[1].shader);
 	ck_assert_int_eq(GL_FALSE, descriptor.shaders[1].status);
+
+	release(program);
 
 	FreeProgramDescriptor(&descriptor);
 
@@ -186,8 +188,8 @@ START_TEST(initWithDescriptor_missing) {
 START_TEST(initWithDescriptor_syntaxError) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/syntax-error.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "syntax-error.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -199,14 +201,16 @@ START_TEST(initWithDescriptor_syntaxError) {
 	ck_assert_ptr_eq(NULL, descriptor.shaders[1].shader);
 	ck_assert_int_eq(GL_FALSE, descriptor.shaders[1].status);
 
+	release(program);
+
 	FreeProgramDescriptor(&descriptor);
 
 } END_TEST
 
 START_TEST(link) {
 
-	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "Shaders/simple.vs.glsl");
-	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "Shaders/simple.fs.glsl");
+	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
+	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "simple.fs.glsl");
 
 	ck_assert_ptr_ne(NULL, vertex);
 	ck_assert_ptr_ne(NULL, fragment);

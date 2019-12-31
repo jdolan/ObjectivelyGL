@@ -33,13 +33,12 @@ static void teardown(void) {
 
 START_TEST(initWithResourceName) {
 
-	Model *model = $((Model *) alloc(WavefrontModel), initWithResourceName, "Models/teapot.obj");
+	Model *model = $((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
 	ck_assert_ptr_ne(NULL, model);
 	
 	printf("Vertices: %zd\n", model->vertices->count);
 	printf("Meshes: %zd\n", model->meshes->count);
 	printf("Elements: %zd\n", model->elements->count);
-
 
 } END_TEST
 

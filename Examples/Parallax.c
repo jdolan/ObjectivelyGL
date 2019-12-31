@@ -77,8 +77,8 @@ static SDL_GLContext *createContext(SDL_Window *window) {
 static Program *createProgram(void) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/parallax.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/parallax.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "parallax.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "parallax.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);

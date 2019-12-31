@@ -35,7 +35,7 @@ static void teardown(void) {
 
 START_TEST(compile) {
 
-	Shader *shader = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "Shaders/simple.vs.glsl");
+	Shader *shader = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
 	ck_assert(shader);
 
 	const GLint status = $(shader, compile);
@@ -99,7 +99,7 @@ START_TEST(initWithData) {
 
 START_TEST(initWithDescriptor) {
 
-	ShaderDescriptor descriptor = MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl");
+	ShaderDescriptor descriptor = MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl");
 
 	Shader *shader = $(alloc(Shader), initWithDescriptor, &descriptor);
 	ck_assert(shader);
@@ -108,6 +108,8 @@ START_TEST(initWithDescriptor) {
 	ck_assert_str_ne("", shader->source);
 	ck_assert_ptr_eq(shader, descriptor.shader);
 	release(shader);
+
+	FreeShaderDescriptor(&descriptor);
 
 } END_TEST
 
@@ -129,7 +131,7 @@ START_TEST(initWithResource) {
 
 START_TEST(initWithResourceName) {
 
-	Shader *shader = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "Shaders/simple.vs.glsl");
+	Shader *shader = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
 	ck_assert(shader);
 	ck_assert_int_ne(0, shader->name);
 	ck_assert_int_eq(GL_VERTEX_SHADER, shader->type);

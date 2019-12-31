@@ -27,19 +27,20 @@
 #include <ObjectivelyGL.h>
 
 typedef struct {
+	Program *program;
+	const Variable *projection;
+	const Variable *view;
+	const Variable *model;
+} Simple;
+
+typedef struct {
 	SDL_Window *window;
 	SDL_GLContext *context;
-	Program *program;
+	Simple simple;
 	Model *model;
 	VertexArray *vertexArray;
 	Buffer *elementsBuffer;
 } CommandData;
-
-static struct {
-	const Variable *projection;
-	const Variable *view;
-	const Variable *model;
-} Uniforms;
 
 typedef struct {
 	vec3s position;
@@ -75,20 +76,20 @@ static void initialize(ident data) {
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "Shaders/simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "Shaders/simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
-	in->program = $(alloc(Program), initWithDescriptor, &descriptor);
-	assert(in->program);
-
-	Uniforms.projection = $(in->program, uniformForName, "projection");
-	Uniforms.view = $(in->program, uniformForName, "view");
-	Uniforms.model = $(in->program, uniformForName, "model");
+	in->simple.program = $(alloc(Program), initWithDescriptor, &descriptor);
+	assert(in->simple.program);
 
 	FreeProgramDescriptor(&descriptor);
 
-	in->model =	$((Model *) alloc(WavefrontModel), initWithResourceName, "Models/teapot.obj");
+	in->simple.projection = $(in->simple.program, uniformForName, "projection");
+	in->simple.view = $(in->simple.program, uniformForName, "view");
+	in->simple.model = $(in->simple.program, uniformForName, "model");
+
+	in->model =	$((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
 	assert(in->model);
 
 	const Attribute attributes[] = MakeAttributes(
@@ -116,10 +117,10 @@ static void drawScene(ident data) {
 	const mat4s view = glms_lookat((vec3s) { 0, 16, -16 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
 	const mat4s model = glms_euler_xyz((vec3s) { -GLM_PI_2, 0, SDL_GetTicks() * 0.001 });
 
-	$(in->program, use);
-	$(in->program, setUniform, Uniforms.projection, &projection);
-	$(in->program, setUniform, Uniforms.view, &view);
-	$(in->program, setUniform, Uniforms.model, &model);
+	$(in->simple.program, use);
+	$(in->simple.program, setUniform, in->simple.projection, &projection);
+	$(in->simple.program, setUniform, in->simple.view, &view);
+	$(in->simple.program, setUniform, in->simple.model, &model);
 
 	$(in->vertexArray, bind);
 	$(in->vertexArray, enableAttribute, 0);
@@ -143,7 +144,7 @@ static void destroy(ident data) {
 
 	CommandData *in = data;
 
-	release(in->program);
+	release(in->simple.program);
 	release(in->model);
 	release(in->elementsBuffer);
 	release(in->vertexArray);
