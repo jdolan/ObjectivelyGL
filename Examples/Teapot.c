@@ -27,16 +27,9 @@
 #include <ObjectivelyGL.h>
 
 typedef struct {
-	Program *program;
-	const Variable *projection;
-	const Variable *view;
-	const Variable *model;
-} Simple;
-
-typedef struct {
 	SDL_Window *window;
 	SDL_GLContext *context;
-	Simple simple;
+	Program *program;
 	Model *model;
 	VertexArray *vertexArray;
 	Buffer *elementsBuffer;
@@ -80,14 +73,10 @@ static void initialize(ident data) {
 		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
 	);
 
-	in->simple.program = $(alloc(Program), initWithDescriptor, &descriptor);
-	assert(in->simple.program);
+	in->program = $(alloc(Program), initWithDescriptor, &descriptor);
+	assert(in->program);
 
 	FreeProgramDescriptor(&descriptor);
-
-	in->simple.projection = $(in->simple.program, uniformForName, "projection");
-	in->simple.view = $(in->simple.program, uniformForName, "view");
-	in->simple.model = $(in->simple.program, uniformForName, "model");
 
 	in->model =	$((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
 	assert(in->model);
@@ -117,10 +106,10 @@ static void drawScene(ident data) {
 	const mat4s view = glms_lookat((vec3s) { 0, 16, -16 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
 	const mat4s model = glms_euler_xyz((vec3s) { -GLM_PI_2, 0, SDL_GetTicks() * 0.001 });
 
-	$(in->simple.program, use);
-	$(in->simple.program, setUniform, in->simple.projection, &projection);
-	$(in->simple.program, setUniform, in->simple.view, &view);
-	$(in->simple.program, setUniform, in->simple.model, &model);
+	$(in->program, use);
+	$(in->program, setUniformForName, "projection", &projection);
+	$(in->program, setUniformForName, "view", &view);
+	$(in->program, setUniformForName, "model", &model);
 
 	$(in->vertexArray, bind);
 	$(in->vertexArray, enableAttribute, 0);
@@ -144,7 +133,7 @@ static void destroy(ident data) {
 
 	CommandData *in = data;
 
-	release(in->simple.program);
+	release(in->program);
 	release(in->model);
 	release(in->elementsBuffer);
 	release(in->vertexArray);
