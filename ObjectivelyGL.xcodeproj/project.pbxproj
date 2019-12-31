@@ -40,6 +40,8 @@
 		CE129E2823B15E82007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE129E2923B15E82007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE129E2F23B15E99007D0433 /* CommandQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1F23B15E6D007D0433 /* CommandQueue.c */; };
+		CE129E3623B5692A007D0433 /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E3423B5692A007D0433 /* Texture.h */; };
+		CE129E3723B5692A007D0433 /* Texture.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E3523B5692A007D0433 /* Texture.c */; };
 		CE129E4023B6720F007D0433 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
 		CE129E4123B6720F007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE129E4223B6720F007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
@@ -304,6 +306,8 @@
 		CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-CommandQueue"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE129E3023B5684A007D0433 /* parallax.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = parallax.vs.glsl; sourceTree = "<group>"; };
 		CE129E3123B56873007D0433 /* parallax.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = parallax.fs.glsl; sourceTree = "<group>"; };
+		CE129E3423B5692A007D0433 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		CE129E3523B5692A007D0433 /* Texture.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Texture.c; sourceTree = "<group>"; };
 		CE129E3923B671E7007D0433 /* Parallax.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Parallax.c; sourceTree = "<group>"; };
 		CE129E4723B6720F007D0433 /* ObjectivelyGL-Parallax */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Parallax"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE129E4A23B67331007D0433 /* city2_6.normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city2_6.normal.png; sourceTree = "<group>"; };
@@ -508,6 +512,8 @@
 				CE0CE9BB22E1ECAE00963219 /* Program.c */,
 				CEE761B622E2003A007CB42B /* Shader.h */,
 				CEE761B722E2003A007CB42B /* Shader.c */,
+				CE129E3423B5692A007D0433 /* Texture.h */,
+				CE129E3523B5692A007D0433 /* Texture.c */,
 				CE0CE9B922E1EC5B00963219 /* Types.h */,
 				CE129E1323B0310D007D0433 /* UniformBuffer.h */,
 				CE129E1423B0310D007D0433 /* UniformBuffer.c */,
@@ -602,6 +608,7 @@
 				CE129E5723B79C29007D0433 /* Model.h in Headers */,
 				CE0CE9C422E1F51D00963219 /* Config.h in Headers */,
 				CE129E1923B145BA007D0433 /* CommandQueue.h in Headers */,
+				CE129E3623B5692A007D0433 /* Texture.h in Headers */,
 				CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -849,6 +856,7 @@
 				CE129E7323B8EB2B007D0433 /* WavefrontModel.c in Sources */,
 				CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */,
 				CE2A594022E253260043FCD2 /* OpenGL.c in Sources */,
+				CE129E3723B5692A007D0433 /* Texture.c in Sources */,
 				CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */,
 				CE0CE9BD22E1ECAE00963219 /* Program.c in Sources */,
 				CEE761B922E2003A007CB42B /* Shader.c in Sources */,

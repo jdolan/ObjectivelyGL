@@ -237,7 +237,6 @@ static GLint link(Program *self) {
 							  var.name);
 
 			var.location = glGetAttribLocation(self->name, var.name);
-
 			$(self->attributes, addElement, &var);
 		}
 
@@ -254,7 +253,6 @@ static GLint link(Program *self) {
 							   var.name);
 
 			var.location = glGetUniformLocation(self->name, var.name);
-
 			$(self->uniforms, addElement, &var);
 		}
 	}
@@ -341,7 +339,11 @@ static void setUniform(const Program *self, const Variable *variable, const GLvo
 static void setUniformForName(const Program *self, const GLchar *name, const void *value) {
 
 	const Variable *var = $(self, uniformForName, name);
-	$(self, setUniform, var, value);
+	if (var) {
+		$(self, setUniform, var, value);
+	} else {
+		assert(false);
+	}
 }
 
 /**
