@@ -106,13 +106,7 @@ static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
 			.type = GL_TRIANGLES
 		};
 
-		char *head = obj.file;
-		while (true) {
-
-			char *line = strsep(&head, "\r\n");
-			if (line == NULL) {
-				break;
-			}
+		for (char *line = strtok(obj.file, "\r\n"); line; line = strtok(NULL, "\r\n")) {
 
 			vec3s vec;
 			if (strncmp("v ", line, strlen("v ")) == 0) {
