@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <cglm/struct.h>
+
 #include <Objectively/Types.h>
 #include <ObjectivelyGL/OpenGL.h>
 
