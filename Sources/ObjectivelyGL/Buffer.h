@@ -184,7 +184,7 @@ struct BufferInterface {
 
 	/**
 	 * @fn void Buffer::writeData(const Buffer *self, const BufferData *data)
-	 * @brief Writes data to this this Buffer's data store, (re) allocating storage.
+	 * @brief Writes data to this Buffer's data store, (re) allocating storage.
 	 * @details The Buffer is (re)allocated if necessary.
 	 * @param self The Buffer.
 	 * @param data The BufferData.
@@ -194,10 +194,10 @@ struct BufferInterface {
 
 	/**
 	 * @fn void Buffer::writeSubData(const Buffer *self, const BufferData *data)
-	 * @brief Writes sub-data to this this Buffer's data store.
+	 * @brief Writes sub-data to this Buffer's data store.
 	 * @details The specified data must fit within this Buffer.
 	 * @param self The Buffer.
-	 * @param data The BufferData.
+	 * @param data The BufferSubData.
 	 * @memberof Buffer
 	 */
 	void (*writeSubData)(Buffer *self, const BufferSubData *data);
