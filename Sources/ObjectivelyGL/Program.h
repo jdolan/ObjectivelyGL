@@ -232,7 +232,7 @@ struct ProgramInterface {
 	
 	/**
 	 * @fn GLint Program::link(Program *self)
-	 * @brief Links this Program.
+	 * @brief Links this Program and resolves all attribute and uniform Variables.
 	 * @param self The Program.
 	 * @return `GL_TRUE` on success, `GL_FALSE` on error.
 	 * @memberof Program
