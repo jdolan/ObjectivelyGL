@@ -85,7 +85,7 @@ typedef struct {
 	/**
 	 * @brief The location.
 	 */
-	GLuint location;
+	GLint location;
 
 	/**
 	 * @brief The name.
