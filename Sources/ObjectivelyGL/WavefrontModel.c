@@ -35,22 +35,10 @@ typedef struct {
 	Vector *vn;
 } Wavefront;
 
-#pragma mark - Object
+#pragma mark - WavefrontModel
 
 /**
- * @see Object::dealloc(Object *)
- */
-static void dealloc(Object *self) {
-
-	//..
-
-	super(Object, self, dealloc);
-}
-
-#pragma mark - Model
-
-/**
- * @brief Finds or adds a MeshVertex with the given indices to this model.
+ * @brief Finds or adds a MeshVertex with the given indices to self model.
  * @return The vertex index.
  */
 static GLuint findOrAddVertex(Model *self, const Wavefront *obj, const ivec3s indices) {
@@ -85,103 +73,96 @@ static void postProcessVertex(const Vector *vector, ident obj, ident data) {
 }
 
 /**
- * @fn Model *Model::initWithResource(Model *self, const uint8_t *bytes, size_t length)
- * @memberof Model
+ * @see Mode::load(Model *, const uint8_t *, size_t)
  */
-static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
+static void load(Model *self, const uint8_t *bytes, size_t length) {
 
-	self = super(Model, self, initWithBytes, bytes, length);
-	if (self) {
+	const Wavefront obj = {
+		.file = calloc(length + 1, sizeof(char)),
+		.v = $(alloc(Vector), initWithSize, sizeof(vec3s)),
+		.vt = $(alloc(Vector), initWithSize, sizeof(vec2s)),
+		.vn = $(alloc(Vector), initWithSize, sizeof(vec3s)),
+	};
 
-		Wavefront obj = {
-			.file = calloc(length + 1, sizeof(char)),
-			.v = $(alloc(Vector), initWithSize, sizeof(vec3s)),
-			.vt = $(alloc(Vector), initWithSize, sizeof(vec2s)),
-			.vn = $(alloc(Vector), initWithSize, sizeof(vec3s)),
-		};
+	memcpy(obj.file, bytes, length);
 
-		memcpy(obj.file, bytes, length);
+	ModelMesh mesh = {
+		.type = GL_TRIANGLES
+	};
 
-		ModelMesh mesh = {
-			.type = GL_TRIANGLES
-		};
+	for (char *line = strtok(obj.file, "\r\n"); line; line = strtok(NULL, "\r\n")) {
 
-		for (char *line = strtok(obj.file, "\r\n"); line; line = strtok(NULL, "\r\n")) {
-
-			vec3s vec;
-			if (strncmp("v ", line, strlen("v ")) == 0) {
-				if (sscanf(line, "v %f %f %f", &vec.x, &vec.y, &vec.z) == 3) {
-					$(obj.v, addElement, &vec);
-				}
-			} else if (strncmp("vt ", line, strlen("vt ")) == 0) {
-				if (sscanf(line, "vt %f %f", &vec.x, &vec.y) == 2) {
-					$(obj.vt, addElement, &vec);
-				}
-			} else if (strncmp("vn ", line, strlen("vn ")) == 0) {
-				if (sscanf(line, "vn %f %f %f", &vec.x, &vec.y, &vec.z) == 3) {
-					$(obj.vn, addElement, &vec);
-				}
-			} else if (strncmp("g ", line, strlen("g ")) == 0) {
-				if (mesh.count) {
-					$(self->meshes, addElement, &mesh);
-				}
-				mesh = (ModelMesh) {
-					.name = strdup(line + strlen("g ")),
-					.type = GL_TRIANGLES
-				};
-			} else if (strncmp("f ", line, strlen("f ")) == 0) {
-
-				if (mesh.count == 0) {
-					mesh.elements = self->elements->count;
-				}
-
-				Vector *face = $(alloc(Vector), initWithSize, sizeof(GLuint));
-
-				char *token = line + 1;
-				while (*token) {
-
-					ivec3s indices = { 0, 0, 0 };
-					indices.x = (int) strtol(token + 1, &token, 10);
-					if (*token == '/') {
-						indices.y = (int) strtol(token + 1, &token, 10);
-						if (*token == '/') {
-							indices.z = (int) strtol(token + 1, &token, 10);
-						}
-					} else if (indices.x == 0) {
-						break;
-					}
-
-					const GLuint element = findOrAddVertex(self, &obj, indices);
-					$(face, addElement, (ident) &element);
-				}
-
-				for (size_t i = 2; i < face->count; i++) {
-					const GLuint *a = VectorElement(face, GLuint, 0);
-					const GLuint *b = VectorElement(face, GLuint, i - 1);
-					const GLuint *c = VectorElement(face, GLuint, i);
-
-					$(self->elements, addElement, (ident) a);
-					$(self->elements, addElement, (ident) b);
-					$(self->elements, addElement, (ident) c);
-
-					mesh.count += 3;
-				}
-
-				release(face);
+		vec3s vec;
+		if (strncmp("v ", line, strlen("v ")) == 0) {
+			if (sscanf(line, "v %f %f %f", &vec.x, &vec.y, &vec.z) == 3) {
+				$(obj.v, addElement, &vec);
 			}
+		} else if (strncmp("vt ", line, strlen("vt ")) == 0) {
+			if (sscanf(line, "vt %f %f", &vec.x, &vec.y) == 2) {
+				$(obj.vt, addElement, &vec);
+			}
+		} else if (strncmp("vn ", line, strlen("vn ")) == 0) {
+			if (sscanf(line, "vn %f %f %f", &vec.x, &vec.y, &vec.z) == 3) {
+				$(obj.vn, addElement, &vec);
+			}
+		} else if (strncmp("g ", line, strlen("g ")) == 0) {
+			if (mesh.count) {
+				$(self->meshes, addElement, &mesh);
+			}
+			mesh = (ModelMesh) {
+				.name = strdup(line + strlen("g ")),
+				.type = GL_TRIANGLES
+			};
+		} else if (strncmp("f ", line, strlen("f ")) == 0) {
+
+			if (mesh.count == 0) {
+				mesh.elements = self->elements->count;
+			}
+
+			Vector *face = $(alloc(Vector), initWithSize, sizeof(GLuint));
+
+			char *token = line + 1;
+			while (*token) {
+
+				ivec3s indices = { 0, 0, 0 };
+				indices.x = (int) strtol(token + 1, &token, 10);
+				if (*token == '/') {
+					indices.y = (int) strtol(token + 1, &token, 10);
+					if (*token == '/') {
+						indices.z = (int) strtol(token + 1, &token, 10);
+					}
+				} else if (indices.x == 0) {
+					break;
+				}
+
+				const GLuint element = findOrAddVertex(self, &obj, indices);
+				$(face, addElement, (ident) &element);
+			}
+
+			for (size_t i = 2; i < face->count; i++) {
+				const GLuint *a = VectorElement(face, GLuint, 0);
+				const GLuint *b = VectorElement(face, GLuint, i - 1);
+				const GLuint *c = VectorElement(face, GLuint, i);
+
+				$(self->elements, addElement, (ident) a);
+				$(self->elements, addElement, (ident) b);
+				$(self->elements, addElement, (ident) c);
+
+				mesh.count += 3;
+			}
+
+			release(face);
 		}
-
-		$(self->meshes, addElement, &mesh);
-
-		$(self->vertices, enumerateElements, postProcessVertex, NULL);
-
-		free(obj.file);
-		release(obj.v);
-		release(obj.vt);
-		release(obj.vn);
 	}
 
-	return self;
+	$(self->meshes, addElement, &mesh);
+
+	$(self->vertices, enumerateElements, postProcessVertex, NULL);
+
+	free(obj.file);
+	release(obj.v);
+	release(obj.vt);
+	release(obj.vn);
 }
 
 #pragma mark - Class lifecycle
@@ -191,9 +172,7 @@ static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
  */
 static void initialize(Class *clazz) {
 
-	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
-
-	((ModelInterface *) clazz->interface)->initWithBytes = initWithBytes;
+	((ModelInterface *) clazz->interface)->load = load;
 }
 
 /**

@@ -65,10 +65,10 @@ static Buffer *elementsBuffer(const Model *self) {
 }
 
 /**
- * @fn Model *Model::initWithBytes(Model *self, const uint8_t *bytes, size_t length)
+ * @fn Model *Model::init(Model *self)
  * @memberof Model
  */
-static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
+static Model *init(Model *self) {
 
 	self = (Model *) super(Object, self, init);
 	if (self) {
@@ -80,6 +80,20 @@ static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
 
 		self->vertices = $(alloc(Vector), initWithSize, sizeof(ModelVertex));
 		assert(self->vertices);
+	}
+
+	return self;
+}
+
+/**
+ * @fn Model *Model::initWithBytes(Model *self, const uint8_t *bytes, size_t length)
+ * @memberof Model
+ */
+static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
+
+	self = $(self, init);
+	if (self) {
+		$(self, load, bytes, length);
 	}
 
 	return self;
@@ -125,6 +139,14 @@ static Model *initWithResourceName(Model *self, const char *name) {
 	}
 	release(resource);
 	return self;
+}
+
+/**
+ * @fn void Model::load(Model *self, const uint8_t *bytes, size_t length)
+ * @memberof Model
+ */
+static void load(Model *self, const uint8_t *bytes, size_t length) {
+
 }
 
 /**
@@ -217,10 +239,12 @@ static void initialize(Class *clazz) {
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
 
 	((ModelInterface *) clazz->interface)->elementsBuffer = elementsBuffer;
+	((ModelInterface *) clazz->interface)->init = init;
 	((ModelInterface *) clazz->interface)->initWithBytes = initWithBytes;
 	((ModelInterface *) clazz->interface)->initWithData = initWithData;
 	((ModelInterface *) clazz->interface)->initWithResource = initWithResource;
 	((ModelInterface *) clazz->interface)->initWithResourceName = initWithResourceName;
+	((ModelInterface *) clazz->interface)->load = load;
 	((ModelInterface *) clazz->interface)->vertexArray = vertexArray;
 	((ModelInterface *) clazz->interface)->vertexBuffer = vertexBuffer;
 }

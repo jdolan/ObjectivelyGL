@@ -134,19 +134,18 @@ struct ModelInterface {
 
 	/**
 	 * @fn Model *Model::initWithBytes(Model *self, const uint8_t *bytes, size_t length)
-	 * @brief Initializes this Model with the given bytes and length.
+	 * @brief Initializes this Model with the specified bytes and length.
 	 * @param self The Model.
 	 * @param bytes The Model data bytes.
 	 * @param length The length of bytes.
 	 * @return The initialized Model, or `NULL` on error.
-	 * @remarks Subclasses must override this initializer.
 	 * @memberof Model
 	 */
 	Model *(*initWithBytes)(Model *self, const uint8_t *bytes, size_t length);
 
 	/**
 	 * @fn Model *Model::initWithResource(Model *self, const Data *data)
-	 * @brief Initializes this Model with the Data containing Model data.
+	 * @brief Initializes this Model with the specified Data.
 	 * @param self The Model.
 	 * @param data The Data containing Model data.
 	 * @return The initialized Model, or `NULL` on error.
@@ -156,24 +155,34 @@ struct ModelInterface {
 
 	/**
 	 * @fn Model *Model::initWithResource(Model *self, const Resource *resource)
-	 * @brief Initializes this Model with the Resource containing Model data.
+	 * @brief Initializes this Model with the specified Resource.
 	 * @param self The Model.
 	 * @param resource The Resource containing Model data.
 	 * @return The initialized Model, or `NULL` on error.
-	 * @remarks Subclasses must override this initializer.
 	 * @memberof Model
 	 */
 	Model *(*initWithResource)(Model *self, const Resource *resource);
 
 	/**
 	 * @fn Model *Model::initWithResourceName(Model *self, const char *name)
-	 * @brief Initializes this Model with the named Resource containing Model data.
+	 * @brief Initializes this Model with the specified Resource name.
 	 * @param self The Model.
 	 * @param name The name of the Resource containing Model data.
 	 * @return The initialized Model, or `NULL` on error.
 	 * @memberof Model
 	 */
 	Model *(*initWithResourceName)(Model *self, const char *name);
+
+	/**
+	 * @fn void Model::load(Model *self, const uint8_t *bytes, size_t length)
+	 * @brief Loads this Model from the specified data.
+	 * @param self The Model.
+	 * @param bytes The model data.
+	 * @param length The length of bytes.
+	 * @remarks Subclasses must override this method.
+	 * @memberof Model
+	 */
+	void (*load)(Model *self, const uint8_t *bytes, size_t length);
 
 	/**
 	 * @fn VertexArray *Model::vertexArray(const Model *self, const Attribute *attributes)

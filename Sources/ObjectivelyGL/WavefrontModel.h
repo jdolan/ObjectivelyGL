@@ -49,8 +49,6 @@ struct WavefrontModel {
 	 * @protected
 	 */
 	WavefrontModelInterface *interface;
-
-	//..
 };
 
 /**
