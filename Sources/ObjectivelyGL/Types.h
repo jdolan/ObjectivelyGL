@@ -28,6 +28,29 @@
 #include <Objectively/Types.h>
 #include <ObjectivelyGL/OpenGL.h>
 
+typedef uint8_t vec3ub[3];
+
+typedef union {
+	vec3ub raw;
+	struct {
+		uint8_t r;
+		uint8_t g;
+		uint8_t b;
+	};
+} vec3ubs;
+
+typedef uint8_t vec4ub[4];
+
+typedef union {
+	vec4ub raw;
+	struct {
+		uint8_t r;
+		uint8_t g;
+		uint8_t b;
+		uint8_t a;
+	};
+} vec4ubs;
+
 #ifndef OBJECTIVELYGL_EXPORT
 #define OBJECTIVELYGL_EXPORT extern
 #endif
