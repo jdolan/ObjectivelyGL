@@ -94,11 +94,13 @@ static Model *initWithBytes(Model *self, const uint8_t *bytes, size_t length) {
 	if (self) {
 
 		Wavefront obj = {
-			.file = strndup((char *) bytes, length),
+			.file = calloc(length + 1, sizeof(char)),
 			.v = $(alloc(Vector), initWithSize, sizeof(vec3s)),
 			.vt = $(alloc(Vector), initWithSize, sizeof(vec2s)),
 			.vn = $(alloc(Vector), initWithSize, sizeof(vec3s)),
 		};
+
+		memcpy(obj.file, bytes, length);
 
 		ModelMesh mesh = {
 			.type = GL_TRIANGLES
