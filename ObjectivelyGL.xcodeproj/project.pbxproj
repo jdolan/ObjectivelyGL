@@ -40,8 +40,6 @@
 		CE129E2823B15E82007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE129E2923B15E82007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE129E2F23B15E99007D0433 /* CommandQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E1F23B15E6D007D0433 /* CommandQueue.c */; };
-		CE129E3223B56883007D0433 /* parallax.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3023B5684A007D0433 /* parallax.vs.glsl */; };
-		CE129E3323B56886007D0433 /* parallax.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3123B56873007D0433 /* parallax.fs.glsl */; };
 		CE129E4023B6720F007D0433 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
 		CE129E4123B6720F007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE129E4223B6720F007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
@@ -58,9 +56,14 @@
 		CE129E7F23B90579007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE129E8023B90579007D0433 /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
 		CE129E8623B9058A007D0433 /* WavefrontModel.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E7623B9054B007D0433 /* WavefrontModel.c */; };
-		CE129E8823B9079E007D0433 /* teapot.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E7523B8FECA007D0433 /* teapot.obj */; };
 		CE129E8B23BA3B3C007D0433 /* Attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E8923BA3B3C007D0433 /* Attribute.h */; };
 		CE129E8C23BA3B3C007D0433 /* Attribute.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E8A23BA3B3C007D0433 /* Attribute.c */; };
+		CE161E3723BB8C060023AC8D /* parallax.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3023B5684A007D0433 /* parallax.vs.glsl */; };
+		CE161E3823BB8C060023AC8D /* parallax.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3123B56873007D0433 /* parallax.fs.glsl */; };
+		CE161E3923BB8C060023AC8D /* simple.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0722E5035100ED22EA /* simple.vs.glsl */; };
+		CE161E3A23BB8C060023AC8D /* simple.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* simple.fs.glsl */; };
+		CE161E3B23BB8C060023AC8D /* syntax-error.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBB82B022E749A700997E82 /* syntax-error.glsl */; };
+		CE161E3C23BB8C060023AC8D /* teapot.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E7523B8FECA007D0433 /* teapot.obj */; };
 		CE2A594022E253260043FCD2 /* OpenGL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A593E22E253260043FCD2 /* OpenGL.c */; };
 		CE2A594122E253260043FCD2 /* OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2A593F22E253260043FCD2 /* OpenGL.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2A594E22E260B30043FCD2 /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A594222E25F7D0043FCD2 /* Shader.c */; };
@@ -91,9 +94,6 @@
 		CE61326522E75BA100673094 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
 		CE61326622E75BA100673094 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE61326722E75BA100673094 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
-		CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0722E5035100ED22EA /* simple.vs.glsl */; };
-		CE7DEE0D22E514DC00ED22EA /* simple.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* simple.fs.glsl */; };
-		CEBB82B122E749CB00997E82 /* syntax-error.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBB82B022E749A700997E82 /* syntax-error.glsl */; };
 		CEE761B822E2003A007CB42B /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE761B622E2003A007CB42B /* Shader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CEE761B922E2003A007CB42B /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CEE761B722E2003A007CB42B /* Shader.c */; };
 /* End PBXBuildFile section */
@@ -207,12 +207,18 @@
 		CE129E4D23B6734D007D0433 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = Materials;
+			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
 				CE129E4E23B67360007D0433 /* city2_6.gloss.jpg in CopyFiles */,
 				CE129E4F23B67360007D0433 /* city2_6.normal.png in CopyFiles */,
 				CE129E5023B67360007D0433 /* city2_6.diffuse.jpg in CopyFiles */,
+				CE161E3723BB8C060023AC8D /* parallax.vs.glsl in CopyFiles */,
+				CE161E3823BB8C060023AC8D /* parallax.fs.glsl in CopyFiles */,
+				CE161E3923BB8C060023AC8D /* simple.vs.glsl in CopyFiles */,
+				CE161E3A23BB8C060023AC8D /* simple.fs.glsl in CopyFiles */,
+				CE161E3B23BB8C060023AC8D /* syntax-error.glsl in CopyFiles */,
+				CE161E3C23BB8C060023AC8D /* teapot.obj in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,16 +230,6 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CE129E8723B90796007D0433 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Models;
-			dstSubfolderSpec = 7;
-			files = (
-				CE129E8823B9079E007D0433 /* teapot.obj in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CE2A594522E2609D0043FCD2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -279,20 +275,6 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-		};
-		CE7DEE0922E5133C00ED22EA /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Shaders;
-			dstSubfolderSpec = 7;
-			files = (
-				CE129E3323B56886007D0433 /* parallax.fs.glsl in CopyFiles */,
-				CE129E3223B56883007D0433 /* parallax.vs.glsl in CopyFiles */,
-				CE7DEE0D22E514DC00ED22EA /* simple.fs.glsl in CopyFiles */,
-				CE7DEE0C22E514DC00ED22EA /* simple.vs.glsl in CopyFiles */,
-				CEBB82B122E749CB00997E82 /* syntax-error.glsl in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -585,42 +567,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CE129E4923B67257007D0433 /* Materials */ = {
+		CE2A595522E262D40043FCD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */,
 				CE129E4A23B67331007D0433 /* city2_6.normal.png */,
 				CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */,
-			);
-			path = Materials;
-			sourceTree = "<group>";
-		};
-		CE129E5223B673C9007D0433 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				CEBB82B022E749A700997E82 /* syntax-error.glsl */,
 				CE129E3023B5684A007D0433 /* parallax.vs.glsl */,
 				CE129E3123B56873007D0433 /* parallax.fs.glsl */,
 				CE7DEE0722E5035100ED22EA /* simple.vs.glsl */,
 				CE7DEE0822E5046800ED22EA /* simple.fs.glsl */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
-		CE129E7423B8FECA007D0433 /* Models */ = {
-			isa = PBXGroup;
-			children = (
+				CEBB82B022E749A700997E82 /* syntax-error.glsl */,
 				CE129E7523B8FECA007D0433 /* teapot.obj */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		CE2A595522E262D40043FCD2 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				CE129E4923B67257007D0433 /* Materials */,
-				CE129E7423B8FECA007D0433 /* Models */,
-				CE129E5223B673C9007D0433 /* Shaders */,
 				CE7DEE0E22E5176F00ED22EA /* Makefile.am */,
 			);
 			path = Resources;
@@ -659,8 +617,6 @@
 				CE0CE99522E1E90900963219 /* Frameworks */,
 				CE0CE99322E1E90900963219 /* Headers */,
 				CE129E4D23B6734D007D0433 /* CopyFiles */,
-				CE129E8723B90796007D0433 /* CopyFiles */,
-				CE7DEE0922E5133C00ED22EA /* CopyFiles */,
 			);
 			buildRules = (
 			);
