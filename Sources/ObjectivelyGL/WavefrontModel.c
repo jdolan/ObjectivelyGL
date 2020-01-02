@@ -163,7 +163,6 @@ static void load(Model *self, const uint8_t *bytes, size_t length) {
 
 	$(self->meshes, addElement, &mesh);
 
-	$(self->vertices, enumerateElements, postProcessVertex, NULL);
 	$(self->vertices, enumerateElements, postProcessVertex, self);
 
 	free(obj.file);
