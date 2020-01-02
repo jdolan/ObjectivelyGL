@@ -103,6 +103,11 @@ struct Model {
 	 * @brief The ModelVertices.
 	 */
 	Vector *vertices;
+
+	/**
+	 * @brief The Model bounding box.
+	 */
+	vec3s mins, maxs;
 };
 
 /**

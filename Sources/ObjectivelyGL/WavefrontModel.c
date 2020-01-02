@@ -69,7 +69,13 @@ static GLuint findOrAddVertex(Model *self, const Wavefront *obj, const ivec3s in
 static void postProcessVertex(const Vector *vector, ident obj, ident data) {
 
 	ModelVertex *vertex = obj;
+	Model *model = data;
+
+	model->mins = glms_vec3_minv(model->mins, vertex->position);
+	model->maxs = glms_vec3_maxv(model->maxs, vertex->position);
 	glms_vec3_normalize(vertex->normal);
+
+	// TODO: Calculate tangents
 }
 
 /**
@@ -158,6 +164,7 @@ static void load(Model *self, const uint8_t *bytes, size_t length) {
 	$(self->meshes, addElement, &mesh);
 
 	$(self->vertices, enumerateElements, postProcessVertex, NULL);
+	$(self->vertices, enumerateElements, postProcessVertex, self);
 
 	free(obj.file);
 	release(obj.v);

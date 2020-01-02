@@ -80,6 +80,9 @@ static Model *init(Model *self) {
 
 		self->vertices = $(alloc(Vector), initWithSize, sizeof(ModelVertex));
 		assert(self->vertices);
+
+		self->mins = glms_vec3_fill(FLT_MAX);
+		self->maxs = glms_vec3_fill(-FLT_MAX);
 	}
 
 	return self;
