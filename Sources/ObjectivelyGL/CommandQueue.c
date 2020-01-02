@@ -90,7 +90,7 @@ static _Bool enqueue(CommandQueue *self, Consumer consumer, ident data) {
 	_Bool enqueued = false;
 
 	synchronized(self->condition, {
-		Command *cmd = &self->commands[self->free];
+		Command *cmd = self->commands + self->free;
 		if (cmd->consumer == NULL) {
 			cmd->consumer = consumer;
 			cmd->data = data;
@@ -190,9 +190,8 @@ static void resize(CommandQueue *self, size_t capacity) {
 		Command *commands = calloc(capacity, sizeof(Command));
 		assert(commands);
 
-		const Command *in = self->commands + self->pending;
 		for (size_t i = 0; i < self->count; i++) {
-			*(commands + i) = *(in + i % self->capacity);
+			*(commands + i) = *(self->commands + (self->pending + i) % self->capacity);
 		}
 
 		free(self->commands);

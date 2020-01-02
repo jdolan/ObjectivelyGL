@@ -40,6 +40,7 @@ static void command(ident data) {
 	criticalSection++;
 }
 
+#if 0
 static void printq(const CommandQueue *q) {
 
 	const Command *cmd = q->commands;
@@ -47,6 +48,7 @@ static void printq(const CommandQueue *q) {
 		printf("%d %s\n", (int) cmd->data, i == q->pending ? "P" : i == q->free ? "F" : "");
 	}
 }
+#endif
 
 START_TEST(enqueue) {
 
@@ -123,7 +125,7 @@ START_TEST(resize) {
 	ck_assert_int_eq(6, q->free);
 	ck_assert_int_eq(6, q->count);
 
-	printq(q);
+	//printq(q);
 
 } END_TEST
 
