@@ -44,6 +44,7 @@ static void dealloc(Object *self) {
 	release(this->shaders);
 	release(this->attributes);
 	release(this->uniforms);
+	release(this->uniformBlocks);
 
 	glDeleteProgram(this->name);
 
@@ -143,6 +144,9 @@ static Program *init(Program *self) {
 
 		self->uniforms = $$(Vector, vectorWithSize, sizeof(Variable));
 		assert(self->uniforms);
+
+		self->uniformBlocks = $$(Vector, vectorWithSize, sizeof(UniformBlock));
+		assert(self->uniformBlocks);
 	}
 
 	return self;
@@ -224,10 +228,10 @@ static GLint link(Program *self) {
 
 	if (status == GL_TRUE) {
 
-		GLuint activeAttributes;
-		glGetProgramiv(self->name, GL_ACTIVE_ATTRIBUTES, (GLint *) &activeAttributes);
-		for (GLuint i = 0; i < activeAttributes; i++) {
-			Variable var;
+		GLint activeAttributes;
+		glGetProgramiv(self->name, GL_ACTIVE_ATTRIBUTES, &activeAttributes);
+		for (GLint i = 0; i < activeAttributes; i++) {
+			Variable var = { .index = i };
 			glGetActiveAttrib(self->name,
 							  i,
 							  sizeof(var.name) - 1,
@@ -240,10 +244,10 @@ static GLint link(Program *self) {
 			$(self->attributes, addElement, &var);
 		}
 
-		GLuint activeUniforms;
-		glGetProgramiv(self->name, GL_ACTIVE_UNIFORMS, (GLint *) &activeUniforms);
-		for (GLuint i = 0; i < activeUniforms; i++) {
-			Variable var;
+		GLint activeUniforms;
+		glGetProgramiv(self->name, GL_ACTIVE_UNIFORMS, &activeUniforms);
+		for (GLint i = 0; i < activeUniforms; i++) {
+			Variable var = { .index = i };
 			glGetActiveUniform(self->name,
 							   i,
 							   sizeof(var.name) - 1,
@@ -254,6 +258,24 @@ static GLint link(Program *self) {
 
 			var.location = glGetUniformLocation(self->name, var.name);
 			$(self->uniforms, addElement, &var);
+		}
+
+		GLint activeUniformBlocks;
+		glGetProgramiv(self->name, GL_ACTIVE_UNIFORM_BLOCKS, &activeUniformBlocks);
+		for (GLint i = 0; i < activeUniformBlocks; i++) {
+			UniformBlock block = { .index = i };
+			glGetActiveUniformBlockName(self->name,
+										i,
+										sizeof(block.name) - 1,
+										NULL,
+										block.name);
+
+			glGetActiveUniformBlockiv(self->name,
+									  i,
+									  GL_UNIFORM_BLOCK_BINDING,
+									  &block.binding);
+
+			$(self->uniformBlocks, addElement, &block);
 		}
 	}
 
@@ -327,8 +349,33 @@ static void setUniform(const Program *self, const Variable *variable, const GLvo
 			break;
 
 		default:
-			// TODO: Print something?
+			assert(false);
 			break;
+	}
+}
+
+/**
+ * @fn void Program::setUniformBlockBinding(const Program *self, const UniformBlock *block, GLint index)
+ * @memberof Program
+ */
+static void setUniformBlockBinding(const Program *self, const UniformBlock *block, GLuint index) {
+
+	glUniformBlockBinding(self->name, block->index, block->binding);
+
+	((UniformBlock *) block)->binding = index;
+}
+
+/**
+ * @fn void Program::setUniformBlockBindingForName(const Program *self, const UniformBlock *block, GLint index)
+ * @memberof Program
+ */
+static void setUniformBlockBindingForName(const Program *self, const GLchar *name, GLuint index) {
+
+	const UniformBlock *block = $(self, uniformBlockForName, name);
+	if (block) {
+		$(self, setUniformBlockBinding, block, index);
+	} else {
+		assert(false);
 	}
 }
 
@@ -346,20 +393,17 @@ static void setUniformForName(const Program *self, const GLchar *name, const voi
 	}
 }
 
-/**
- * @fn GLint Program::uniformBlockLocation(const Program *self, const GLchar *name)
- * @memberof Program
- */
-static GLint uniformBlockLocation(const Program *self, const GLchar *name) {
-	return glGetUniformBlockIndex(self->name, name);
-}
 
-/**
- * @fn void Program::uniformBlockBinding(const Program *self, GLuint block, GLuint index)
- * @memberof Program
- */
-static void uniformBlockBinding(const Program *self, GLuint block, GLuint index) {
-	glUniformBlockBinding(self->name, block, index);
+static const UniformBlock *uniformBlockForName(const Program *self, const GLchar *name) {
+
+	UniformBlock *block = self->uniformBlocks->elements;
+	for (size_t i = 0; i < self->uniformBlocks->count; i++, block++) {
+		if (!strcmp(name, block->name)) {
+			return block;
+		}
+	}
+
+	return NULL;
 }
 
 /**
@@ -409,10 +453,11 @@ static void initialize(Class *clazz) {
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;
 	((ProgramInterface *) clazz->interface)->initWithDescriptor = initWithDescriptor;
 	((ProgramInterface *) clazz->interface)->link = link;
-	((ProgramInterface *) clazz->interface)->uniformBlockLocation = uniformBlockLocation;
-	((ProgramInterface *) clazz->interface)->uniformBlockBinding = uniformBlockBinding;
+	((ProgramInterface *) clazz->interface)->uniformBlockForName = uniformBlockForName;
 	((ProgramInterface *) clazz->interface)->uniformForName = uniformForName;
 	((ProgramInterface *) clazz->interface)->setUniform = setUniform;
+	((ProgramInterface *) clazz->interface)->setUniformBlockBinding = setUniformBlockBinding;
+	((ProgramInterface *) clazz->interface)->setUniformBlockBindingForName = setUniformBlockBindingForName;
 	((ProgramInterface *) clazz->interface)->setUniformForName = setUniformForName;
 	((ProgramInterface *) clazz->interface)->use = use;
 }

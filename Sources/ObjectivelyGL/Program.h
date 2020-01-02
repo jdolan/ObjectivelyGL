@@ -85,6 +85,11 @@ typedef struct {
 typedef struct {
 
 	/**
+	 * @brief The index.
+	 */
+	GLuint index;
+
+	/**
 	 * @brief The location.
 	 */
 	GLint location;
@@ -105,6 +110,28 @@ typedef struct {
 	GLenum type;
 
 } Variable;
+
+/**
+ * @brief Uniform blocks.
+ */
+typedef struct {
+
+	/**
+	 * @brief The index.
+	 */
+	GLuint index;
+
+	/**
+	 * @brief The name.
+	 */
+	GLchar name[64];
+
+	/**
+	 * @brief The binding point.
+	 */
+	GLint binding;
+
+} UniformBlock;
 
 /**
  * @brief The Program type.
@@ -144,6 +171,11 @@ struct Program {
 	Vector *uniforms;
 
 	/**
+	 * @brief The UniformBlocks defined by this Program.
+	 */
+	Vector *uniformBlocks;
+
+	/**
 	 * @brief An optional callback that, if set, is called on `use`.
 	 */
 	ProgramUse use;
@@ -176,7 +208,7 @@ struct ProgramInterface {
 	/**
 	 * @fn const Variable *Program::attributeForName(const Program *self, const GLchar *name)
 	 * @param self The Program.
-	 * @param name The attribute name.
+	 * @param name The attribute Variable name.
 	 * @return The attribute Variable for the given name, or `NULL`.
 	 * @memberof Program
 	 */
@@ -252,28 +284,18 @@ struct ProgramInterface {
 	GLint (*link)(Program *self);
 
 	/**
-	 * @fn GLint Program::uniformBlockLocation(const Program *self, const GLchar *name)
+	 * @fn const UniformBlock *Program::uniformBlockForName(const Program *self, const GLchar *name)
 	 * @param self The Program.
-	 * @param name The uniform block name.
-	 * @return The uniform block location, or -1 on error.
+	 * @param name The UniformBlock name.
+	 * @return The UniformBlock for the given name, or `NULL`.
 	 * @memberof Program
 	 */
-	GLint (*uniformBlockLocation)(const Program *self, const GLchar *name);
-
-	/**
-	 * @fn void Program::uniformBlockBinding(const Program *self, GLuint block, GLuint index)
-	 * @brief Sets the binding point index for the specified uniform block.
-	 * @param self The Program.
-	 * @param block The uniform block location.
-	 * @param index The binding point index.
-	 * @memberof Program
-	 */
-	void (*uniformBlockBinding)(const Program *self, GLuint block, GLuint index);
+	const UniformBlock *(*uniformBlockForName)(const Program *self, const GLchar *name);
 
 	/**
 	 * @fn const Variable *Program::uniformForName(const Program *self, const GLchar *name)
 	 * @param self The Program.
-	 * @param name The uniform name.
+	 * @param name The uniform Variable name.
 	 * @return The uniform Variable for the given name, or `NULL`.
 	 * @memberof Program
 	 */
@@ -288,6 +310,26 @@ struct ProgramInterface {
 	 * @memberof Program
 	 */
 	void (*setUniform)(const Program *self, const Variable *variable, const GLvoid *value);
+
+	/**
+	 * @fn void Program::setUniformBlockBinding(const Program *self, const UniformBlock *block, GLint index)
+	 * @brief Sets the UniformBlock binding to the specified index.
+	 * @param self The Program.
+	 * @param block The UniformBlock.
+	 * @param index The binding index, which must be less than the value of `GL_MAX_UNIFORM_BUFFER_BINDINGS`.
+	 * @memberof Program
+	 */
+	void (*setUniformBlockBinding)(const Program *self, const UniformBlock *block, GLuint index);
+
+	/**
+	 * @fn void Program::setUniformBlockBindingForName(const Program *self, const UniformBlock *block, GLint index)
+	 * @brief Sets the UniformBlock binding for the given name to the specified index.
+	 * @param self The Program.
+	 * @param name The UniformBlock name.
+	 * @param index The binding index, which must be less than the value of `GL_MAX_UNIFORM_BUFFER_BINDINGS`.
+	 * @memberof Program
+	 */
+	void (*setUniformBlockBindingForName)(const Program *self, const GLchar *name, GLuint index);
 
 	/**
 	 * @fn void Program::setUniformForName(const Program *self, const GLchar *name, const void *value)
