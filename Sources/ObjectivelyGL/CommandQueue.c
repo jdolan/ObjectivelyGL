@@ -69,6 +69,8 @@ static _Bool dequeue(CommandQueue *self) {
 			self->pending = (self->pending + 1) % self->capacity;
 			self->count--;
 			dequeued = true;
+
+			$(self->condition, signal);
 		}
 	});
 
@@ -98,6 +100,8 @@ static _Bool enqueue(CommandQueue *self, Consumer consumer, ident data) {
 			self->free = (self->free + 1) % self->capacity;
 			self->count++;
 			enqueued = true;
+
+			$(self->condition, signal);
 		}
 	});
 
@@ -131,7 +135,10 @@ static ident _thread(Thread *thread) {
 	CommandQueue *self = thread->data;
 
 	while (!thread->isCancelled) {
+
 		$(self, flush);
+
+		synchronized(self->condition, $(self->condition, wait));
 	}
 
 	return NULL;
@@ -166,17 +173,7 @@ static CommandQueue *initWithCapacity(CommandQueue *self, size_t capacity) {
  * @memberof CommandQueue
  */
 static _Bool isEmpty(const CommandQueue *self) {
-
-	_Bool isEmpty = false;
-
-	synchronized(self->condition, {
-		const Command *cmd = self->commands + self->pending;
-		if (cmd->consumer == NULL) {
-			isEmpty = true;
-		}
-	});
-
-	return isEmpty;
+	return self->count == 0;
 }
 
 /**
@@ -219,6 +216,9 @@ static void start(CommandQueue *self) {
 static void stop(CommandQueue *self) {
 
 	$(self->thread, cancel);
+
+	synchronized(self->condition, $(self->condition, signal));
+
 	$(self->thread, join, NULL);
 }
 
@@ -228,9 +228,11 @@ static void stop(CommandQueue *self) {
  */
 static void waitUntilEmpty(const CommandQueue *self) {
 
-	while (!$(self, isEmpty)) {
-
-	}
+	synchronized(self->condition, {
+		while (self->count) {
+			$(self->condition, wait);
+		}
+	});
 }
 
 #pragma mark - Class lifecycle
