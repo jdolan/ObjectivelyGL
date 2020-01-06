@@ -36,14 +36,14 @@ typedef struct UniformBufferInterface UniformBufferInterface;
 /**
  * @brief Creates a BufferData suitable for use with a UniformBuffer.
  */
-#define MakeUniformBufferData(size, data, usage) \
-	MakeBufferData(GL_UNIFORM_BUFFER, size, data, usage)
+#define MakeUniformBufferData(uniforms) \
+	MakeBufferData(GL_UNIFORM_BUFFER, sizeof(uniforms), &uniforms, GL_DYNAMIC_DRAW)
 
 /**
  * @brief Creates a BufferSubData suitable for use with a UniformBuffer.
  */
-#define MakeUniformBufferSubData(offset, size, data) \
-	MakeBufferSubData(GL_UNIFORM_BUFFER, offset, size, data)
+#define MakeUniformBufferSubData(uniforms, member) \
+	MakeBufferSubData(GL_UNIFORM_BUFFER, sizeof(uniforms.member), &uniforms.member)
 
 /**
  * @brief The UniformBuffer type.
