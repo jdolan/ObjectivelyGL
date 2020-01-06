@@ -34,8 +34,8 @@ static void teardown(void) {
 START_TEST(attributes) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "gouraud.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -61,8 +61,8 @@ START_TEST(attributes) {
 START_TEST(uniforms) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "gouraud.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -123,8 +123,8 @@ START_TEST(init) {
 
 START_TEST(initWithShaders) {
 
-	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
-	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "simple.fs.glsl");
+	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "gouraud.vs.glsl");
+	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "gouraud.fs.glsl");
 
 	ck_assert_ptr_ne(NULL, vertex);
 	ck_assert_ptr_ne(NULL, fragment);
@@ -148,8 +148,8 @@ START_TEST(initWithShaders) {
 START_TEST(initWithDescriptor) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "simple.fs.glsl")
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "gouraud.fs.glsl")
 	);
 
 	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
@@ -166,7 +166,7 @@ START_TEST(initWithDescriptor) {
 START_TEST(initWithDescriptor_missing) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
 		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "missing.gs.glsl")
 	);
 
@@ -188,7 +188,7 @@ START_TEST(initWithDescriptor_missing) {
 START_TEST(initWithDescriptor_syntaxError) {
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "simple.vs.glsl"),
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
 		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "syntax-error.glsl")
 	);
 
@@ -209,8 +209,8 @@ START_TEST(initWithDescriptor_syntaxError) {
 
 START_TEST(link) {
 
-	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "simple.vs.glsl");
-	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "simple.fs.glsl");
+	Shader *vertex = $(alloc(Shader), initWithResourceName, GL_VERTEX_SHADER, "gouraud.vs.glsl");
+	Shader *fragment = $(alloc(Shader), initWithResourceName, GL_FRAGMENT_SHADER, "gouraud.fs.glsl");
 
 	ck_assert_ptr_ne(NULL, vertex);
 	ck_assert_ptr_ne(NULL, fragment);

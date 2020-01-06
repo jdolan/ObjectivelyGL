@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <Objectively/MutableString.h>
+
 #include "Program.h"
 
 #define _Class _Program
@@ -49,6 +51,53 @@ static void dealloc(Object *self) {
 	glDeleteProgram(this->name);
 
 	super(Object, self, dealloc);
+}
+
+/**
+ * @see Object::description(const Object *)
+ */
+static String *description(const Object *self) {
+
+	Program *this = (Program *) self;
+
+	MutableString *desc = $(super(Object, self, description), mutableCopy);
+	$(desc, appendFormat, " %d\n", this->name);
+
+	$(desc, appendFormat, "\n");
+	$(desc, appendFormat, "%-32s %s %s %s %s\n", "Attribute", "Index", "Location", "Size", "Type");
+	const Variable *attr = this->attributes->elements;
+	for (size_t i = 0; i < this->attributes->count; i++, attr++) {
+		$(desc, appendFormat, "%-32s %-5d %-8d %-4d %-4d\n",
+				attr->name,
+				attr->index,
+				attr->location,
+				attr->size,
+				attr->type);
+	}
+
+	$(desc, appendFormat, "\n");
+	$(desc, appendFormat, "%-32s %s %s %s %s\n", "Uniform", "Index", "Location", "Size", "Type");
+	const Variable *uniform = this->uniforms->elements;
+	for (size_t i = 0; i < this->uniforms->count; i++, uniform++) {
+		$(desc, appendFormat, "%-32s %-5d %-8d %-4d %-4d\n",
+				uniform->name,
+				uniform->index,
+				uniform->location,
+				uniform->size,
+				uniform->type);
+	}
+
+	$(desc, appendFormat, "\n");
+	$(desc, appendFormat, "%-32s %s %s\n", "Uniform Block", "Index", "Binding");
+	const UniformBlock *block = this->uniformBlocks->elements;
+	for (size_t i = 0; i < this->uniformBlocks->count; i++, block++) {
+		$(desc, appendFormat, "%-32s %5d %7d\n",
+				block->name,
+				block->index,
+				block->binding);
+	}
+
+	return (String *) desc;
 }
 
 #pragma mark - Program
@@ -286,72 +335,65 @@ static GLint link(Program *self) {
  * @fn void Program::setUniform(const Program *self, const Variable *variable, const GLvoid *value)
  * @memberof Program
  */
-static void setUniform(const Program *self, const Variable *variable, const GLvoid *value) {
+static void setUniform(const Program *self, const Variable *var, const GLvoid *value) {
 
-	switch (variable->type) {
+	switch (var->type) {
 		case GL_FLOAT:
-			switch (variable->size) {
-				case 1:
-					glUniform1f(variable->location, *(GLfloat *) value);
-					break;
-				case 2:
-					glUniform2fv(variable->location, 2, (const GLfloat *) value);
-					break;
-				case 3:
-					glUniform3fv(variable->location, 3, (const GLfloat *) value);
-					break;
-				case 4:
-					glUniform4fv(variable->location, 4, (const GLfloat *) value);
-					break;
-			}
+			glUniform1f(var->location, *(GLfloat *) value);
 			break;
 
 		case GL_FLOAT_MAT3:
-			glUniformMatrix3fv(variable->location, 1, GL_FALSE, (const GLfloat *) value);
+			glUniformMatrix3fv(var->location, var->size, GL_FALSE, (const GLfloat *) value);
 			break;
 
 		case GL_FLOAT_MAT4:
-			glUniformMatrix4fv(variable->location, 1, GL_FALSE, (const GLfloat *) value);
+			glUniformMatrix4fv(var->location, var->size, GL_FALSE, (const GLfloat *) value);
+			break;
+
+		case GL_FLOAT_VEC2:
+			glUniform2fv(var->location, var->size, (const GLfloat *) value);
+			break;
+
+		case GL_FLOAT_VEC3:
+			glUniform3fv(var->location, var->size, (const GLfloat *) value);
+			break;
+
+		case GL_FLOAT_VEC4:
+			glUniform4fv(var->location, var->size, (const GLfloat *) value);
 			break;
 
 		case GL_INT:
-			switch (variable->size) {
-				case 1:
-					glUniform1i(variable->location, *(GLint *) value);
-					break;
-				case 2:
-					glUniform2iv(variable->location, 2, (const GLint *) value);
-					break;
-				case 3:
-					glUniform3iv(variable->location, 3, (const GLint *) value);
-					break;
-				case 4:
-					glUniform4iv(variable->location, 4, (const GLint *) value);
-					break;
-			}
+			glUniform1i(var->location, *(GLint *) value);
+			break;
+		case GL_INT_VEC2:
+			glUniform2iv(var->location, var->size, (const GLint *) value);
+			break;
+		case GL_INT_VEC3:
+			glUniform3iv(var->location, var->size, (const GLint *) value);
+			break;
+		case GL_INT_VEC4:
+			glUniform4iv(var->location, var->size, (const GLint *) value);
 			break;
 
 		case GL_UNSIGNED_INT:
-			switch (variable->size) {
-				case 1:
-					glUniform1ui(variable->location, *(const GLint *) value);
-					break;
-				case 2:
-					glUniform2uiv(variable->location, 2, (const GLuint *) value);
-					break;
-				case 3:
-					glUniform3uiv(variable->location, 3, (const GLuint *) value);
-					break;
-				case 4:
-					glUniform4uiv(variable->location, 4, (const GLuint *) value);
-					break;
-			}
+			glUniform1ui(var->location, *(const GLint *) value);
+			break;
+		case GL_UNSIGNED_INT_VEC2:
+			glUniform2uiv(var->location, var->size, (const GLuint *) value);
+			break;
+		case GL_UNSIGNED_INT_VEC3:
+			glUniform3uiv(var->location, var->size, (const GLuint *) value);
+			break;
+		case GL_UNSIGNED_INT_VEC4:
+			glUniform4uiv(var->location, var->size, (const GLuint *) value);
 			break;
 
 		default:
 			assert(false);
 			break;
 	}
+
+	assert(glGetError() == GL_NO_ERROR);
 }
 
 /**
@@ -393,7 +435,10 @@ static void setUniformForName(const Program *self, const GLchar *name, const voi
 	}
 }
 
-
+/**
+ * @fn const UniformBlock *Program::uniformBlockForName(const Program *self, const GLchar *name)
+ * @memberof Program
+ */
 static const UniformBlock *uniformBlockForName(const Program *self, const GLchar *name) {
 
 	UniformBlock *block = self->uniformBlocks->elements;
@@ -443,6 +488,7 @@ static void use(const Program *self) {
 static void initialize(Class *clazz) {
 
 	((ObjectInterface *) clazz->interface)->dealloc = dealloc;
+	((ObjectInterface *) clazz->interface)->description = description;
 
 	((ProgramInterface *) clazz->interface)->attributeForName = attributeForName;
 	((ProgramInterface *) clazz->interface)->attach = attach;
@@ -453,12 +499,12 @@ static void initialize(Class *clazz) {
 	((ProgramInterface *) clazz->interface)->initWithShaders = initWithShaders;
 	((ProgramInterface *) clazz->interface)->initWithDescriptor = initWithDescriptor;
 	((ProgramInterface *) clazz->interface)->link = link;
-	((ProgramInterface *) clazz->interface)->uniformBlockForName = uniformBlockForName;
-	((ProgramInterface *) clazz->interface)->uniformForName = uniformForName;
 	((ProgramInterface *) clazz->interface)->setUniform = setUniform;
 	((ProgramInterface *) clazz->interface)->setUniformBlockBinding = setUniformBlockBinding;
 	((ProgramInterface *) clazz->interface)->setUniformBlockBindingForName = setUniformBlockBindingForName;
 	((ProgramInterface *) clazz->interface)->setUniformForName = setUniformForName;
+	((ProgramInterface *) clazz->interface)->uniformBlockForName = uniformBlockForName;
+	((ProgramInterface *) clazz->interface)->uniformForName = uniformForName;
 	((ProgramInterface *) clazz->interface)->use = use;
 }
 

@@ -46,9 +46,6 @@
 		CE129E4123B6720F007D0433 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE129E4223B6720F007D0433 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE129E4823B6721D007D0433 /* Parallax.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E3923B671E7007D0433 /* Parallax.c */; };
-		CE129E4E23B67360007D0433 /* city2_6.gloss.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */; };
-		CE129E4F23B67360007D0433 /* city2_6.normal.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E4A23B67331007D0433 /* city2_6.normal.png */; };
-		CE129E5023B67360007D0433 /* city2_6.diffuse.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */; };
 		CE129E5723B79C29007D0433 /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E5523B79C29007D0433 /* Model.h */; };
 		CE129E5823B79C29007D0433 /* Model.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E5623B79C29007D0433 /* Model.c */; };
 		CE129E7223B8EB2B007D0433 /* WavefrontModel.h in Headers */ = {isa = PBXBuildFile; fileRef = CE129E7023B8EB2B007D0433 /* WavefrontModel.h */; };
@@ -62,10 +59,15 @@
 		CE129E8C23BA3B3C007D0433 /* Attribute.c in Sources */ = {isa = PBXBuildFile; fileRef = CE129E8A23BA3B3C007D0433 /* Attribute.c */; };
 		CE161E3723BB8C060023AC8D /* parallax.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3023B5684A007D0433 /* parallax.vs.glsl */; };
 		CE161E3823BB8C060023AC8D /* parallax.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E3123B56873007D0433 /* parallax.fs.glsl */; };
-		CE161E3923BB8C060023AC8D /* simple.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0722E5035100ED22EA /* simple.vs.glsl */; };
-		CE161E3A23BB8C060023AC8D /* simple.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* simple.fs.glsl */; };
+		CE161E3923BB8C060023AC8D /* gouraud.vs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0722E5035100ED22EA /* gouraud.vs.glsl */; };
+		CE161E3A23BB8C060023AC8D /* gouraud.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* gouraud.fs.glsl */; };
 		CE161E3B23BB8C060023AC8D /* syntax-error.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBB82B022E749A700997E82 /* syntax-error.glsl */; };
 		CE161E3C23BB8C060023AC8D /* teapot.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E7523B8FECA007D0433 /* teapot.obj */; };
+		CE161E4023BBFB400023AC8D /* armor.normal.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3F23BBFB2B0023AC8D /* armor.normal.tga */; };
+		CE161E4123BBFB400023AC8D /* armor.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3D23BBFB2A0023AC8D /* armor.obj */; };
+		CE161E4223BBFB400023AC8D /* armor.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3E23BBFB2A0023AC8D /* armor.tga */; };
+		CE161E4523BD63380023AC8D /* Scene.h in Headers */ = {isa = PBXBuildFile; fileRef = CE161E4323BD63380023AC8D /* Scene.h */; };
+		CE161E4623BD63380023AC8D /* Scene.c in Sources */ = {isa = PBXBuildFile; fileRef = CE161E4423BD63380023AC8D /* Scene.c */; };
 		CE2A594022E253260043FCD2 /* OpenGL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A593E22E253260043FCD2 /* OpenGL.c */; };
 		CE2A594122E253260043FCD2 /* OpenGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2A593F22E253260043FCD2 /* OpenGL.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2A594E22E260B30043FCD2 /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A594222E25F7D0043FCD2 /* Shader.c */; };
@@ -84,7 +86,7 @@
 		CE2DC4AE22E8DEF200908C7E /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE2DC4AF22E8DEF200908C7E /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
 		CE2DC4B022E8DEF200908C7E /* libcheck.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595122E260E40043FCD2 /* libcheck.0.dylib */; };
-		CE2DC4B622E8DF1A00908C7E /* Teapot.c in Sources */ = {isa = PBXBuildFile; fileRef = CE61325E22E75B2000673094 /* Teapot.c */; };
+		CE2DC4B622E8DF1A00908C7E /* Gouraud.c in Sources */ = {isa = PBXBuildFile; fileRef = CE61325E22E75B2000673094 /* Gouraud.c */; };
 		CE2DC4B822E8DF2600908C7E /* Buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2DC4A622E8DE3D00908C7E /* Buffer.c */; };
 		CE2DC4BB22EBF82200908C7E /* VertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2DC4B922EBF82200908C7E /* VertexArray.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CE2DC4BC22EBF82200908C7E /* VertexArray.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2DC4BA22EBF82200908C7E /* VertexArray.c */; };
@@ -96,6 +98,8 @@
 		CE61326522E75BA100673094 /* libObjectivelyGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */; };
 		CE61326622E75BA100673094 /* libObjectively.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0CE9BF22E1F4AB00963219 /* libObjectively.dylib */; };
 		CE61326722E75BA100673094 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2A595C22E26D9D0043FCD2 /* libSDL2-2.0.0.dylib */; };
+		CE75454C23C0DC1700140C52 /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = CE75454A23C0DC1700140C52 /* Camera.h */; };
+		CE75454D23C0DC1700140C52 /* Camera.c in Sources */ = {isa = PBXBuildFile; fileRef = CE75454B23C0DC1700140C52 /* Camera.c */; };
 		CEE761B822E2003A007CB42B /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE761B622E2003A007CB42B /* Shader.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CEE761B922E2003A007CB42B /* Shader.c in Sources */ = {isa = PBXBuildFile; fileRef = CEE761B722E2003A007CB42B /* Shader.c */; };
 /* End PBXBuildFile section */
@@ -212,13 +216,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				CE129E4E23B67360007D0433 /* city2_6.gloss.jpg in CopyFiles */,
-				CE129E4F23B67360007D0433 /* city2_6.normal.png in CopyFiles */,
-				CE129E5023B67360007D0433 /* city2_6.diffuse.jpg in CopyFiles */,
+				CE161E4023BBFB400023AC8D /* armor.normal.tga in CopyFiles */,
+				CE161E4123BBFB400023AC8D /* armor.obj in CopyFiles */,
+				CE161E4223BBFB400023AC8D /* armor.tga in CopyFiles */,
 				CE161E3723BB8C060023AC8D /* parallax.vs.glsl in CopyFiles */,
 				CE161E3823BB8C060023AC8D /* parallax.fs.glsl in CopyFiles */,
-				CE161E3923BB8C060023AC8D /* simple.vs.glsl in CopyFiles */,
-				CE161E3A23BB8C060023AC8D /* simple.fs.glsl in CopyFiles */,
+				CE161E3923BB8C060023AC8D /* gouraud.vs.glsl in CopyFiles */,
+				CE161E3A23BB8C060023AC8D /* gouraud.fs.glsl in CopyFiles */,
 				CE161E3B23BB8C060023AC8D /* syntax-error.glsl in CopyFiles */,
 				CE161E3C23BB8C060023AC8D /* teapot.obj in CopyFiles */,
 			);
@@ -310,9 +314,6 @@
 		CE129E3523B5692A007D0433 /* Texture.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Texture.c; sourceTree = "<group>"; };
 		CE129E3923B671E7007D0433 /* Parallax.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Parallax.c; sourceTree = "<group>"; };
 		CE129E4723B6720F007D0433 /* ObjectivelyGL-Parallax */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Parallax"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE129E4A23B67331007D0433 /* city2_6.normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city2_6.normal.png; sourceTree = "<group>"; };
-		CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = city2_6.diffuse.jpg; sourceTree = "<group>"; };
-		CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = city2_6.gloss.jpg; sourceTree = "<group>"; };
 		CE129E5523B79C29007D0433 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		CE129E5623B79C29007D0433 /* Model.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Model.c; sourceTree = "<group>"; };
 		CE129E7023B8EB2B007D0433 /* WavefrontModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WavefrontModel.h; sourceTree = "<group>"; };
@@ -322,6 +323,11 @@
 		CE129E8523B90579007D0433 /* ObjectivelyGL-WavefrontModel */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-WavefrontModel"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE129E8923BA3B3C007D0433 /* Attribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Attribute.h; sourceTree = "<group>"; };
 		CE129E8A23BA3B3C007D0433 /* Attribute.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Attribute.c; sourceTree = "<group>"; };
+		CE161E3D23BBFB2A0023AC8D /* armor.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = armor.obj; sourceTree = "<group>"; };
+		CE161E3E23BBFB2A0023AC8D /* armor.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = armor.tga; sourceTree = "<group>"; };
+		CE161E3F23BBFB2B0023AC8D /* armor.normal.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = armor.normal.tga; sourceTree = "<group>"; };
+		CE161E4323BD63380023AC8D /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		CE161E4423BD63380023AC8D /* Scene.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Scene.c; sourceTree = "<group>"; };
 		CE2A593E22E253260043FCD2 /* OpenGL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OpenGL.c; sourceTree = "<group>"; };
 		CE2A593F22E253260043FCD2 /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL.h; sourceTree = "<group>"; };
 		CE2A594222E25F7D0043FCD2 /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
@@ -340,10 +346,12 @@
 		CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-VertexArray"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5D758A23228CCB003DC4DE /* libquemath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libquemath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5D758C232290E0003DC4DE /* libquemath.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libquemath.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE61325E22E75B2000673094 /* Teapot.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Teapot.c; sourceTree = "<group>"; };
-		CE61326D22E75BA100673094 /* ObjectivelyGL-Teapot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Teapot"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE7DEE0722E5035100ED22EA /* simple.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.vs.glsl; sourceTree = "<group>"; };
-		CE7DEE0822E5046800ED22EA /* simple.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = simple.fs.glsl; sourceTree = "<group>"; };
+		CE61325E22E75B2000673094 /* Gouraud.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Gouraud.c; sourceTree = "<group>"; };
+		CE61326D22E75BA100673094 /* ObjectivelyGL-Gouraud */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ObjectivelyGL-Gouraud"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE75454A23C0DC1700140C52 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		CE75454B23C0DC1700140C52 /* Camera.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Camera.c; sourceTree = "<group>"; };
+		CE7DEE0722E5035100ED22EA /* gouraud.vs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud.vs.glsl; sourceTree = "<group>"; };
+		CE7DEE0822E5046800ED22EA /* gouraud.fs.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = gouraud.fs.glsl; sourceTree = "<group>"; };
 		CE7DEE0E22E5176F00ED22EA /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		CE7DEE0F22E5185900ED22EA /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		CEBB82AC22E68EE100997E82 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
@@ -472,7 +480,7 @@
 				CE0CE99722E1E90900963219 /* libObjectivelyGL.dylib */,
 				CE2A594722E2609D0043FCD2 /* ObjectivelyGL-Shader */,
 				CE2A597322E4447B0043FCD2 /* ObjectivelyGL-Program */,
-				CE61326D22E75BA100673094 /* ObjectivelyGL-Teapot */,
+				CE61326D22E75BA100673094 /* ObjectivelyGL-Gouraud */,
 				CE2DC4B522E8DEF200908C7E /* ObjectivelyGL-Buffer */,
 				CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
 				CE129E2E23B15E82007D0433 /* ObjectivelyGL-CommandQueue */,
@@ -500,6 +508,8 @@
 				CE129E8A23BA3B3C007D0433 /* Attribute.c */,
 				CE2DC4A222E8C65F00908C7E /* Buffer.h */,
 				CE2DC4A322E8C65F00908C7E /* Buffer.c */,
+				CE75454A23C0DC1700140C52 /* Camera.h */,
+				CE75454B23C0DC1700140C52 /* Camera.c */,
 				CE0CE9C322E1F51D00963219 /* Config.h */,
 				CE0CE9A822E1EA9A00963219 /* Config.h.in */,
 				CE129E1723B145BA007D0433 /* CommandQueue.h */,
@@ -510,6 +520,8 @@
 				CE2A593E22E253260043FCD2 /* OpenGL.c */,
 				CE0CE9BA22E1ECAE00963219 /* Program.h */,
 				CE0CE9BB22E1ECAE00963219 /* Program.c */,
+				CE161E4323BD63380023AC8D /* Scene.h */,
+				CE161E4423BD63380023AC8D /* Scene.c */,
 				CEE761B622E2003A007CB42B /* Shader.h */,
 				CEE761B722E2003A007CB42B /* Shader.c */,
 				CE129E3423B5692A007D0433 /* Texture.h */,
@@ -530,7 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				CE129E3923B671E7007D0433 /* Parallax.c */,
-				CE61325E22E75B2000673094 /* Teapot.c */,
+				CE61325E22E75B2000673094 /* Gouraud.c */,
 				CE0CE9AD22E1EA9A00963219 /* Makefile.am */,
 			);
 			path = Examples;
@@ -576,13 +588,13 @@
 		CE2A595522E262D40043FCD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE129E4C23B67331007D0433 /* city2_6.gloss.jpg */,
-				CE129E4A23B67331007D0433 /* city2_6.normal.png */,
-				CE129E4B23B67331007D0433 /* city2_6.diffuse.jpg */,
+				CE161E3F23BBFB2B0023AC8D /* armor.normal.tga */,
+				CE161E3D23BBFB2A0023AC8D /* armor.obj */,
+				CE161E3E23BBFB2A0023AC8D /* armor.tga */,
 				CE129E3023B5684A007D0433 /* parallax.vs.glsl */,
 				CE129E3123B56873007D0433 /* parallax.fs.glsl */,
-				CE7DEE0722E5035100ED22EA /* simple.vs.glsl */,
-				CE7DEE0822E5046800ED22EA /* simple.fs.glsl */,
+				CE7DEE0722E5035100ED22EA /* gouraud.vs.glsl */,
+				CE7DEE0822E5046800ED22EA /* gouraud.fs.glsl */,
 				CEBB82B022E749A700997E82 /* syntax-error.glsl */,
 				CE129E7523B8FECA007D0433 /* teapot.obj */,
 				CE7DEE0E22E5176F00ED22EA /* Makefile.am */,
@@ -603,11 +615,13 @@
 				CE0CE9BC22E1ECAE00963219 /* Program.h in Headers */,
 				CE129E7223B8EB2B007D0433 /* WavefrontModel.h in Headers */,
 				CE129E8B23BA3B3C007D0433 /* Attribute.h in Headers */,
+				CE75454C23C0DC1700140C52 /* Camera.h in Headers */,
 				CEE761B822E2003A007CB42B /* Shader.h in Headers */,
 				CE2DC4BB22EBF82200908C7E /* VertexArray.h in Headers */,
 				CE129E5723B79C29007D0433 /* Model.h in Headers */,
 				CE0CE9C422E1F51D00963219 /* Config.h in Headers */,
 				CE129E1923B145BA007D0433 /* CommandQueue.h in Headers */,
+				CE161E4523BD63380023AC8D /* Scene.h in Headers */,
 				CE129E3623B5692A007D0433 /* Texture.h in Headers */,
 				CE129E1523B0310D007D0433 /* UniformBuffer.h in Headers */,
 			);
@@ -760,9 +774,9 @@
 			productReference = CE2DC4CC22EBFFD500908C7E /* ObjectivelyGL-VertexArray */;
 			productType = "com.apple.product-type.tool";
 		};
-		CE61325F22E75BA100673094 /* ObjectivelyGL-Teapot */ = {
+		CE61325F22E75BA100673094 /* ObjectivelyGL-Gouraud */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Teapot" */;
+			buildConfigurationList = CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Gouraud" */;
 			buildPhases = (
 				CE61326222E75BA100673094 /* Sources */,
 				CE61326422E75BA100673094 /* Frameworks */,
@@ -773,9 +787,9 @@
 			dependencies = (
 				CE61326022E75BA100673094 /* PBXTargetDependency */,
 			);
-			name = "ObjectivelyGL-Teapot";
+			name = "ObjectivelyGL-Gouraud";
 			productName = "ObjectivelyGL-Shader";
-			productReference = CE61326D22E75BA100673094 /* ObjectivelyGL-Teapot */;
+			productReference = CE61326D22E75BA100673094 /* ObjectivelyGL-Gouraud */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -819,8 +833,8 @@
 				CE2DC4BE22EBFFD500908C7E /* ObjectivelyGL-VertexArray */,
 				CE129E7723B90579007D0433 /* ObjectivelyGL-WavefrontModel */,
 				CE03F13E22E65FC200147FB9 /* ObjectivelyGL-Tests */,
+				CE61325F22E75BA100673094 /* ObjectivelyGL-Gouraud */,
 				CE129E3A23B6720F007D0433 /* ObjectivelyGL-Parallax */,
-				CE61325F22E75BA100673094 /* ObjectivelyGL-Teapot */,
 			);
 		};
 /* End PBXProject section */
@@ -853,9 +867,11 @@
 				CE129E5823B79C29007D0433 /* Model.c in Sources */,
 				CE129E1A23B145BA007D0433 /* CommandQueue.c in Sources */,
 				CE129E8C23BA3B3C007D0433 /* Attribute.c in Sources */,
+				CE75454D23C0DC1700140C52 /* Camera.c in Sources */,
 				CE129E7323B8EB2B007D0433 /* WavefrontModel.c in Sources */,
 				CE2DC4A522E8C65F00908C7E /* Buffer.c in Sources */,
 				CE2A594022E253260043FCD2 /* OpenGL.c in Sources */,
+				CE161E4623BD63380023AC8D /* Scene.c in Sources */,
 				CE129E3723B5692A007D0433 /* Texture.c in Sources */,
 				CE129E1623B0310D007D0433 /* UniformBuffer.c in Sources */,
 				CE0CE9BD22E1ECAE00963219 /* Program.c in Sources */,
@@ -924,7 +940,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE2DC4B622E8DF1A00908C7E /* Teapot.c in Sources */,
+				CE2DC4B622E8DF1A00908C7E /* Gouraud.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1315,7 +1331,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Teapot" */ = {
+		CE61326A22E75BA100673094 /* Build configuration list for PBXNativeTarget "ObjectivelyGL-Gouraud" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE61326B22E75BA100673094 /* Debug */,

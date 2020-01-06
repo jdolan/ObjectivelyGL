@@ -1,6 +1,6 @@
 noinst_PROGRAMS = \
-	Parallax \
-	Teapot
+	Gouraud \
+	Parallax
 
 CFLAGS += \
 	-I$(top_srcdir)/Sources \

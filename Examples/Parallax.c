@@ -50,7 +50,7 @@ typedef struct {
 	Uniforms uniforms;
 	VertexArray *vertexArray;
 	Buffer *elementsBuffer;
-} CommandData;
+} View;
 
 /**
  * @brief Creates the GL context.
@@ -105,7 +105,7 @@ static Program *createProgram(void) {
  */
 static void initialize(ident data) {
 
-	CommandData *in = data;
+	View *in = data;
 
 	in->context = createContext(in->window);
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
@@ -131,7 +131,7 @@ static void initialize(ident data) {
  */
 static void drawScene(ident data) {
 
-	CommandData *in = data;
+	View *in = data;
 
 	int w, h;
 	SDL_GetWindowSize(in->window, &w, &h);
@@ -162,7 +162,7 @@ static void drawScene(ident data) {
  */
 static void destroy(ident data) {
 
-	CommandData *in = data;
+	View *in = data;
 
 	release(in->program);
 	release(in->vertexArray);
@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
 
 	SDL_Init(SDL_INIT_VIDEO);
 
-	CommandData in = {
+	View in = {
 		.window = SDL_CreateWindow(__FILE__,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,

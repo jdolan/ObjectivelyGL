@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CE61325F22E75BA100673094"
-               BuildableName = "ObjectivelyGL-Teapot"
-               BlueprintName = "ObjectivelyGL-Teapot"
+               BuildableName = "ObjectivelyGL-Gouraud"
+               BlueprintName = "ObjectivelyGL-Gouraud"
                ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,8 +31,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE61325F22E75BA100673094"
-            BuildableName = "ObjectivelyGL-Teapot"
-            BlueprintName = "ObjectivelyGL-Teapot"
+            BuildableName = "ObjectivelyGL-Gouraud"
+            BlueprintName = "ObjectivelyGL-Gouraud"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,8 +54,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE61325F22E75BA100673094"
-            BuildableName = "ObjectivelyGL-Teapot"
-            BlueprintName = "ObjectivelyGL-Teapot"
+            BuildableName = "ObjectivelyGL-Gouraud"
+            BlueprintName = "ObjectivelyGL-Gouraud"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,8 +71,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE61325F22E75BA100673094"
-            BuildableName = "ObjectivelyGL-Teapot"
-            BlueprintName = "ObjectivelyGL-Teapot"
+            BuildableName = "ObjectivelyGL-Gouraud"
+            BlueprintName = "ObjectivelyGL-Gouraud"
             ReferencedContainer = "container:ObjectivelyGL.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

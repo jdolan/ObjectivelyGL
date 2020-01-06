@@ -1,11 +1,12 @@
 resourcesdir = $(datadir)/$(PACKAGE_NAME)
 
 resources_DATA = \
-	city2_6.gloss.jpg \
-	city2_6.normal.png \
-	city2_6.diffuse.jpg \
+	armor.obj \
+	armor.normal.tga \
+	armor.tga \
+	gouraud.fs.glsl \
+	gouraud.vs.glsl \
 	parallax.fs.glsl \
 	parallax.vs.glsl \
-	simple.fs.glsl \
-	simple.vs.glsl \
-	syntax-error.glsl
+	syntax-error.glsl \
+	teapot.obj

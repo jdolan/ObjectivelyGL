@@ -36,18 +36,51 @@
 typedef struct Model Model;
 typedef struct ModelInterface ModelInterface;
 
+/**
+ * @brief Each model contains at least two vertices.
+ */
 typedef struct {
 
+	/**
+	 * @brief The position.
+	 */
 	vec3s position;
+
+	/**
+	 * @brief The color.
+	 */
 	vec4ubs color;
+
+	/**
+	 * @brief The diffuse texture coordinates.
+	 */
 	vec2s diffuse;
+
+	/**
+	 * @brief The lightmap texture coordinates.
+	 */
 	vec2s lightmap;
+
+	/**
+	 * @brief The normal vector.
+	 */
 	vec3s normal;
+
+	/**
+	 * @brief The tangent vector.
+	 */
 	vec3s tangent;
+
+	/**
+	 * @brief The bitangent vector.
+	 */
 	vec3s bitangent;
 
 } ModelVertex;
 
+/**
+ * @brief Each Model contains at least one mesh.
+ */
 typedef struct {
 
 	/**
@@ -95,17 +128,17 @@ struct Model {
 	Vector *elements;
 
 	/**
-	 * @brief The ModelMeshes.
+	 * @brief The meshes.
 	 */
 	Vector *meshes;
 
 	/**
-	 * @brief The ModelVertices.
+	 * @brief The vertices.
 	 */
 	Vector *vertices;
 
 	/**
-	 * @brief The Model bounding box.
+	 * @brief The bounding box.
 	 */
 	vec3s mins, maxs;
 };

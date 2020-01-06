@@ -284,24 +284,6 @@ struct ProgramInterface {
 	GLint (*link)(Program *self);
 
 	/**
-	 * @fn const UniformBlock *Program::uniformBlockForName(const Program *self, const GLchar *name)
-	 * @param self The Program.
-	 * @param name The UniformBlock name.
-	 * @return The UniformBlock for the given name, or `NULL`.
-	 * @memberof Program
-	 */
-	const UniformBlock *(*uniformBlockForName)(const Program *self, const GLchar *name);
-
-	/**
-	 * @fn const Variable *Program::uniformForName(const Program *self, const GLchar *name)
-	 * @param self The Program.
-	 * @param name The uniform Variable name.
-	 * @return The uniform Variable for the given name, or `NULL`.
-	 * @memberof Program
-	 */
-	const Variable *(*uniformForName)(const Program *self, const GLchar *name);
-
-	/**
 	 * @fn void Program::setUniform(const Program *self, const Variable *variable, const GLvoid *value)
 	 * @brief Sets the uniform Variable to the specified value.
 	 * @param self The Program.
@@ -322,7 +304,7 @@ struct ProgramInterface {
 	void (*setUniformBlockBinding)(const Program *self, const UniformBlock *block, GLuint index);
 
 	/**
-	 * @fn void Program::setUniformBlockBindingForName(const Program *self, const UniformBlock *block, GLint index)
+	 * @fn void Program::setUniformBlockBindingForName(const Program *self, const GLchar *name, GLint index)
 	 * @brief Sets the UniformBlock binding for the given name to the specified index.
 	 * @param self The Program.
 	 * @param name The UniformBlock name.
@@ -341,6 +323,24 @@ struct ProgramInterface {
 	 */
 	void (*setUniformForName)(const Program *self, const GLchar *name, const void *value);
 
+	/**
+	 * @fn const UniformBlock *Program::uniformBlockForName(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The UniformBlock name.
+	 * @return The UniformBlock for the given name, or `NULL`.
+	 * @memberof Program
+	 */
+	const UniformBlock *(*uniformBlockForName)(const Program *self, const GLchar *name);
+
+	/**
+	 * @fn const Variable *Program::uniformForName(const Program *self, const GLchar *name)
+	 * @param self The Program.
+	 * @param name The uniform Variable name.
+	 * @return The uniform Variable for the given name, or `NULL`.
+	 * @memberof Program
+	 */
+	const Variable *(*uniformForName)(const Program *self, const GLchar *name);
+	
 	/**
 	 * @fn void Program::use(const Program *self)
 	 * @brief Installs this Program as part of the current rendering state.
