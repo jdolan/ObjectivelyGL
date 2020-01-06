@@ -73,7 +73,7 @@ static void initialize(ident data) {
 	in->camera = $(alloc(Camera), init);
 	in->scene = $(alloc(Scene), init);
 
-	in->model =	$((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
+	in->model = $((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
 
 	in->camera->position = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
 	in->camera->position.z = in->model->maxs.z * 2.f;
