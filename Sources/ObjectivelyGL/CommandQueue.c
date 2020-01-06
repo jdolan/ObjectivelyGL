@@ -69,13 +69,12 @@ static _Bool dequeue(CommandQueue *self) {
 			self->pending = (self->pending + 1) % self->capacity;
 			self->count--;
 			dequeued = true;
-
-			$(self->condition, signal);
 		}
 	});
 
 	if (copy.consumer) {
 		copy.consumer(copy.data);
+		synchronized(self->condition, $(self->condition, signal));
 	}
 
 	return dequeued;
