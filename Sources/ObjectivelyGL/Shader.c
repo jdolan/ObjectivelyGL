@@ -57,14 +57,16 @@ static ssize_t appendBytes(Shader *self, const uint8_t *bytes, size_t length) {
 
 	if (length) {
 
-		GLchar *source = realloc(self->source, strlen(self->source) + length + 1);
+		const size_t size = strlen(self->source) + length + 1;
+		GLchar *source = realloc(self->source, size);
 		if (source) {
 			self->source = source;
 		} else {
 			return -1;
 		}
 
-		strncat(self->source, (char *) bytes, length);
+		memcpy(self->source + strlen(self->source), bytes, length);
+		self->source[size - 1] = '\0';
 	}
 
 	return length;
