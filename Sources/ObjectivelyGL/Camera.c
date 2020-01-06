@@ -52,6 +52,21 @@ static void fly(Camera *self, const vec3s dir, float seconds) {
 }
 
 /**
+ * @fn void Camera::freeLook(Camera *self, int deltaX, int deltaY)
+ * @memberof Camera
+ */
+static void freeLook(Camera *self, int deltaX, int deltaY) {
+
+	vec3s lookAt = self->position;
+
+	lookAt = glms_vec3_add(lookAt, glms_vec3_scale(self->forward, 200.f));
+	lookAt = glms_vec3_add(lookAt, glms_vec3_scale(self->right, deltaX * self->sensitivity));
+	lookAt = glms_vec3_add(lookAt, glms_vec3_scale(self->up, deltaY * self->sensitivity));
+
+	$(self, lookAt, lookAt);
+}
+
+/**
  * @fn Camera *Camera::init(Camera *self)
  * @memberof Camera
  */
@@ -68,12 +83,14 @@ static Camera *init(Camera *self) {
 
 		self->fovY = 90.f;
 		self->nearZ = 0.1f;
-		self->farZ = 1024.f;
+		self->farZ = 100.f;
 
 		self->velocity = glms_vec3_zero();
-		self->speed = 20.f;
-		self->acceleration = 20.f;
-		self->friction = 40.f;
+		self->speed = 100.f;
+		self->acceleration = 10.f;
+		self->friction = 200.f;
+
+		self->sensitivity = 1.f;
 	}
 
 	return self;
@@ -141,6 +158,7 @@ static mat4s view(const Camera *self) {
 static void initialize(Class *clazz) {
 
 	((CameraInterface *) clazz->interface)->fly = fly;
+	((CameraInterface *) clazz->interface)->freeLook = freeLook;
 	((CameraInterface *) clazz->interface)->init = init;
 	((CameraInterface *) clazz->interface)->look = look;
 	((CameraInterface *) clazz->interface)->lookAt = lookAt;

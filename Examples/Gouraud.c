@@ -37,6 +37,7 @@ typedef struct {
 	VertexArray *vertexArray;
 	Buffer *elementsBuffer;
 	float frameTime;
+	SDL_bool windowGrab;
 } View;
 
 typedef struct {
@@ -187,9 +188,9 @@ int main(int argc, char *argv[]) {
 			__FILE__,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
-			0,
-			0,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_FULLSCREEN_DESKTOP
+			1024,
+			640,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/
 		)
 	};
 
@@ -204,32 +205,31 @@ int main(int argc, char *argv[]) {
 
 		$(queue, waitUntilEmpty);
 
-		in.frameTime = (SDL_GetTicks() - ticks) / 1000.0;
+		in.frameTime = (SDL_GetTicks() - ticks) / 1000.f;
 		ticks = SDL_GetTicks();
+
+		in.windowGrab = SDL_GetWindowGrab(in.window);
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 
+			if (event.type == SDL_MOUSEBUTTONUP) {
+				if (event.button.button == SDL_BUTTON_RIGHT) {
+					if (in.windowGrab) {
+						SDL_SetWindowGrab(in.window, false);
+						SDL_SetRelativeMouseMode(false);
+					} else {
+						SDL_SetWindowGrab(in.window, true);
+						SDL_SetRelativeMouseMode(true);
+					}
+				}
+			}
 			if (event.type == SDL_MOUSEMOTION) {
-				if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+				if (SDL_GetWindowGrab(in.window)) {
+					$(in.camera, freeLook, event.motion.xrel, event.motion.yrel);
+				} else if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
 					in.node->angles.x += event.motion.yrel;
 					in.node->angles.y += event.motion.xrel;
-				} else {
-					vec3s angles = glms_euler_angles($(in.camera, view));
-					//angles = glms_vec3_zero();
-					printf("%.0f %.0f %.0f\n", glm_deg(angles.x),
-										 glm_deg(angles.y),
-										 glm_deg(angles.z));
-
-					angles.x += event.motion.yrel * 0.001;
-					angles.y += event.motion.xrel * 0.001;
-
-//					vec3s forward;
-//					forward.x = cos(angles.y) * cos(angles.x);
-//					forward.y = sin(angles.x);
-//					forward.z = sin(angles.y) * cos(angles.x);
-//
-//					$(in.camera, look, forward);
 				}
 			} else if (event.type == SDL_MOUSEWHEEL) {
 				in.camera->fovY -= event.wheel.y;

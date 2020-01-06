@@ -98,6 +98,11 @@ struct Camera {
 	float friction;
 
 	/**
+	 * @brief The sensitivity for free look rotation.
+	 */
+	float sensitivity;
+
+	/**
 	 * @brief The horizontal field of view, in degrees.
 	 */
 	float fovY;
@@ -125,13 +130,23 @@ struct CameraInterface {
 
 	/**
 	 * @fn void Camera::fly(Camera *self, const vec3s dir, float seconds)
-	 * @brief Accelerate this camera in the specified direction for the given duration.
+	 * @brief Accelerate this Camera in the specified direction for the given duration.
 	 * @param self The Camera.
 	 * @param dir The acceleration direction.
 	 * @param seconds The duration of the movement, in seconds.
 	 * @memberof Camera
 	 */
 	void (*fly)(Camera *self, const vec3s dir, float seconds);
+
+	/**
+	 * @fn void Camera::freeLook(Camera *self, int deltaX, int deltaY)
+	 * @brief Rotates this Camera using the given relative mouse movement.
+	 * @param self The Camera.
+	 * @param deltaX The relative X mouse motion.
+	 * @param deltaY The relative Y mouse motion.
+	 * @memberof Camera
+	 */
+	void (*freeLook)(Camera *self, int deltaX, int deltaY);
 
 	/**
 	 * @fn Camera *Camera::init(Camera *self)
