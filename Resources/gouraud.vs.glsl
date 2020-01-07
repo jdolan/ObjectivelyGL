@@ -17,7 +17,7 @@ struct light {
 
 uniform light lights[8];
 
-uniform vec3 camera;
+uniform vec3 eye;
 
 out vec3 gouraudLighting;
 
@@ -33,12 +33,12 @@ void main() {
 		gouraudLighting += lights[i].ambient;
 
 		vec3 lightDir = normalize(lights[i].position - position);
-		vec3 viewDir = normalize(camera - position);
+		vec3 eyeDir = normalize(eye - position);
 
 		float diffuse = max(0.0, dot(normal, lightDir));
 		gouraudLighting += lights[i].diffuse * diffuse;
 
-		float specular = pow(max(dot(viewDir, reflect(-lightDir, normal)), 0.0), 32);
+		float specular = pow(max(dot(eyeDir, reflect(-lightDir, normal)), 0.0), 32);
 		gouraudLighting += lights[i].specular * specular;
 	}
 }

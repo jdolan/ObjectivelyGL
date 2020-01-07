@@ -25,15 +25,12 @@
 
 #include <ObjectivelyGL/Attribute.h>
 #include <ObjectivelyGL/Buffer.h>
-#include <ObjectivelyGL/Camera.h>
 #include <ObjectivelyGL/CommandQueue.h>
 #include <ObjectivelyGL/Model.h>
 #include <ObjectivelyGL/OpenGL.h>
 #include <ObjectivelyGL/Program.h>
-#include <ObjectivelyGL/Scene.h>
 #include <ObjectivelyGL/Shader.h>
 #include <ObjectivelyGL/Types.h>
 #include <ObjectivelyGL/UniformBuffer.h>
 #include <ObjectivelyGL/VertexArray.h>
 #include <ObjectivelyGL/WavefrontModel.h>
-

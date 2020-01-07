@@ -9,12 +9,10 @@ pkgincludedir = $(includedir)/$(PACKAGE_NAME)
 pkginclude_HEADERS = \
 	Attribute.h \
 	Buffer.h \
-	Camera.h \
 	CommandQueue.h \
 	Model.h \
 	OpenGL.h \
 	Program.h \
-	Scene.h \
 	Shader.h \
 	Types.h \
 	UniformBuffer.h \
@@ -27,12 +25,10 @@ lib_LTLIBRARIES = \
 libObjectivelyGL_la_SOURCES = \
 	Attribute.c \
 	Buffer.c \
-	Camera.c \
 	CommandQueue.c \
 	Model.c \
 	OpenGL.c \
 	Program.c \
-	Scene.c \
 	Shader.c \
 	UniformBuffer.c \
 	VertexArray.c \

@@ -29,15 +29,18 @@
 typedef struct {
 	SDL_Window *window;
 	SDL_GLContext *context;
-	Camera *camera;
-	Scene *scene;
-	Model *model;
-	Node *node;
 	Program *program;
+
+	Model *model;
 	VertexArray *vertexArray;
 	Buffer *elementsBuffer;
-	float frameTime;
-	SDL_bool windowGrab;
+	vec3s angles;
+
+	vec3s eye;
+	vec3s forward;
+	vec3s right;
+	vec3s up;
+
 } View;
 
 typedef struct {
@@ -51,10 +54,6 @@ typedef struct {
 	vec3s position;
 	vec3s normal;
 } Vertex;
-
-typedef enum {
-	TagMesh = 1 << 0
-} SceneTag;
 
 /**
  * @brief Command Consumer to initialize GL resources.
@@ -70,17 +69,10 @@ static void initialize(ident data) {
 	in->context = SDL_GL_CreateContext(in->window);
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
-	in->camera = $(alloc(Camera), init);
-	in->scene = $(alloc(Scene), init);
-
 	in->model = $((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
 
-	in->camera->position = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
-	in->camera->position.z = in->model->maxs.z * 2.f;
-
-	in->node = $(in->scene, addNode, NULL);
-	in->node->tag = TagMesh;
-	in->node->data = in->model;
+	in->eye = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
+	in->eye.z = in->model->maxs.z * 1.5f;
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
 		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
@@ -109,29 +101,6 @@ static void initialize(ident data) {
 }
 
 /**
- * @brief Draws a Node in the Scene.
- */
-static void drawNode(const Node *node, ident data) {
-
-	View *in = data;
-
-	$(in->vertexArray, bind);
-	$(in->vertexArray, enableAttribute, 0);
-	$(in->vertexArray, enableAttribute, 1);
-
-	$(in->elementsBuffer, bind, GL_ELEMENT_ARRAY_BUFFER);
-
-	$(in->program, setUniformForName, "modelMatrix", &node->transform);
-
-	const mat3s normal = glms_mat4_pick3(glms_mat4_transpose(glms_mat4_inv(node->transform)));
-	$(in->program, setUniformForName, "normalMatrix", &normal);
-
-	glDrawElements(GL_TRIANGLES, (GLsizei) in->model->elements->count, GL_UNSIGNED_INT, 0);
-
-	assert(glGetError() == GL_NO_ERROR);
-}
-
-/**
  * @brief Command Consumer to draw the Scene.
  */
 static void drawScene(ident data) {
@@ -140,21 +109,33 @@ static void drawScene(ident data) {
 
 	$(in->program, use);
 
-	int width, height;
-	SDL_GetWindowSize(in->window, &width, &height);
+	int w, h;
+	SDL_GetWindowSize(in->window, &w, &h);
 
-	const mat4s projection = $(in->camera, perspective, width, height);
+	const float aspect = w / (float) h;
+
+	const mat4s projection = glms_perspective(90.f, aspect, .1f, 100.f);
+	const mat4s view = glms_lookat(in->eye, GLMS_VEC3_ZERO, GLMS_YUP);
+	const mat4s model = glms_euler_xyz(in->angles);
+	const mat3s normal = glms_mat4_pick3(glms_mat4_transpose(glms_mat4_inv(model)));
+
 	$(in->program, setUniformForName, "projectionMatrix", &projection);
-
-	const mat4s view = $(in->camera, view);
 	$(in->program, setUniformForName, "viewMatrix", &view);
+	$(in->program, setUniformForName, "modelMatrix", &model);
+	$(in->program, setUniformForName, "normalMatrix", &normal);
+	$(in->program, setUniformForName, "eye", &in->eye);
 
-	$(in->program, setUniformForName, "camera", &in->camera->position);
+	$(in->vertexArray, bind);
+	$(in->vertexArray, enableAttribute, 0);
+	$(in->vertexArray, enableAttribute, 1);
+
+	$(in->elementsBuffer, bind, GL_ELEMENT_ARRAY_BUFFER);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	$(in->scene, ready);
-	$(in->scene, enumerateNodes, TagMesh, drawNode, in);
+	glDrawElements(GL_TRIANGLES, (GLsizei) in->model->elements->count, GL_UNSIGNED_INT, 0);
+
+	assert(glGetError() == GL_NO_ERROR);
 
 	SDL_GL_SwapWindow(in->window);
 }
@@ -166,8 +147,6 @@ static void destroy(ident data) {
 
 	View *in = data;
 
-	release(in->camera);
-	release(in->scene);
 	release(in->model);
 	release(in->program);
 	release(in->vertexArray);
@@ -199,40 +178,20 @@ int main(int argc, char *argv[]) {
 	$(queue, enqueue, initialize, &in);
 	$(queue, start);
 
-	unsigned int ticks = SDL_GetTicks();
-
 	while (true) {
 
 		$(queue, waitUntilEmpty);
 
-		in.frameTime = (SDL_GetTicks() - ticks) / 1000.f;
-		ticks = SDL_GetTicks();
-
-		in.windowGrab = SDL_GetWindowGrab(in.window);
-
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 
-			if (event.type == SDL_MOUSEBUTTONUP) {
-				if (event.button.button == SDL_BUTTON_RIGHT) {
-					if (in.windowGrab) {
-						SDL_SetWindowGrab(in.window, false);
-						SDL_SetRelativeMouseMode(false);
-					} else {
-						SDL_SetWindowGrab(in.window, true);
-						SDL_SetRelativeMouseMode(true);
-					}
-				}
-			}
 			if (event.type == SDL_MOUSEMOTION) {
-				if (SDL_GetWindowGrab(in.window)) {
-					$(in.camera, freeLook, event.motion.xrel, event.motion.yrel);
-				} else if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-					in.node->angles.x += event.motion.yrel;
-					in.node->angles.y += event.motion.xrel;
+				if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+					in.angles.x += glm_rad(event.motion.yrel);
+					in.angles.y += glm_rad(event.motion.xrel);
 				}
 			} else if (event.type == SDL_MOUSEWHEEL) {
-				in.camera->fovY -= event.wheel.y;
+				in.eye.z -= event.wheel.y;
 			} else if (event.type == SDL_QUIT) {
 				break;
 			}
@@ -242,29 +201,6 @@ int main(int argc, char *argv[]) {
 			$(queue, enqueue, destroy, &in);
 			break;
 		}
-
-		vec3s dir = glms_vec3_zero();
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
-		if (state[SDL_SCANCODE_W]) {
-			dir = glms_vec3_add(dir, in.camera->forward);
-		}
-		if (state[SDL_SCANCODE_S]) {
-			dir = glms_vec3_sub(dir, in.camera->forward);
-		}
-		if (state[SDL_SCANCODE_A]) {
-			dir = glms_vec3_sub(dir, in.camera->right);
-		}
-		if (state[SDL_SCANCODE_D]) {
-			dir = glms_vec3_add(dir, in.camera->right);
-		}
-		if (state[SDL_SCANCODE_SPACE]) {
-			dir = glms_vec3_add(dir, in.camera->up);
-		}
-		if (state[SDL_SCANCODE_C]) {
-			dir = glms_vec3_sub(dir, in.camera->up);
-		}
-
-		$(in.camera, fly, dir, in.frameTime);
 
 		$(queue, enqueue, drawScene, &in);
 	}
