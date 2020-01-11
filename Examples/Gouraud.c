@@ -68,7 +68,7 @@ static void initialize(ident data) {
 	in->context = SDL_GL_CreateContext(in->window);
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
-	in->model = $((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
+	in->model = $((Model *) alloc(WavefrontModel), initWithResourceName, "armor.obj");
 
 	in->view = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
 	in->view.z = in->model->maxs.z * 1.5f;
