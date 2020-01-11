@@ -47,21 +47,6 @@ typedef struct {
 	vec3s position;
 
 	/**
-	 * @brief The color.
-	 */
-	vec4ubs color;
-
-	/**
-	 * @brief The diffuse texture coordinates.
-	 */
-	vec2s diffuse;
-
-	/**
-	 * @brief The lightmap texture coordinates.
-	 */
-	vec2s lightmap;
-
-	/**
 	 * @brief The normal vector.
 	 */
 	vec3s normal;
@@ -75,6 +60,21 @@ typedef struct {
 	 * @brief The bitangent vector.
 	 */
 	vec3s bitangent;
+
+	/**
+	 * @brief The diffuse texture coordinates.
+	 */
+	vec2s diffuse;
+
+	/**
+	 * @brief The lightmap texture coordinates.
+	 */
+	vec2s lightmap;
+
+	/**
+	 * @brief The color.
+	 */
+	vec4ubs color;
 
 } ModelVertex;
 

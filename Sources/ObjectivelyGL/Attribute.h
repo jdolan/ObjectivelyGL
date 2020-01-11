@@ -31,12 +31,12 @@
 typedef enum {
 	TagNone,
 	TagPosition,
-	TagColor,
-	TagDiffuse,
-	TagLightmap,
 	TagNormal,
 	TagTangent,
 	TagBitangent,
+	TagDiffuse,
+	TagLightmap,
+	TagColor,
 } AttributeTag;
 
 /**

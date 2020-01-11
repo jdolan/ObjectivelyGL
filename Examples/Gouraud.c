@@ -36,11 +36,10 @@ typedef struct {
 	Buffer *elementsBuffer;
 	vec3s angles;
 
-	vec3s eye;
+	vec3s view;
 	vec3s forward;
 	vec3s right;
 	vec3s up;
-
 } View;
 
 typedef struct {
@@ -71,8 +70,8 @@ static void initialize(ident data) {
 
 	in->model = $((Model *) alloc(WavefrontModel), initWithResourceName, "teapot.obj");
 
-	in->eye = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
-	in->eye.z = in->model->maxs.z * 1.5f;
+	in->view = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
+	in->view.z = in->model->maxs.z * 1.5f;
 
 	ProgramDescriptor descriptor = MakeProgramDescriptor(
 		MakeShaderDescriptor(GL_VERTEX_SHADER, "gouraud.vs.glsl"),
@@ -84,10 +83,10 @@ static void initialize(ident data) {
 
 	$(in->program, use);
 
-	$(in->program, setUniformForName, "lights[0].position", &(vec3s) { 0, 20, 0 });
-	$(in->program, setUniformForName, "lights[0].ambient", &(vec3s) { 1, 0, 0 });
-	$(in->program, setUniformForName, "lights[0].diffuse", &(vec3s) { 0, 1, 0 });
-	$(in->program, setUniformForName, "lights[0].specular", &(vec3s) { 0, 0, 1 });
+	$(in->program, setUniformForName, "light.position", &(vec3s) { 0, 20, 0 });
+	$(in->program, setUniformForName, "light.ambient", &(vec3s) { 1, 0, 0 });
+	$(in->program, setUniformForName, "light.diffuse", &(vec3s) { 0, 1, 0 });
+	$(in->program, setUniformForName, "light.specular", &(vec3s) { 0, 0, 1 });
 
 	const Attribute attributes[] = MakeAttributes(
 		MakeVertexAttributeVec3f(TagPosition, 0, Vertex, position),
@@ -115,7 +114,7 @@ static void drawScene(ident data) {
 	const float aspect = w / (float) h;
 
 	const mat4s projection = glms_perspective(90.f, aspect, .1f, 100.f);
-	const mat4s view = glms_lookat(in->eye, GLMS_VEC3_ZERO, GLMS_YUP);
+	const mat4s view = glms_lookat(in->view, GLMS_VEC3_ZERO, GLMS_YUP);
 	const mat4s model = glms_euler_xyz(in->angles);
 	const mat3s normal = glms_mat4_pick3(glms_mat4_transpose(glms_mat4_inv(model)));
 
@@ -123,7 +122,7 @@ static void drawScene(ident data) {
 	$(in->program, setUniformForName, "viewMatrix", &view);
 	$(in->program, setUniformForName, "modelMatrix", &model);
 	$(in->program, setUniformForName, "normalMatrix", &normal);
-	$(in->program, setUniformForName, "eye", &in->eye);
+	$(in->program, setUniformForName, "view", &in->view);
 
 	$(in->vertexArray, bind);
 	$(in->vertexArray, enableAttribute, 0);
@@ -191,7 +190,7 @@ int main(int argc, char *argv[]) {
 					in.angles.y += glm_rad(event.motion.xrel);
 				}
 			} else if (event.type == SDL_MOUSEWHEEL) {
-				in.eye.z -= event.wheel.y;
+				in.view.z -= event.wheel.y;
 			} else if (event.type == SDL_QUIT) {
 				break;
 			}
