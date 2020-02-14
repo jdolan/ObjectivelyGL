@@ -1,0 +1,10 @@
+newmtl armor
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Ns 500
+illum 2
+map_Ka armor.tga
+map_Kd armor.tga
+map_Ks armor.tga
+bump armor.bump.tga

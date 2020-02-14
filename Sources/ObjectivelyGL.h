@@ -30,6 +30,7 @@
 #include <ObjectivelyGL/OpenGL.h>
 #include <ObjectivelyGL/Program.h>
 #include <ObjectivelyGL/Shader.h>
+#include <ObjectivelyGL/Texture.h>
 #include <ObjectivelyGL/Types.h>
 #include <ObjectivelyGL/UniformBuffer.h>
 #include <ObjectivelyGL/VertexArray.h>

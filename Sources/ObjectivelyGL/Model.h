@@ -78,6 +78,28 @@ typedef struct {
 
 } ModelVertex;
 
+typedef struct {
+
+	char *name;
+
+	vec3s ambient;
+
+	char *ambientMap;
+
+	vec3s diffuse;
+
+	char *diffuseMap;
+
+	vec3s specular;
+
+	char *specularMap;
+
+	char *bumpMap;
+
+	char *heightMap;
+
+} ModelMaterial;
+
 /**
  * @brief Each Model contains at least one mesh.
  */

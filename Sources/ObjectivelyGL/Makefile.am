@@ -14,6 +14,7 @@ pkginclude_HEADERS = \
 	OpenGL.h \
 	Program.h \
 	Shader.h \
+	Texture.h \
 	Types.h \
 	UniformBuffer.h \
 	VertexArray.h \
@@ -30,6 +31,7 @@ libObjectivelyGL_la_SOURCES = \
 	OpenGL.c \
 	Program.c \
 	Shader.c \
+	Texture.c \
 	UniformBuffer.c \
 	VertexArray.c \
 	WavefrontModel.c

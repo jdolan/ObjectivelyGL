@@ -63,7 +63,7 @@
 		CE161E3A23BB8C060023AC8D /* gouraud.fs.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE7DEE0822E5046800ED22EA /* gouraud.fs.glsl */; };
 		CE161E3B23BB8C060023AC8D /* syntax-error.glsl in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEBB82B022E749A700997E82 /* syntax-error.glsl */; };
 		CE161E3C23BB8C060023AC8D /* teapot.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE129E7523B8FECA007D0433 /* teapot.obj */; };
-		CE161E4023BBFB400023AC8D /* armor.normal.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3F23BBFB2B0023AC8D /* armor.normal.tga */; };
+		CE161E4023BBFB400023AC8D /* armor.bump.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3F23BBFB2B0023AC8D /* armor.bump.tga */; };
 		CE161E4123BBFB400023AC8D /* armor.obj in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3D23BBFB2A0023AC8D /* armor.obj */; };
 		CE161E4223BBFB400023AC8D /* armor.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE161E3E23BBFB2A0023AC8D /* armor.tga */; };
 		CE2A594022E253260043FCD2 /* OpenGL.c in Sources */ = {isa = PBXBuildFile; fileRef = CE2A593E22E253260043FCD2 /* OpenGL.c */; };
@@ -212,7 +212,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				CE161E4023BBFB400023AC8D /* armor.normal.tga in CopyFiles */,
+				CE161E4023BBFB400023AC8D /* armor.bump.tga in CopyFiles */,
 				CE161E4123BBFB400023AC8D /* armor.obj in CopyFiles */,
 				CE161E4223BBFB400023AC8D /* armor.tga in CopyFiles */,
 				CE161E3723BB8C060023AC8D /* parallax.vs.glsl in CopyFiles */,
@@ -321,7 +321,7 @@
 		CE129E8A23BA3B3C007D0433 /* Attribute.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Attribute.c; sourceTree = "<group>"; };
 		CE161E3D23BBFB2A0023AC8D /* armor.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = armor.obj; sourceTree = "<group>"; };
 		CE161E3E23BBFB2A0023AC8D /* armor.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = armor.tga; sourceTree = "<group>"; };
-		CE161E3F23BBFB2B0023AC8D /* armor.normal.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = armor.normal.tga; sourceTree = "<group>"; };
+		CE161E3F23BBFB2B0023AC8D /* armor.bump.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = armor.bump.tga; sourceTree = "<group>"; };
 		CE2A593E22E253260043FCD2 /* OpenGL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OpenGL.c; sourceTree = "<group>"; };
 		CE2A593F22E253260043FCD2 /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL.h; sourceTree = "<group>"; };
 		CE2A594222E25F7D0043FCD2 /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
@@ -350,6 +350,7 @@
 		CEBB82B022E749A700997E82 /* syntax-error.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = "syntax-error.glsl"; sourceTree = "<group>"; };
 		CEE761B622E2003A007CB42B /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		CEE761B722E2003A007CB42B /* Shader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Shader.c; sourceTree = "<group>"; };
+		CEF80C0023CA16E000D66D99 /* armor.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = armor.mtl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -576,7 +577,8 @@
 		CE2A595522E262D40043FCD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE161E3F23BBFB2B0023AC8D /* armor.normal.tga */,
+				CE161E3F23BBFB2B0023AC8D /* armor.bump.tga */,
+				CEF80C0023CA16E000D66D99 /* armor.mtl */,
 				CE161E3D23BBFB2A0023AC8D /* armor.obj */,
 				CE161E3E23BBFB2A0023AC8D /* armor.tga */,
 				CE129E3023B5684A007D0433 /* parallax.vs.glsl */,

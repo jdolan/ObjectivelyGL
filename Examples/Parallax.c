@@ -22,83 +22,36 @@
  */
 
 #include <assert.h>
-#include <cglm/struct.h>
 #include <SDL.h>
-#include <SDL_image.h>
+
 #include <ObjectivelyGL.h>
-
-typedef struct {
-	mat4s projection;
-	mat4s view;
-	mat4s model;
-	vec3s lightPos;
-	vec3s viewPos;
-} Uniforms;
-
-typedef struct {
-	vec3s position;
-	vec3s normal;
-	vec2s diffuse;
-	vec3s tangent;
-	vec3s bitangent;
-} Vertex;
 
 typedef struct {
 	SDL_Window *window;
 	SDL_GLContext *context;
 	Program *program;
-	Uniforms uniforms;
+
+	Model *model;
 	VertexArray *vertexArray;
 	Buffer *elementsBuffer;
+	vec3s angles;
+
+	vec3s view;
+	vec3s forward;
+	vec3s right;
+	vec3s up;
+
+	vec3s light;
+
 } View;
 
-/**
- * @brief Creates the GL context.
- */
-static SDL_GLContext *createContext(SDL_Window *window) {
-
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
-
-	SDL_GLContext *context = SDL_GL_CreateContext(window);
-	if (context == NULL) {
-		fprintf(stderr, "Failed to create GL context\n");
-		exit(1);
-	}
-
-	return context;
-}
-
-/**
- * @brief Creates the Program from the parallax vertex and fragment shaders.
- */
-static Program *createProgram(void) {
-
-	ProgramDescriptor descriptor = MakeProgramDescriptor(
-		MakeShaderDescriptor(GL_VERTEX_SHADER, "parallax.vs.glsl"),
-		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "parallax.fs.glsl")
-	);
-
-	Program *program = $(alloc(Program), initWithDescriptor, &descriptor);
-	if (program == NULL) {
-		for (ShaderDescriptor *shader = descriptor.shaders;
-			 shader->type != GL_NONE;
-			 shader++) {
-
-			if (shader->status != GL_TRUE) {
-				fprintf(stderr, "%s: %s\n", shader->resources[0], shader->infoLog);
-			}
-		}
-		fprintf(stderr, "%s\n", descriptor.infoLog);
-		FreeProgramDescriptor(&descriptor);
-		exit(1);
-	}
-
-	FreeProgramDescriptor(&descriptor);
-	return program;
-}
+typedef struct {
+	vec3s aPos;
+	vec3s aNormal;
+	vec3s aTexCoords;
+	vec3s aTangent;
+	vec2s aBitangent;
+} Vertex;
 
 /**
  * @brief Command Consumer to initialize GL resources.
@@ -107,52 +60,79 @@ static void initialize(ident data) {
 
 	View *in = data;
 
-	in->context = createContext(in->window);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	in->context = SDL_GL_CreateContext(in->window);
 	gladLoadGLLoader(SDL_GL_GetProcAddress);
 
-	in->program = createProgram();
+	in->model = $((Model *) alloc(WavefrontModel), initWithResourceName, "armor.obj");
 
-	Model *model = $((Model *) alloc(WavefrontModel), initWithResourceName, "Models/teapot.obj");
+	in->view = glms_vec3_scale(glms_vec3_add(in->model->mins, in->model->maxs), .5f);
+	in->view.z = in->model->maxs.z * 1.5f;
 
-	const Attribute attributes[] = MakeAttributes(
-		MakeVertexAttributeVec3f(TagPosition, 0, Vertex, position),
-		MakeVertexAttributeVec3f(TagNormal, 1, Vertex, normal),
-		MakeVertexAttributeVec2f(TagDiffuse, 2, Vertex, diffuse),
-		MakeVertexAttributeVec3f(TagTangent, 3, Vertex, tangent),
-		MakeVertexAttributeVec3f(TagBitangent, 4, Vertex, bitangent)
+	ProgramDescriptor descriptor = MakeProgramDescriptor(
+		MakeShaderDescriptor(GL_VERTEX_SHADER, "parallax.vs.glsl"),
+		MakeShaderDescriptor(GL_FRAGMENT_SHADER, "parallax.fs.glsl")
 	);
 
-	in->vertexArray = $(model, vertexArray, attributes);
-	in->elementsBuffer = $(model, elementsBuffer);
+	in->program = $(alloc(Program), initWithDescriptor, &descriptor);
+	FreeProgramDescriptor(&descriptor);
+
+	const Attribute attributes[] = MakeAttributes(
+		MakeVertexAttributeVec3f(TagPosition, 0, Vertex, aPos),
+		MakeVertexAttributeVec3f(TagNormal, 1, Vertex, aNormal),
+		MakeVertexAttributeVec3f(TagDiffuse, 1, Vertex, aTexCoords),
+		MakeVertexAttributeVec3f(TagTangent, 1, Vertex, aTangent),
+		MakeVertexAttributeVec3f(TagBitangent, 1, Vertex, aBitangent)
+	);
+
+	in->vertexArray = $(in->model, vertexArray, attributes);
+	in->elementsBuffer = $(in->model, elementsBuffer);
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 /**
- * @brief Command Consumer to render the teapot.
+ * @brief Command Consumer to draw the Scene.
  */
 static void drawScene(ident data) {
 
 	View *in = data;
 
+	$(in->program, use);
+
 	int w, h;
 	SDL_GetWindowSize(in->window, &w, &h);
 
-	const mat4s projection = glms_perspective(90, (float) w / (float) h, 0, 100);
+	const float aspect = w / (float) h;
+
+	const mat4s projection = glms_perspective(90.f, aspect, .1f, 100.f);
+	const mat4s view = glms_lookat(in->view, GLMS_VEC3_ZERO, GLMS_YUP);
+	const mat4s model = glms_euler_xyz(in->angles);
+
 	$(in->program, setUniformForName, "projection", &projection);
-
-	const mat4s view = glms_lookat((vec3s) { 0, 2, -2 }, (vec3s) { 0, 0, 0 }, GLMS_YUP);
 	$(in->program, setUniformForName, "view", &view);
-
-	const mat4s model = glms_mat4_identity();
 	$(in->program, setUniformForName, "model", &model);
-
-	$(in->program, use);
+	$(in->program, setUniformForName, "viewPos", &in->view);
+	$(in->program, setUniformForName, "lightPos", &in->light);
 
 	$(in->vertexArray, bind);
 	$(in->vertexArray, enableAttribute, 0);
+	$(in->vertexArray, enableAttribute, 1);
+	$(in->vertexArray, enableAttribute, 2);
+	$(in->vertexArray, enableAttribute, 3);
+	$(in->vertexArray, enableAttribute, 4);
+
+	$(in->elementsBuffer, bind, GL_ELEMENT_ARRAY_BUFFER);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glDrawElements(GL_TRIANGLES, lengthof(in->elementsBuffer), GL_UNSIGNED_INT, in->elements);
+	glDrawElements(GL_TRIANGLES, (GLsizei) in->model->elements->count, GL_UNSIGNED_INT, 0);
+
+	printf("%d\n", glGetError());
+	assert(glGetError() == GL_NO_ERROR);
 
 	SDL_GL_SwapWindow(in->window);
 }
@@ -164,8 +144,10 @@ static void destroy(ident data) {
 
 	View *in = data;
 
+	release(in->model);
 	release(in->program);
 	release(in->vertexArray);
+	release(in->elementsBuffer);
 
 	SDL_GL_DeleteContext(in->context);
 }
@@ -178,12 +160,13 @@ int main(int argc, char *argv[]) {
 	SDL_Init(SDL_INIT_VIDEO);
 
 	View in = {
-		.window = SDL_CreateWindow(__FILE__,
+		.window = SDL_CreateWindow(
+			__FILE__,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			1024,
-			768,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
+			640,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI /*| SDL_WINDOW_FULLSCREEN_DESKTOP*/
 		)
 	};
 
@@ -194,9 +177,19 @@ int main(int argc, char *argv[]) {
 
 	while (true) {
 
+		$(queue, waitUntilEmpty);
+
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
+
+			if (event.type == SDL_MOUSEMOTION) {
+				if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+					in.angles.x += glm_rad(event.motion.yrel);
+					in.angles.y += glm_rad(event.motion.xrel);
+				}
+			} else if (event.type == SDL_MOUSEWHEEL) {
+				in.view.z -= event.wheel.y;
+			} else if (event.type == SDL_QUIT) {
 				break;
 			}
 		}
@@ -207,7 +200,6 @@ int main(int argc, char *argv[]) {
 		}
 
 		$(queue, enqueue, drawScene, &in);
-		$(queue, waitUntilEmpty);
 	}
 
 	$(queue, stop);
@@ -220,5 +212,3 @@ int main(int argc, char *argv[]) {
 
 	return 0;
 }
-
-

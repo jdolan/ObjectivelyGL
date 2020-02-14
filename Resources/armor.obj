@@ -1,6 +1,6 @@
 # Wavefront OBJ exported by MilkShape 3D
 
-mtllib tris.mtl
+mtllib armor.mtl
 
 v 6.109375 25.218750 16.093750
 v 6.640625 17.843750 18.703125
@@ -225,8 +225,8 @@ vn -0.956779 0.159281 -0.243318
 vn 0.958943 0.153554 -0.238430
 # 67 normals
 
-g tris.md2
-usemtl Material01
+g armor
+usemtl armor
 s 1
 f 1/1/1 2/2/2 3/3/3
 f 4/4/4 5/5/5 6/6/6
